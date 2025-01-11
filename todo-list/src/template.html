@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body class="sb-expanded">
+    <aside>
+        <nav>
+            <ul>
+                <li>
+                    <button type="button" class="active">
+                        <i class="bx bx-home-circle"></i>
+                        <span>Home</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" id="add-todo">
+                        <i class='bx bxs-message-square-add'></i>
+                        <span>Add Todo</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" id="edit modal">
+                        <i class='bx bxs-edit' ></i>
+                        <span>Edit Todo</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-resize-btn>
+                        <i class='bx bxs-chevrons-right'></i>
+                        <span>Collapse</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <main>
+        <div class="main-header">
+            <h1>My Projects</h1>  
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="todo">
+                    <div class="todo-header">
+                        <h2>I am a todo header</h2>
+                    </div>
+                    <div class="todo-body">
+                        <p>I have stuff to do</p>
+                        <p>I am due on:</p>
+                        <p>I am this important</p>
+                        <p>I may have notes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="todo">
+                    <div class="todo-header">
+                        <h2>I am a todo header</h2>
+                    </div>
+                    <div class="todo-body">
+                        <p>I have stuff to do</p>
+                        <p>I am due on:</p>
+                        <p>I am this important</p>
+                        <p>I may have notes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="todo">
+                    <div class="todo-header">
+                        <h2>I am a todo header</h2>
+                    </div>
+                    <div class="todo-body">
+                        <p>I have stuff to do</p>
+                        <p>I am due on:</p>
+                        <p>I am this important</p>
+                        <p>I may have notes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="todo">
+                    <div class="todo-header">
+                        <h2>I am a todo header</h2>
+                    </div>
+                    <div class="todo-body">
+                        <p>I have stuff to do</p>
+                        <p>I am due on:</p>
+                        <p>I am this important</p>
+                        <p>I may have notes</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="modal" id="todo-modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form action="">
+                    <label for="todo-name">To Do:</label>
+                    <input type="text" name="todo-name" id="todo-name">
+                    <label for="todo-desc">Description:</label>
+                    <input type="text" name="todo-desc" id="todo-desc">
+                    <label for="todo-due">Due Date:</label>
+                    <input type="datetime" name="todo-due" id="todo-due">
+                    <label for="todo-priority">Priority:</label>
+                    <input type="color" name="todo-priority" id="todo-priority">
+                    <label for="todo-notes">Notes:</label>
+                    <input type="text" name="todo-notes" id="todo-notes">
+                    <button type="submit">Create Todo</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>
