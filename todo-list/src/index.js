@@ -1,7 +1,6 @@
 import "./styles.css";
-import createTodo from "./modules/createTodo";
-import extractTodo from "./modules/extractTodoForm";
-import deleteTodo from "./modules/deleteTodo";
+import TodoManager from "./modules/todo/todoManager.js";
+import { openTodoModal, closeTodoModal, resetTodoModal } from "./modules/modal/modalManager.js";
 
 /* ASIDE FUNCTIONS */
 const resizeButton = document.querySelector('[data-resize-btn]');
@@ -14,35 +13,34 @@ resizeButton.addEventListener('click', function(e) {
 var span = document.getElementsByClassName("close")[0];
 
 span.onclick = function() {
-    submitTodoForm.style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target == submitTodoForm) {
-        submitTodoForm.style.display = "none";
-    }
+    closeTodoModal();
 }
 
 /* TODO FUNCTIONALITY */
 const addTodoButton = document.getElementById('add-todo');
 addTodoButton.addEventListener("click", (e) => {
     e.preventDefault();
-    submitTodoForm.style.display = "block";
+    
+    openTodoModal();
 });
 
-const submitTodoForm = document.getElementById('todo-add-modal');
-submitTodoForm.addEventListener("submit", (e) => {
+const submitNewTodoForm = document.getElementById('todo-modal');
+submitNewTodoForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const todoInfo = extractTodo();
-    createTodo(todoInfo.todoName, todoInfo.todoDesc, todoInfo.todoDueDate, todoInfo.todoPriority, todoInfo.todoNotes);
-
-    submitTodoForm.style.display = "none";
-
+    const todoInfo = TodoManager.extractInfo();
+    TodoManager.addTodo(todoInfo);
+    closeTodoModal();
+    resetTodoModal();
 });
 
-/* Doesn't really work, targets the first todo item */
-// const deleteTodoButton = document.getElementById('deleteTodoButton');
-// deleteTodoButton.addEventListener("click", (e) => {
-//     deleteTodo(e);
-// });
+
+const submitEditTodoForm = document.getElementById('todo-edit-modal');
+submitNewTodoForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const todoInfo = TodoManager.extractInfo();
+    TodoManager.addTodo(todoInfo);
+    closeTodoModal();
+    resetTodoModal();
+});
