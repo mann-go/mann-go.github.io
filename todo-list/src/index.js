@@ -1,6 +1,7 @@
 import "./styles.css";
 import TodoManager from "./modules/todo/todoManager.js";
 import { openTodoModal, closeTodoModal, resetTodoModal } from "./modules/modal/modalManager.js";
+import localStorageManager from "./modules/localStorage/localStorageManager.js";
 
 /* ASIDE FUNCTIONS */
 const resizeButton = document.querySelector('[data-resize-btn]');
@@ -24,19 +25,19 @@ addTodoButton.addEventListener("click", (e) => {
     openTodoModal();
 });
 
-const submitNewTodoForm = document.getElementById('todo-modal');
+const submitNewTodoForm = document.getElementById('todo-add-modal');
 submitNewTodoForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const todoInfo = TodoManager.extractInfo();
-    TodoManager.addTodo(todoInfo);
+    TodoManager.buildTodo(todoInfo);
     closeTodoModal();
     resetTodoModal();
 });
 
 
 const submitEditTodoForm = document.getElementById('todo-edit-modal');
-submitNewTodoForm.addEventListener("submit", (e) => {
+submitEditTodoForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const todoInfo = TodoManager.extractInfo();
@@ -44,3 +45,7 @@ submitNewTodoForm.addEventListener("submit", (e) => {
     closeTodoModal();
     resetTodoModal();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    localStorageManager.loadLocalStorage();
+})

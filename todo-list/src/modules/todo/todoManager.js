@@ -4,7 +4,33 @@ import extractTodoForm from './extractTodoForm';
 import deleteTodo from './deleteTodo';
 import changeTodoStatus from './changeTodoStatus';
 
+import localStorageManager from '../localStorage/localStorageManager';
+
 const TodoManager = (() => {
+
+    const todos = [];
+
+    function buildTodo(todoData) {
+        addTodo(todoData);
+
+        localStorageManager.addToLocalStorage("todos", null, todoData);
+
+        attachListener('#editTodoButton', 'click', (e) => {
+            let todoEdit = e.target.closest('.todo');
+            editTodo(todoEdit);
+        });
+    
+        attachListener('#todoStatusButton', 'click', (e) => {
+            let todoStatus = e.target.closest('.todo');
+            changeTodoStatus(todoStatus);
+        });
+    
+        attachListener('#deleteTodoButton', 'click', (e) => {
+            let todoDelete = e.target.closest('.grid-item');
+            deleteTodo(todoDelete);
+        });
+
+    }
 
     function addTodo(todoData) {
 
@@ -22,23 +48,8 @@ const TodoManager = (() => {
         });
     }
 
-    attachListener('#editTodoButton', 'click', (e) => {
-        let todoEdit = e.target.closest('.todo');
-        editTodo(todoEdit);
-    });
-
-    attachListener('#todoStatusButton', 'click', (e) => {
-        let todoStatus = e.target.closest('.todo');
-        changeTodoStatus(todoStatus);
-    });
-
-    attachListener('#deleteTodoButton', 'click', (e) => {
-        let todoDelete = e.target.closest('.grid-item');
-        deleteTodo(todoDelete);
-    });
-
     return {
-        addTodo,
+        buildTodo,
         extractInfo,
         attachListener
     };

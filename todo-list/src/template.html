@@ -23,9 +23,9 @@
                     </button>
                 </li>
                 <li>
-                    <button type="button" id="edit modal">
-                        <i class='bx bxs-edit' ></i>
-                        <span>Edit Todo</span>
+                    <button type="button" id="my-projects">
+                        <i class='bx bxs-folder-open'></i>
+                        <span>My Projects</span>
                     </button>
                 </li>
                 <li>
@@ -39,93 +39,58 @@
     </aside>
     <main>
         <div class="main-header">
-            <h1>My Projects</h1>  
+            <h1>{PROJECT NAME} OR {MY PROJECTS}</h1>  
         </div>
 
         <div id="grid-container" class="grid-container">
-            <div class="grid-item">
+            
+            <!-- <div class="grid-item">
                 <div class="todo">
                     <div class="todo-header">
-                        <h2>I am a todo header</h2>
-                        <button type="button" class="todo-button">
+                        <h2 id="title">I am a todo header</h2>
+                        <button type="button" id="editTodoButton" class="todo-button">
                             <span><i class='bx bxs-edit'></i></span>
+                        </button>
+                        <button type="button" id="todoStatusButton" class="todo-button">
+                            <span><i class='bx bx-check'></i></span>
                         </button>
                         <button type="button" id="deleteTodoButton" class="todo-button">
                             <span><i class='bx bx-trash'></i></span>
                         </button>
                     </div>
                     <div class="todo-body">
-                        <p>I have stuff to do</p>
-                        <p>I am due on:</p>
-                        <p>I am this important</p>
-                        <p>I may have notes</p>
+                        <p id="desc">I have stuff to do</p>
+                        <p id="dueDate">I am due on:</p>
+                        <p id="priority">I am this important</p>
+                        <p id="notes">I may have notes</p>
                     </div>
                 </div>
-            </div>
-            <div class="grid-item">
-                <div class="todo">
-                    <div class="todo-header">
-                        <h2>I am a todo header</h2>
-                        <button type="button" class="todo-button">
-                            <span><i class='bx bxs-edit'></i></span>
-                        </button>
-                        <button type="button" id="deleteTodoButton" class="todo-button">
-                            <span><i class='bx bx-trash'></i></span>
-                        </button>
-                    </div>
-                    <div class="todo-body">
-                        <p>I have stuff to do</p>
-                        <p>I am due on:</p>
-                        <p>I am this important</p>
-                        <p>I may have notes</p>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-item">
-                <div class="todo">
-                    <div class="todo-header">
-                        <h2>I am a todo header</h2>
-                        <button type="button" class="todo-button">
-                            <span><i class='bx bxs-edit'></i></span>
-                        </button>
-                        <button type="button" id="deleteTodoButton" class="todo-button">
-                            <span><i class='bx bx-trash'></i></span>
-                        </button>
-                    </div>
-                    <div class="todo-body">
-                        <p>I have stuff to do</p>
-                        <p>I am due on:</p>
-                        <p>I am this important</p>
-                        <p>I may have notes</p>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-item">
-                <div class="todo">
-                    <div class="todo-header">
-                        <h2>I am a todo header</h2>
-                        <button type="button" class="todo-button">
-                            <span><i class='bx bxs-edit'></i></span>
-                        </button>
-                        <button type="button" id="deleteTodoButton" class="todo-button">
-                            <span><i class='bx bx-trash'></i></span>
-                        </button>
-                    </div>
-                    <div class="todo-body">
-                        <p>I have stuff to do</p>
-                        <p>I am due on:</p>
-                        <p>I am this important</p>
-                        <p>I may have notes</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </div> -->
 
+            <div class="grid-item">
+                <div class="project">
+                    <div class="project-header">
+                        <h2 id="title">PROJECT NAME</h2>
+                        <div class="project-icons">
+                            <button type="button" id="deleteTodoButton" class="todo-button">
+                                <span><i class='bx bx-trash'></i></span>
+                            </button> 
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p id="todo-count">I have x amount of todos.</p>
+                    </div>
+                </div>
+            </div>
+           
         <div class="modal" id="todo-add-modal">
             <div class="modal-content">
-                <h2>Add Todo</h2>
-                <span class="close">&times;</span>
-                <form action="">
+                <div class="modal-header">
+                    <h2>Add Todo</h2>
+                    <span class="close">&times;</span>
+                </div>
+
+                <form action="" id="todo-add-form">
                     <label for="todo-name">To Do:</label>
                     <input type="text" name="todo-name" id="todo-name" required>
                     <label for="todo-desc">Description:</label>
@@ -134,9 +99,9 @@
                     <input type="datetime" name="todo-due" id="todo-due" required>
                     <label for="todo-priority">Priority:</label>
                     <select name="todo-priority" id="todo-priority" required>
-                        <option value="green" style="background-color: green">Green</option>
-                        <option value="orange" style="color: orange">Orange</option>
-                        <option value="red" style="color: red">Red</option>
+                        <option value="high">High</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
                     </select>
                     <label for="todo-notes">Notes:</label>
                     <input type="text" name="todo-notes" id="todo-notes" required>
@@ -147,23 +112,27 @@
 
         <div class="modal" id="todo-edit-modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <form action="">
-                    <label for="todo-name">To Do:</label>
-                    <input type="text" name="todo-name" id="todo-name" required>
-                    <label for="todo-desc">Description:</label>
-                    <input type="text" name="todo-desc" id="todo-desc" required>
-                    <label for="todo-due">Due Date:</label>
-                    <input type="datetime" name="todo-due" id="todo-due" required>
-                    <label for="todo-priority">Priority:</label>
-                    <select name="todo-priority" id="todo-priority" required>
-                        <option value="green" style="background-color: green">Green</option>
-                        <option value="orange" style="color: orange">Orange</option>
-                        <option value="red" style="color: red">Red</option>
+                <div class="modal-header">
+                    <h2>Edit Todo</h2>
+                    <span class="close">&times;</span>     
+                </div>
+
+                <form action="" id="todo-edit-form">
+                    <label for="edit-todo-name">To Do:</label>
+                    <input type="text" name="edit-todo-name" id="edit-todo-name" required>
+                    <label for="edit-todo-desc">Description:</label>
+                    <input type="text" name="edit-todo-desc" id="edit-todo-desc" required>
+                    <label for="edit-todo-due">Due Date:</label>
+                    <input type="datetime" name="edit-todo-due" id="edit-todo-due" required>
+                    <label for="edit-todo-priority">Priority:</label>
+                    <select name="edit-todo-priority" id="edit-todo-priority" required>
+                        <option value="high">High</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
                     </select>
-                    <label for="todo-notes">Notes:</label>
-                    <input type="text" name="todo-notes" id="todo-notes" required>
-                    <button type="submit">Create Todo</button>
+                    <label for="edit-todo-notes">Notes:</label>
+                    <input type="text" name="edit-todo-notes" id="edit-todo-notes" required>
+                    <button type="button" id="saveTodoButton">Save changes</button>
                 </form>
             </div>
         </div>
