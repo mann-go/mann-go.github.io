@@ -73,6 +73,7 @@ const localStorageManager = (() => {
             if (todosData) {
                 todos = JSON.parse(todosData).map((item) => 
                     new todoObject(
+                        item.id,
                         item.name, 
                         item.desc, 
                         item.dueDate, 
@@ -88,6 +89,7 @@ const localStorageManager = (() => {
                 projects = JSON.parse(projectsData).map((item) => {
                     const projectTodos = item.todos.map((todo) => 
                         new todoObject(
+                            todo.id,
                             todo.name, 
                             todo.desc, 
                             todo.dueDate, 
@@ -106,7 +108,7 @@ const localStorageManager = (() => {
     }
 
     function removeLocalStorageEntry() {
-        
+
     }
 
     // Gets the todos in the file
@@ -132,8 +134,6 @@ const localStorageManager = (() => {
             console.log(`Key: ${key}, Value: ${value}`);
         }
     }
-
-
     
     return {
         addToLocalStorage,

@@ -4,6 +4,8 @@ export function createTodoElement(todoObject) {
 
     // Clone template content
     const todoElement = template.content.cloneNode(true);
+    console.log(todoObject.id);
+    todoElement.dataset.id = todoObject.id;
 
     // Populate todo title
     const title = todoElement.getElementById('title');
@@ -12,7 +14,7 @@ export function createTodoElement(todoObject) {
     // Populate todo body
     const todoBody = todoElement.querySelector('.todo-body');
     for (const [key, value] of Object.entries(todoObject)) {
-        if (key !== 'name') {
+        if (key !== "name" && key !== "id") {
             const todoBodyItem = document.createElement('p');
             todoBodyItem.id = key;
             todoBodyItem.textContent = value;
