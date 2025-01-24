@@ -1,6 +1,28 @@
-import { openEditTodoModal } from "../modal/modalManager";
+import { attachListeners } from './TodoListeners';
+import { createTodoElement } from "./TodoRenderer";
 
-function extractTodoData(todoDiv) {
+export function renderTodos(todos) {
+    todos.forEach(todo => {
+        console.log("Adding: " + todo.name);
+        createTodoElement(todo);
+    });
+    
+    attachListeners();
+}
+
+export function extractTodoForm() {
+    const name = document.getElementById('todo-name').value;
+    const desc = document.getElementById('todo-desc').value;
+    const dueDate = document.getElementById('todo-due').value;
+    const priority = document.getElementById('todo-priority').value;
+    const notes = document.getElementById('todo-notes').value;
+
+    const todoInfo = { name, desc, dueDate, priority, notes };
+
+    return todoInfo; 
+}    
+
+export function extractTodoData(todoDiv) {
     return {
         title: todoDiv.querySelector('#title').textContent,
         description: todoDiv.querySelector('#desc').textContent,
@@ -10,7 +32,8 @@ function extractTodoData(todoDiv) {
     };
 }
 
-function populateForm(todoData) {
+// Populates the form with the data of the todo the user is trying to update
+export function populateForm(todoData) {
     document.getElementById('edit-todo-name').value = todoData.title;
     document.getElementById('edit-todo-desc').value = todoData.description;
     document.getElementById('edit-todo-due').value = todoData.dueDate;
@@ -18,7 +41,8 @@ function populateForm(todoData) {
     document.getElementById('edit-todo-notes').value = todoData.notes;
 }
 
-function saveTodo(todoDiv) {
+// Updates the todo that the user is trying to update
+export function saveTodo(todoDiv) {
     const updatedData = {
         title: document.getElementById('edit-todo-name').value,
         description: document.getElementById('edit-todo-desc').value,
@@ -33,12 +57,4 @@ function saveTodo(todoDiv) {
     todoDiv.querySelector('#dueDate').textContent = updatedData.dueDate;
     todoDiv.querySelector('#priority').textContent = updatedData.priority;
     todoDiv.querySelector('#notes').textContent = updatedData.notes;
-}
-
-export default function editTodoHandler(todoDiv) {
-    const todoData = extractTodoData(todoDiv);
-    populateForm(todoData);
-    openEditTodoModal(() => {
-        saveTodo(todoDiv);
-    });
 }

@@ -1,7 +1,11 @@
 import "./styles.css";
-import TodoManager from "./modules/todo/todoManager.js";
-import { openTodoModal, closeTodoModal, resetTodoModal } from "./modules/modal/modalManager.js";
-import localStorageManager from "./modules/localStorage/localStorageManager.js";
+import TodoManager from "./features/todo/todoManager.js"
+import { createTodoElement } from "./features/todo/ui/TodoRenderer.js";
+import { renderTodos, extractTodoData, extractTodoForm } from "./features/todo/ui/TodoUI.js";
+import { openTodoModal, closeTodoModal, resetTodoModal } from "./modules/modalManager.js";
+import localStorageManager from "./modules/localStorage.js";
+import { todoObject } from "./features/todo/todoObject.js";
+import { attachListeners } from "./features/todo/ui/TodoListeners.js";
 
 /* ASIDE FUNCTIONS */
 const resizeButton = document.querySelector('[data-resize-btn]');
@@ -29,8 +33,15 @@ const submitNewTodoForm = document.getElementById('todo-add-modal');
 submitNewTodoForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const todoInfo = TodoManager.extractInfo();
-    TodoManager.buildTodo(todoInfo);
+    // Create a new todoObject, set its data to that of the new todoForm
+    const todo = new todoObject;
+    const todoInfo = extractTodoForm();
+    todo.setTodo(todoInfo);
+
+    // Create HTML for the todo, and add that todo to localStorage
+    createTodoElement(todo);
+    attachListeners();
+    TodoManager.addTodo(todo);
     closeTodoModal();
     resetTodoModal();
 });
@@ -39,8 +50,10 @@ submitNewTodoForm.addEventListener("submit", (e) => {
 const submitEditTodoForm = document.getElementById('todo-edit-modal');
 submitEditTodoForm.addEventListener("submit", (e) => {
     e.preventDefault();
+    
+    const todoInfo = extractInfo();
+    console.log("EDIT: ", todoInfo);
 
-    const todoInfo = TodoManager.extractInfo();
     TodoManager.addTodo(todoInfo);
     closeTodoModal();
     resetTodoModal();
@@ -48,4 +61,14 @@ submitEditTodoForm.addEventListener("submit", (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
     localStorageManager.loadLocalStorage();
+    const todos = TodoManager.getTodos();
+    console.log("TODOS ON LOAD:", todos);
+    renderTodos(todos);
 })
+
+/* DEV TOOLS */
+const logLocalStorage = document.getElementById('log-local-storage');
+logLocalStorage.addEventListener("click", localStorageManager.logLocalStorageItems);
+
+const deleteLocalStorage = document.getElementById('delete-local-storage');
+deleteLocalStorage.addEventListener("click", localStorageManager.deleteLocalStorage);

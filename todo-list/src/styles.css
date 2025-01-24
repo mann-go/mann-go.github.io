@@ -157,6 +157,17 @@ main {
   padding: 0.2rem 0.2rem;
 }
 
+.hoverable:hover {
+  transform: scale(1.075);
+  transition: 0.5s ease-in-out;
+  /* height: 100%; */
+}
+
+.hoverable:not(:hover) {
+  transform: scale(1);
+  transition: 0.3s ease-in-out;
+}
+
 .todo, .project {
   border: 2px solid black;
   background-color: #fff;
@@ -169,19 +180,9 @@ main {
 .todo-done {
   transition: 0.5 ease-in;
   opacity: 0.3;
-  
 }
 
-.todo:hover {
-  transform: scale(1.075);
-  transition: 0.5s ease-in-out;
-  /* height: 100%; */
-}
 
-.todo:not(:hover) {
-  transform: scale(1);
-  transition: 0.3s ease-in-out;
-}
 
 .todo-header, .project-header {
   border-bottom: 2px solid var(--federal-blue);
@@ -215,7 +216,7 @@ main {
   transition: 0.125s ease-in-out;
 }
 
-.todo-body #notes {
+.todo-body #todoNotes {
   border: 2px solid var(--federal-blue);
   padding: 0.85rem;
 }

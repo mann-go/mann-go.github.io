@@ -29,6 +29,21 @@
                     </button>
                 </li>
                 <li>
+                    <h1>DEV TOOLS</h1>
+                </li>
+                <li>
+                    <button type="button" id="log-local-storage">
+                        <i class='bx bxs-folder-open'></i>
+                        <span>Log Local Storage</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" id="delete-local-storage">
+                        <i class='bx bxs-folder-open'></i>
+                        <span>Delete Local Storage</span>
+                    </button>
+                </li>
+                <li>
                     <button type="button" data-resize-btn>
                         <i class='bx bxs-chevrons-right'></i>
                         <span>Collapse</span>
@@ -67,7 +82,7 @@
                 </div>
             </div> -->
 
-            <div class="grid-item">
+            <!-- <div class="grid-item">
                 <div class="project">
                     <div class="project-header">
                         <h2 id="title">PROJECT NAME</h2>
@@ -81,7 +96,7 @@
                         <p id="todo-count">I have x amount of todos.</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
            
         <div class="modal" id="todo-add-modal">
             <div class="modal-content">
@@ -136,6 +151,28 @@
                 </form>
             </div>
         </div>
+
+        <template id="todo-template">
+            <div class="grid-item">
+                <div class="todo hoverable">
+                    <div class="todo-header">
+                        <h2 id="title"></h2>
+                        <div class="todo-icons">
+                            <button class="todo-button" id="editTodoButton">
+                                <span><i class="bx bx-edit"></i></span>
+                            </button>
+                            <button class="todo-button" id="todoStatusButton">
+                                <span><i class="bx bx-check"></i></span>
+                            </button>
+                            <button class="todo-button" id="deleteTodoButton">
+                                <span><i class="bx bx-trash"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="todo-body"></div>
+                </div>
+            </div>
+        </template>
 
     </main>
 
