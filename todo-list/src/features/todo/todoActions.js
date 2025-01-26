@@ -1,4 +1,4 @@
-import { extractTodoForm, extractTodoData, populateForm, saveTodo  } from "./ui/TodoUI";
+import { extractTodoData, populateForm, saveTodo  } from "./ui/TodoUI";
 import { openEditTodoModal } from "../../modules/modalManager";
 
 export function handleEditTodo(todoDiv) {
@@ -16,8 +16,15 @@ export function handleChangeTodoStatus(todo) {
 export function handleDeleteTodo(todo) {    
     const confirmDelete = confirm('Are you sure you want to delete this todo item?');
     if(confirmDelete) {
-        // localStorageManager.
-        todo.parentNode.remove();
+        const todoId = todo.dataset.id;
+        deleteTodoFromLocalStorage(todoId);
+        // todo.parentNode.remove();
         console.log('Todo item deleted');
     }
+}
+
+export function deleteTodoFromLocalStorage(todoId) {
+    const todos = JSON.parse(localStorage.getItem('todos')) || [];
+    const updatedTodos = todos.filter((todo) => todo.id !== todoId);
+    localStorage.setItem('todos', JSON.stringify(updatedTodos));
 }
