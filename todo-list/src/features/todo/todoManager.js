@@ -14,14 +14,12 @@ const TodoManager = (() => {
     }
 
     function saveTodos(todosArray) {
-        localStorage.addToLocalStorage("todos", todosArray);
+        console.log(todosArray);
+        localStorageManager.addToLocalStorage("todos", todosArray);
     }
 
     function addTodo(newTodo) {
-        const todos = JSON.parse(localStorage.getItem('todos')) || [];
-        todos.push(newTodo);
-        saveTodos(todos);
-        // localStorageManager.addToLocalStorage('todos', newTodo);
+        saveTodos(newTodo);
     }
 
     function getTodos() {

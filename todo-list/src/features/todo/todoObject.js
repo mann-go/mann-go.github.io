@@ -1,6 +1,6 @@
 export class todoObject {
     constructor(id, name, desc, dueDate, priority, notes) {
-        this.id = id = this.generateUniqueId();
+        this.id = id || this.generateUniqueId();
         this.name = name;
         this.desc = desc;
         this.dueDate = dueDate;

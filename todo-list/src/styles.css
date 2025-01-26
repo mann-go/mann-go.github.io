@@ -182,8 +182,6 @@ main {
   opacity: 0.3;
 }
 
-
-
 .todo-header, .project-header {
   border-bottom: 2px solid var(--federal-blue);
   padding-bottom: 0.25rem;

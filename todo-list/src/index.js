@@ -42,6 +42,7 @@ submitNewTodoForm.addEventListener("submit", (e) => {
     createTodoElement(todo);
     attachListeners();
     TodoManager.addTodo(todo);
+    
     closeTodoModal();
     resetTodoModal();
 });
