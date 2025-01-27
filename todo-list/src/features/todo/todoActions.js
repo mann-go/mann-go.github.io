@@ -6,7 +6,8 @@ export function handleEditTodo(todoDiv) {
     const todoData = extractTodoData(todoDiv);
     populateForm(todoData);
     openEditTodoModal(() => {
-        saveTodo(todoDiv);
+        const updatedTodo = saveTodo(todoDiv);
+        localStorageManager.updateLocalStorageTodoEntry('todos', updatedTodo);
     });
 }
 

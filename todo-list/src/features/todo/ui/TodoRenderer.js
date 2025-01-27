@@ -6,9 +6,9 @@ export function createTodoElement(todoObject) {
     const todoElement = template.content.cloneNode(true);
     todoElement.querySelector(".todo").setAttribute('data-id', todoObject.id);
 
-    // Populate todo title
-    const title = todoElement.getElementById('title');
-    title.textContent = todoObject.name;
+    // Populate todo name
+    const name = todoElement.getElementById('name');
+    name.textContent = todoObject.name;
 
     // Populate todo body
     const todoBody = todoElement.querySelector('.todo-body');

@@ -23,9 +23,6 @@ const localStorageManager = (() => {
 
         // Validate the type of item
         if (arrayName === "todos" && !(item instanceof todoObject)) {
-            let obj = new todoObject;
-            console.log(obj);
-            console.log(item);
             console.error("Invalid object: Must be an instance of todoObject.");
             return;
         }
@@ -84,7 +81,7 @@ const localStorageManager = (() => {
                         item.notes
                     )
                 );
-                console.log("Loaded todos:", todosData);
+                // console.log("Loaded todos:", todosData);
             }
              // Load projects from localStorage
             const projectsData = localStorage.getItem("projects");
@@ -122,6 +119,17 @@ const localStorageManager = (() => {
         localStorage.setItem(arrayKey, JSON.stringify(updatedArray));
     }
 
+    function updateLocalStorageTodoEntry(arrayKey, updatedTodo) {
+        const arrayFromStorage = JSON.parse(localStorage.getItem(arrayKey)) || [];
+
+        // Find and update correct entry
+        const updatedArray = arrayFromStorage.map((item) => 
+            item.id === updatedTodo.id ? { ...item, ...updatedTodo } : item
+        );
+
+        localStorage.setItem(arrayKey, JSON.stringify(updatedArray));
+    }
+
     // Gets the todos in the file
     function getTodos() {
         return todos;
@@ -150,6 +158,7 @@ const localStorageManager = (() => {
         addToLocalStorage,
         loadLocalStorage,
         removeLocalStorageEntry,
+        updateLocalStorageTodoEntry,
         deleteLocalStorage,
         logLocalStorageItems,
         getTodos,
