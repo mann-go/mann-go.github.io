@@ -1,3 +1,5 @@
+import { todoObject } from "../todo/todoObject";
+
 export class projectObject {
 
     constructor(name, desc, todos = [], dueDate) {

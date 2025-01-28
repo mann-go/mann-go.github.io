@@ -1,5 +1,6 @@
 export class todoObject {
-    constructor(name, desc, dueDate, priority, notes) {
+    constructor(id, name, desc, dueDate, priority, notes) {
+        this.id = id || this.generateUniqueId();
         this.name = name;
         this.desc = desc;
         this.dueDate = dueDate;
@@ -13,12 +14,18 @@ export class todoObject {
 
     getTodo() {
         return {
+            id: this.id,
             name: this.name,
             desc: this.desc,
             dueDate: this.dueDate,
             priority: this.priority,
             notes: this.notes,
         };
+    }
+    
+    generateUniqueId() {
+        // Generates a unique ID based on the current timestamp and a random number
+        return `todo-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
     }
 
 

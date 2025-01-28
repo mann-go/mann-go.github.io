@@ -73,6 +73,7 @@ const localStorageManager = (() => {
             if (todosData) {
                 todos = JSON.parse(todosData).map((item) => 
                     new todoObject(
+                        item.id,
                         item.name, 
                         item.desc, 
                         item.dueDate, 
@@ -80,7 +81,7 @@ const localStorageManager = (() => {
                         item.notes
                     )
                 );
-                console.log("Loaded todos:", todosData);
+                // console.log("Loaded todos:", todosData);
             }
              // Load projects from localStorage
             const projectsData = localStorage.getItem("projects");
@@ -88,6 +89,7 @@ const localStorageManager = (() => {
                 projects = JSON.parse(projectsData).map((item) => {
                     const projectTodos = item.todos.map((todo) => 
                         new todoObject(
+                            todo.id,
                             todo.name, 
                             todo.desc, 
                             todo.dueDate, 
@@ -105,8 +107,27 @@ const localStorageManager = (() => {
         }
     }
 
-    function removeLocalStorageEntry() {
-        
+    function removeLocalStorageEntry(arrayKey, valueId) {
+
+        // Get the array from localStorage
+        const arrayFromStorage = JSON.parse(localStorage.getItem(arrayKey)) || [];
+
+        // Filter out the item with the matching id
+        const updatedArray = arrayFromStorage.filter((item) => item.id !== valueId);      
+
+        // Save the updated array back to localStorage
+        localStorage.setItem(arrayKey, JSON.stringify(updatedArray));
+    }
+
+    function updateLocalStorageTodoEntry(arrayKey, updatedTodo) {
+        const arrayFromStorage = JSON.parse(localStorage.getItem(arrayKey)) || [];
+
+        // Find and update correct entry
+        const updatedArray = arrayFromStorage.map((item) => 
+            item.id === updatedTodo.id ? { ...item, ...updatedTodo } : item
+        );
+
+        localStorage.setItem(arrayKey, JSON.stringify(updatedArray));
     }
 
     // Gets the todos in the file
@@ -132,12 +153,12 @@ const localStorageManager = (() => {
             console.log(`Key: ${key}, Value: ${value}`);
         }
     }
-
-
     
     return {
         addToLocalStorage,
         loadLocalStorage,
+        removeLocalStorageEntry,
+        updateLocalStorageTodoEntry,
         deleteLocalStorage,
         logLocalStorageItems,
         getTodos,

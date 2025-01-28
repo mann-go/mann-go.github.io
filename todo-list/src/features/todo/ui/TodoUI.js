@@ -24,7 +24,7 @@ export function extractTodoForm() {
 
 export function extractTodoData(todoDiv) {
     return {
-        title: todoDiv.querySelector('#title').textContent,
+        name: todoDiv.querySelector('#name').textContent,
         description: todoDiv.querySelector('#desc').textContent,
         dueDate: todoDiv.querySelector('#dueDate').textContent,
         priority: todoDiv.querySelector('#priority').textContent,
@@ -34,7 +34,7 @@ export function extractTodoData(todoDiv) {
 
 // Populates the form with the data of the todo the user is trying to update
 export function populateForm(todoData) {
-    document.getElementById('edit-todo-name').value = todoData.title;
+    document.getElementById('edit-todo-name').value = todoData.name;
     document.getElementById('edit-todo-desc').value = todoData.description;
     document.getElementById('edit-todo-due').value = todoData.dueDate;
     document.getElementById('edit-todo-priority').value = todoData.priority;
@@ -44,7 +44,8 @@ export function populateForm(todoData) {
 // Updates the todo that the user is trying to update
 export function saveTodo(todoDiv) {
     const updatedData = {
-        title: document.getElementById('edit-todo-name').value,
+        id: todoDiv.dataset.id,
+        name: document.getElementById('edit-todo-name').value,
         description: document.getElementById('edit-todo-desc').value,
         dueDate: document.getElementById('edit-todo-due').value,
         priority: document.getElementById('edit-todo-priority').value,
@@ -52,9 +53,11 @@ export function saveTodo(todoDiv) {
     };
 
     // Update todo
-    todoDiv.querySelector('#title').textContent = updatedData.title;
+    todoDiv.querySelector('#name').textContent = updatedData.name;
     todoDiv.querySelector('#desc').textContent = updatedData.description;
     todoDiv.querySelector('#dueDate').textContent = updatedData.dueDate;
     todoDiv.querySelector('#priority').textContent = updatedData.priority;
     todoDiv.querySelector('#notes').textContent = updatedData.notes;
+
+    return updatedData;
 }
