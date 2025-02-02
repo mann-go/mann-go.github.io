@@ -66,6 +66,7 @@
         </div>
 
         <div id="grid-container" class="grid-container">
+            <h2>No projects to be found...</h2>
         </div>
 
         <!-- SELECT PROJECT MODAL -->
@@ -88,12 +89,12 @@
                     <span class="close">&times;</span>
                 </div>
                 <form action="" id="new-project-form">
-                    <label for="project-name">Project Name: </label>
-                    <input type="text" name="project-name" id="project-name" minlength="6" maxlength="25" required>
-                    <label for="project-desc">Project Description</label>
-                    <input type="text" name="project-desc" id="project-desc" required>
-                    <label for="project-dueDate">Due Date:</label>
-                    <input type="datetime-local" name="project-dueDate" id="project-dueDate" required>
+                    <label for="project-name-input">Project Name: </label>
+                    <input type="text" name="project-name-input" id="project-name-input" minlength="6" maxlength="25" required>
+                    <label for="project-desc-input">Project Description</label>
+                    <input type="text" name="project-desc-input" id="project-desc-input" required>
+                    <label for="project-dueDate-input">Due Date:</label>
+                    <input type="datetime-local" name="project-dueDate-input" id="project-dueDate-input" required>
                     <button type="submit">Create New Project</button>
                 </form>
             </div>
@@ -150,7 +151,7 @@
                     </select>
                     <label for="edit-todo-notes">Notes:</label>
                     <input type="text" name="edit-todo-notes" id="edit-todo-notes" required>
-                    <button type="button" id="saveTodoButton">Save changes</button>
+                    <button type="submit" id="saveTodoButton">Save changes</button>
                 </form>
             </div>
         </div>
@@ -162,6 +163,9 @@
                         <h2 id="project-name"></h2>
                         <p id="project-desc"></p>
                         <p id="project-dueDate"></p>
+                        <ul id="todos">
+                            <h2>TODOs:</h2>
+                        </ul>
                     </div>
                 </div> 
         </template>

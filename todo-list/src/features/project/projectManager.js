@@ -5,8 +5,8 @@ import { todoObject } from "../todo/todoObject";
 
 let currentProject = null; // Holds active project
 
-export function createNewProject(id, name, desc, dueDate) {
-    currentProject = new projectObject(id, name, desc, dueDate, []);
+export function createNewProject(id, name, desc, dueDate, todos = []) {
+    currentProject = new projectObject(id, name, desc, dueDate, todos);
     saveProjectToLocalStorage(currentProject);
     return currentProject;
 }
@@ -15,14 +15,16 @@ export function getCurrentProject() {
     return currentProject;
 }
 
-export function loadProjectByName(name) {
+export function loadProjectById(id) {
     const projects = loadProjectsFromLocalStorage();
-    const foundProject = projects.find(p => p.name === name);
+    const foundProject = projects.find(i => i.id === id);
 
     if (foundProject) {
         currentProject = new projectObject(
+            foundProject.id,
             foundProject.name,
             foundProject.desc,
+            foundProject.dueDate,
             foundProject.todos.map(todo => new todoObject(
                 todo.id,
                 todo.name,
@@ -31,7 +33,6 @@ export function loadProjectByName(name) {
                 todo.priority,
                 todo.notes
             )),
-            foundProject.dueDate
         );
         return currentProject;
     }

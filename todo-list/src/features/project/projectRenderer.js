@@ -20,6 +20,14 @@ export function createProjectElement(projectObject) {
     const dueDate = projectTemplate.getElementById('project-dueDate');
     dueDate.textContent = projectObject.dueDate;
 
+    const todoUl = projectTemplate.getElementById('todos');
+    projectObject.todos.forEach(todo => {
+        let todoLi = document.createElement('li');
+        todoLi.textContent = todo.name;
+        todoUl.appendChild(todoLi);
+    });
+
+
     // Append project to grid container
     gridContainer.appendChild(projectTemplate);
 }
