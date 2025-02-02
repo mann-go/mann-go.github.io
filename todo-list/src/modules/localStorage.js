@@ -7,7 +7,6 @@ const localStorageManager = (() => {
 
     var projects = [];
     var todos = [];
-    // var localStorage = {};
 
     // Add a valid type of array to localStorage
     function addToLocalStorage(arrayName, item) {
@@ -97,7 +96,7 @@ const localStorageManager = (() => {
                             todo.notes
                         )
                     );
-                    return new projectObject(item.name, item.desc, projectTodos, item.dueDate);
+                    return new projectObject(item.id, item.name, item.desc, item.dueDate, projectTodos);
                 });
                 console.log("Loaded projects:", projects);
             }
