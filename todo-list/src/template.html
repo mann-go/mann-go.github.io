@@ -23,9 +23,17 @@
                     </button>
                 </li>
                 <li>
+                    <!-- Displays projects like todo grid items, clicking shows a preview? -->
                     <button type="button" id="my-projects">
                         <i class='bx bxs-folder-open'></i>
                         <span>My Projects</span>
+                    </button>
+                </li>
+                <li>
+                    <!-- Display the new project form -->
+                    <button type="button" id="create-project-btn">
+                        <i class='bx bxs-folder-plus'></i>
+                        <span>New Project</span>
                     </button>
                 </li>
                 <li>
@@ -54,60 +62,54 @@
     </aside>
     <main>
         <div class="main-header">
-            <h1>{PROJECT NAME} OR {MY PROJECTS}</h1>  
+            <h1>My Projects</h1>  
         </div>
 
         <div id="grid-container" class="grid-container">
-            
-            <!-- <div class="grid-item">
-                <div class="todo">
-                    <div class="todo-header">
-                        <h2 id="title">I am a todo header</h2>
-                        <button type="button" id="editTodoButton" class="todo-button">
-                            <span><i class='bx bxs-edit'></i></span>
-                        </button>
-                        <button type="button" id="todoStatusButton" class="todo-button">
-                            <span><i class='bx bx-check'></i></span>
-                        </button>
-                        <button type="button" id="deleteTodoButton" class="todo-button">
-                            <span><i class='bx bx-trash'></i></span>
-                        </button>
-                    </div>
-                    <div class="todo-body">
-                        <p id="desc">I have stuff to do</p>
-                        <p id="dueDate">I am due on:</p>
-                        <p id="priority">I am this important</p>
-                        <p id="notes">I may have notes</p>
-                    </div>
-                </div>
-            </div> -->
+        </div>
 
-            <!-- <div class="grid-item">
-                <div class="project">
-                    <div class="project-header">
-                        <h2 id="title">PROJECT NAME</h2>
-                        <div class="project-icons">
-                            <button type="button" id="deleteTodoButton" class="todo-button">
-                                <span><i class='bx bx-trash'></i></span>
-                            </button> 
-                        </div>
-                    </div>
-                    <div class="project-body">
-                        <p id="todo-count">I have x amount of todos.</p>
-                    </div>
+        <!-- SELECT PROJECT MODAL -->
+        <div class="modal" id="select-project-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1>My Projects</h1>
+                    <span class="close">&times;</span>    
                 </div>
-            </div> -->
-           
+                <div id="grid-container-modal" class="grid-container-modal">
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW PROJECT MODAL -->
+        <div class="modal" id="new-project-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>New Project</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <form action="" id="new-project-form">
+                    <label for="project-name">Project Name: </label>
+                    <input type="text" name="project-name" id="project-name" minlength="6" maxlength="25" required>
+                    <label for="project-desc">Project Description</label>
+                    <input type="text" name="project-desc" id="project-desc" required>
+                    <label for="project-dueDate">Due Date:</label>
+                    <input type="datetime-local" name="project-dueDate" id="project-dueDate" required>
+                    <button type="submit">Create New Project</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- TODO: further form validation -->
         <div class="modal" id="todo-add-modal">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Add Todo</h2>
                     <span class="close">&times;</span>
                 </div>
-
                 <form action="" id="todo-add-form">
                     <label for="todo-name">To Do:</label>
-                    <input type="text" name="todo-name" id="todo-name" required>
+                    <input type="text" name="todo-name" id="todo-name" minlength="6" maxlength="25" placeholder="">
+                    <!-- <p id="hint">Should be between 6 and 25 characters</p> -->
                     <label for="todo-desc">Description:</label>
                     <input type="text" name="todo-desc" id="todo-desc" required>
                     <label for="todo-due">Due Date:</label>
@@ -125,6 +127,7 @@
             </div>
         </div>
 
+        <!-- TODO: further form validation -->
         <div class="modal" id="todo-edit-modal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -151,7 +154,19 @@
                 </form>
             </div>
         </div>
+  
+        <!-- PROJECT TEMPLATE -->
+        <template id="project-template">
+                <div class="grid-item">
+                    <div id="project" class="project hoverable">
+                        <h2 id="project-name"></h2>
+                        <p id="project-desc"></p>
+                        <p id="project-dueDate"></p>
+                    </div>
+                </div> 
+        </template>
 
+        <!-- TODO TEMPLATE -->
         <template id="todo-template">
             <div class="grid-item">
                 <div class="todo hoverable">
@@ -173,8 +188,6 @@
                 </div>
             </div>
         </template>
-
     </main>
-
 </body>
 </html>

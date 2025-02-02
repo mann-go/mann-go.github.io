@@ -2,11 +2,12 @@ import { todoObject } from "../todo/todoObject";
 
 export class projectObject {
 
-    constructor(name, desc, todos = [], dueDate) {
+    constructor(id, name, desc, dueDate, todos = []) {
+        this.id = id || this.generateUniqueId();
         this.name = name;
         this.desc = desc;
-        this.todos = todos;
         this.dueDate = dueDate;
+        this.todos = todos;
     }
 
     addTodo(todo) {
@@ -23,12 +24,16 @@ export class projectObject {
 
     getProject() {
         return {
+            id: this.id,
             name: this.name,
             desc: this.desc,
-            todos: this.todos.map((todo) => todo.getTodo()),
             dueDate: this.dueDate,
+            todos: Array.isArray(this.todos) ? this.todos.map((todo) => todo.getTodo()) : [],
         };
     }
-
-
+    
+    generateUniqueId() {
+        // Generates a unique ID based on the current timestamp and a random number
+        return `project-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+    }
 }

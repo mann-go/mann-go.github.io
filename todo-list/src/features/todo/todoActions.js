@@ -1,11 +1,11 @@
 import { extractTodoData, populateForm, saveTodo  } from "./ui/TodoUI";
-import { openEditTodoModal } from "../../modules/modalManager";
+import { toggleModal } from "../../modules/modalManager";
 import localStorageManager from "../../modules/localStorage";
 
 export function handleEditTodo(todoDiv) {
     const todoData = extractTodoData(todoDiv);
     populateForm(todoData);
-    openEditTodoModal(() => {
+    toggleModal('todo-edit-modal', () => {
         const updatedTodo = saveTodo(todoDiv);
         localStorageManager.updateLocalStorageTodoEntry('todos', updatedTodo);
     });

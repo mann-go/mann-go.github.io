@@ -7,7 +7,7 @@ const localStorageManager = (() => {
 
     var projects = [];
     var todos = [];
-    var localStorage = {};
+    // var localStorage = {};
 
     // Add a valid type of array to localStorage
     function addToLocalStorage(arrayName, item) {
@@ -65,7 +65,7 @@ const localStorageManager = (() => {
     // Load localStorage data
     function loadLocalStorage() {
         if (isStorageAvailable("localStorage")) {
-            localStorage = window["localStorage"];
+            // localStorage = window["localStorage"];
             console.log("Local storage is available.");
     
             // Load todos from localStorage

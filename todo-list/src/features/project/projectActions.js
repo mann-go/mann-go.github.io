@@ -1,16 +1,28 @@
-const ProjectActions = (() => {
+import { projectObject } from "./projectObject";
 
-    function openProject() {
+export function saveProjectToLocalStorage(project) {
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
 
+    // Check if the project exists
+    const existingIndex = projects.findIndex(p => p.name === project.name);
+
+    if (existingIndex !== -1) {
+        // Updates existing project
+        projects[existingIndex] = project.getProject(); 
+    } else {
+        // Add a new project
+        projects.push(project.getProject()); 
     }
 
-    function createProject() {
+    localStorage.setItem("projects", JSON.stringify(projects));
+}
 
-    }
+export function loadProjectsFromLocalStorage() {
+    return JSON.parse(localStorage.getItem("projects")) || [];
+}
 
-    return (
-        openProject,
-        createProject
-    )
-    
-});
+export function deleteProjectFromLocalStorage(projectName) {
+    let projects = JSON.parse(localStorage.getItem("projects")) || [];
+    projects = projects.filter(p => p.name !== projectName);
+    localStorage.setItem("projects", JSON.stringify(projects));
+}
