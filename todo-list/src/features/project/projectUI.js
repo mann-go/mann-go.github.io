@@ -1,5 +1,6 @@
+import { attachListeners } from "../todo/ui/TodoListeners";
 import { loadProjectById } from "./projectManager";
-import { createProjectElement } from "./projectRenderer";
+import { createProjectElement, createProjectInstance } from "./projectRenderer";
 
 const eventHandlers = [
         { selector: '#project', action: 'click', handler: handleLoadingProject }
@@ -20,10 +21,12 @@ export function attachProjectUIListeners() {
 }
 
 function handleLoadingProject(e) {
-    console.log("I've been clicked");
-    // console.log(e.currentTarget.dataset.id);
     const projectId = e.currentTarget.dataset.id;
-    loadProjectById(projectId);
+    console.log(projectId);
+    const projectObject = loadProjectById(projectId);
+    console.log("Handle loading project:", projectObject);
+    createProjectInstance(projectObject);
+    attachListeners();
 }
 
 export function updateProjectList() {
@@ -34,7 +37,7 @@ export function updateProjectList() {
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
 
     projects.forEach(project => {
-       createProjectElement(project); // Create DOM element
+       createProjectElement(project);
     });
 }
 

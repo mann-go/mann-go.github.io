@@ -214,11 +214,23 @@ main {
   border-radius: 0.85rem;
 }
 
+#editTodoButton:hover {
+  background-color: orange;
+}
+
+#todoStatusButton:hover {
+  background-color: green;
+}
+
+#deleteTodoButton:hover {
+  background-color: red;
+}
+
 .todo-button:hover {
   cursor: pointer;
   background-color: var(--jet);
   color: #fff;
-  transition: 0.125s ease-in-out;
+  transition: 0.325s ease-in-out;
 }
 
 .todo-body #todoNotes {

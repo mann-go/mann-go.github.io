@@ -20,6 +20,7 @@ export function loadProjectById(id) {
     const foundProject = projects.find(i => i.id === id);
 
     if (foundProject) {
+        console.log("Project found:", foundProject);
         currentProject = new projectObject(
             foundProject.id,
             foundProject.name,
