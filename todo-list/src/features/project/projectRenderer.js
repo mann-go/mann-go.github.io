@@ -1,3 +1,6 @@
+import { createTodoElement } from "../todo/ui/TodoRenderer";
+
+// Used within the `My Projects` modal
 export function createProjectElement(projectObject) {
     console.log("Rendering project:", projectObject.name);
     console.log("Project contents:", projectObject);
@@ -21,13 +24,34 @@ export function createProjectElement(projectObject) {
     dueDate.textContent = projectObject.dueDate;
 
     const todoUl = projectTemplate.getElementById('todos');
-    projectObject.todos.forEach(todo => {
-        let todoLi = document.createElement('li');
-        todoLi.textContent = todo.name;
-        todoUl.appendChild(todoLi);
-    });
-
-
+    if(projectObject.todos.length !== 0) {
+        projectObject.todos.forEach(todo => {
+            let todoLi = document.createElement('li');
+            todoLi.textContent = todo.name;
+            todoUl.appendChild(todoLi);
+        });
+    } else {
+        todoUl.textContent = "No todos to display.";
+    }
     // Append project to grid container
     gridContainer.appendChild(projectTemplate);
+}
+
+
+export function createProjectInstance(projectObject) {
+    console.log(projectObject);
+    // Reset grid container
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.innerHTML = "";
+
+    document.getElementById('project-title').textContent = projectObject.name;
+    if(projectObject.todos.length !== 0) {
+        projectObject.todos.forEach(todo => {
+            createTodoElement(todo);
+        });
+    } else {
+        const h2 = document.createElement('h2');
+        gridContainer.append(h2);
+        h2.textContent = "No todos to display.";
+    }
 }
