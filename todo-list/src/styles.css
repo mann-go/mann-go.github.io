@@ -363,11 +363,6 @@ form textarea {
   padding: 0.5rem;
 }
 
-form textarea {
-  resize: vertical;
-  height: 100% !important;
-}
-
 form button {
   grid-column: 1 / 3;
   grid-row: 6 / -1;

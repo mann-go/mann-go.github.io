@@ -6,7 +6,7 @@ import { attachListeners } from "../features/todo/ui/TodoListeners";
 import TodoManager from "../features/todo/todoManager";
 
 import { extractNewProjectForm } from "../features/project/projectUI";
-import { createNewProject } from "../features/project/projectManager";
+import { addTodoToCurrentProject, createNewProject } from "../features/project/projectManager";
 import { updateProjectList } from "../features/project/projectUI";
 
 export function handleNewTodoSubmit(e) {
@@ -20,18 +20,18 @@ export function handleNewTodoSubmit(e) {
     // Create HTML for the todo, and add that todo to localStorage
     createTodoElement(todo);
     attachListeners();
-    TodoManager.addTodo(todo);
+    // TodoManager.addTodo(todo);
+    addTodoToCurrentProject(todo);
     
     toggleModal('todo-add-modal', false);
     resetForm('todo-add-form');
 };
 
-// Form submits now but creates an `undefined` object, possibley malformed.
 export function handleNewProjectSubmit(e) {
     e.preventDefault();
     const projectInfo = extractNewProjectForm();
     createNewProject(null, projectInfo.name, projectInfo.desc, projectInfo.dueDate, []);
     updateProjectList();
-    // alert("Project created successfully");
+    alert("Project created successfully");
     toggleModal('new-project-modal', false);
 }

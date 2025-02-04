@@ -2,8 +2,6 @@ import { createTodoElement } from "../todo/ui/TodoRenderer";
 
 // Used within the `My Projects` modal
 export function createProjectElement(projectObject) {
-    console.log("Rendering project:", projectObject.name);
-    console.log("Project contents:", projectObject);
     const template = document.getElementById('project-template');
     const gridContainer = document.getElementById('grid-container-modal');
 
@@ -39,12 +37,12 @@ export function createProjectElement(projectObject) {
 
 
 export function createProjectInstance(projectObject) {
-    console.log(projectObject);
     // Reset grid container
     const gridContainer = document.getElementById('grid-container');
     gridContainer.innerHTML = "";
 
     document.getElementById('project-title').textContent = projectObject.name;
+    document.getElementById('project-description').textContent = projectObject.desc;
     if(projectObject.todos.length !== 0) {
         projectObject.todos.forEach(todo => {
             createTodoElement(todo);
