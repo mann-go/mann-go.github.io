@@ -62,11 +62,12 @@
     </aside>
     <main>
         <div class="main-header">
-            <h1 id="project-title">My Projects</h1>  
+            <h1 id="project-title">Dashboard</h1>  
+            <p id="project-description"></p>
         </div>
 
         <div id="grid-container" class="grid-container">
-            <h2>No projects to be found...</h2>
+            <h2>Load a project...</h2>
         </div>
 
         <!-- SELECT PROJECT MODAL -->
@@ -114,7 +115,7 @@
                     <label for="todo-desc">Description:</label>
                     <input type="text" name="todo-desc" id="todo-desc" required>
                     <label for="todo-due">Due Date:</label>
-                    <input type="datetime" name="todo-due" id="todo-due" required>
+                    <input type="datetime-local" name="todo-due" id="todo-due" required>
                     <label for="todo-priority">Priority:</label>
                     <select name="todo-priority" id="todo-priority" required>
                         <option value="high">High</option>
@@ -122,7 +123,7 @@
                         <option value="low">Low</option>
                     </select>
                     <label for="todo-notes">Notes:</label>
-                    <input type="text" name="todo-notes" id="todo-notes" required>
+                    <input type="text" name="todo-notes" id="todo-notes">
                     <button type="submit">Create Todo</button>
                 </form>
             </div>
@@ -150,7 +151,7 @@
                         <option value="low">Low</option>
                     </select>
                     <label for="edit-todo-notes">Notes:</label>
-                    <input type="text" name="edit-todo-notes" id="edit-todo-notes" required>
+                    <input type="text" name="edit-todo-notes" id="edit-todo-notes">
                     <button type="submit" id="saveTodoButton">Save changes</button>
                 </form>
             </div>
