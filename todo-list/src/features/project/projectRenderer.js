@@ -16,8 +16,8 @@ export function createProjectElement(projectObject) {
     const name = projectTemplate.getElementById('project-name');
     name.textContent = projectObject.name;
 
-    const desc = projectTemplate.getElementById('project-description');
-    desc.textContent = projectObject.desc;
+    const description = projectTemplate.getElementById('project-description');
+    description.textContent = projectObject.description;
     
     const dueDate = projectTemplate.getElementById('project-dueDate');
     dueDate.textContent = 'Date due:', projectObject.dueDate;

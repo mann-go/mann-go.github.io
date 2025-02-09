@@ -22,8 +22,22 @@ export function extractTodoForm() {
     return todoInfo; 
 }    
 
-export function extractTodoData(todoDiv) {
+export function extractTodoEditForm() {
+    const id = document.getElementById('edit-todo-id').value;
+    const name = document.getElementById('edit-todo-name').value;
+    const description = document.getElementById('edit-todo-description').value;
+    const dueDate = document.getElementById('edit-todo-due').value;
+    const priority = document.getElementById('edit-todo-priority').value;
+    const notes = document.getElementById('edit-todo-notes').value;
+
+    const editTodoInfo = { id, name, description, dueDate, priority, notes };
+
+    return editTodoInfo; 
+}    
+
+export function extractTodoData(todoId, todoDiv) {
     return {
+        id: todoId,
         name: todoDiv.querySelector('#name').textContent,
         description: todoDiv.querySelector('#description').textContent,
         dueDate: todoDiv.querySelector('#dueDate').textContent,
@@ -34,6 +48,8 @@ export function extractTodoData(todoDiv) {
 
 // Populates the form with the data of the todo the user is trying to update
 export function populateForm(todoData) {
+    // console.log("Populate form with:", todoData);
+    document.getElementById('edit-todo-id').textContent = todoData.id,
     document.getElementById('edit-todo-name').value = todoData.name;
     document.getElementById('edit-todo-description').value = todoData.description;
     document.getElementById('edit-todo-due').value = todoData.dueDate;
@@ -42,22 +58,41 @@ export function populateForm(todoData) {
 }
 
 // Updates the todo that the user is trying to update
-export function saveTodo(todoDiv) {
+export function saveTodo() {
     const updatedData = {
-        id: todoDiv.dataset.id,
+        id: document.getElementById('edit-todo-id').textContent,
         name: document.getElementById('edit-todo-name').value,
         description: document.getElementById('edit-todo-description').value,
         dueDate: document.getElementById('edit-todo-due').value,
         priority: document.getElementById('edit-todo-priority').value,
-        notes: document.getElementById('edit-todo-notes').value
+        notes: document.getElementById('edit-todo-notes').value,
     };
 
-    // Update todo
-    todoDiv.querySelector('#name').textContent = updatedData.name;
-    todoDiv.querySelector('#description').textContent = updatedData.description;
-    todoDiv.querySelector('#dueDate').textContent = updatedData.dueDate;
-    todoDiv.querySelector('#priority').textContent = updatedData.priority;
-    todoDiv.querySelector('#notes').textContent = updatedData.notes;
+    let projects = JSON.parse(localStorage.getItem("projects")) || [];
 
-    return updatedData;
+    let projectIndex = projects.findIndex(p => p.todos && p.todos.some(todo => todo.id === updatedData.id));
+
+    if (projectIndex !== -1) {
+        projects[projectIndex].todos = projects[projectIndex].todos.map(todo => 
+            todo.id === updatedData.id ? { ...todo, ...updatedData } : todo
+        );
+        localStorage.setItem("projects", JSON.stringify(projects));
+    }
+    updateTodoUI(updatedData);
+    // return updatedData;
+}
+
+function updateTodoUI(updatedData) {
+    const editedTodoDiv = document.querySelector(`[data-id="${updatedData.id}"]`);
+    if (editedTodoDiv) {
+        editedTodoDiv.querySelector('#name').textContent = updatedData.name;
+        editedTodoDiv.querySelector('#description').textContent = updatedData.description;
+        editedTodoDiv.querySelector('#dueDate').textContent = updatedData.dueDate;
+        editedTodoDiv.querySelector('#priority').textContent = updatedData.priority;
+        editedTodoDiv.querySelector('#notes').textContent = updatedData.notes;
+        console.log("updated successfully");
+        return;
+    }
+
+    console.error("Todo with id " + updatedData.id + " not found.");
 }

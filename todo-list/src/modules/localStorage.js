@@ -6,25 +6,23 @@ const localStorageManager = (() => {
     /* Finish localStorage accessibility */
 
     var projects = [];
-    var todos = [];
+    // var todos = [];
 
     // Add a valid type of array to localStorage
     function addToLocalStorage(arrayName, item) {
         let array;
-        if (arrayName === "todos") {
-            array = todos; // Reference the module's todos array
-        } else if (arrayName === "projects") {
-            array = projects; // Reference the module's projects array
+        if (arrayName === "projects") {
+            array = projects; // Reference the module's todos array
         } else {
             console.error(`Array ${arrayName} does not exist.`);
             return;
         }
 
         // Validate the type of item
-        if (arrayName === "todos" && !(item instanceof todoObject)) {
-            console.error("Invalid object: Must be an instance of todoObject.");
-            return;
-        }
+        // if (arrayName === "todos" && !(item instanceof todoObject)) {
+        //     console.error("Invalid object: Must be an instance of todoObject.");
+        //     return;
+        // }
         if (arrayName === "projects" && !(item instanceof projectObject)) {
             console.error("Invalid object: Must be an instance of projectObject.");
             return;
@@ -67,22 +65,22 @@ const localStorageManager = (() => {
             // localStorage = window["localStorage"];
             console.log("Local storage is available.");
     
-            // Load todos from localStorage
-            const todosData = localStorage.getItem("todos");
-            if (todosData) {
-                todos = JSON.parse(todosData).map((item) => 
-                    new todoObject(
-                        item.id,
-                        item.name, 
-                        item.desc, 
-                        item.dueDate, 
-                        item.priority, 
-                        item.notes,
-                        item.completed
-                    )
-                );
-                console.log("Loaded todos:", todosData);
-            }
+            // // Load todos from localStorage
+            // const todosData = localStorage.getItem("todos");
+            // if (todosData) {
+            //     todos = JSON.parse(todosData).map((item) => 
+            //         new todoObject(
+            //             item.id,
+            //             item.name, 
+            //             item.desc, 
+            //             item.dueDate, 
+            //             item.priority, 
+            //             item.notes,
+            //             item.completed
+            //         )
+            //     );
+            //     console.log("Loaded todos:", todosData);
+            // }
              // Load projects from localStorage
             const projectsData = localStorage.getItem("projects");
             if (projectsData) {
@@ -91,13 +89,13 @@ const localStorageManager = (() => {
                         new todoObject(
                             todo.id,
                             todo.name, 
-                            todo.desc, 
+                            todo.description, 
                             todo.dueDate, 
                             todo.priority, 
                             todo.notes
                         )
                     );
-                    return new projectObject(item.id, item.name, item.desc, item.dueDate, projectTodos);
+                    return new projectObject(item.id, item.name, item.description, item.dueDate, projectTodos);
                 });
                 console.log("Loaded projects:", projects);
             }
@@ -130,10 +128,9 @@ const localStorageManager = (() => {
         localStorage.setItem(arrayKey, JSON.stringify(updatedArray));
     }
 
-    // Gets the todos in the file
-    function getTodos() {
-        return todos;
-    }
+    // function getTodos() {
+    //     return todos;
+    // }
     
     // Dev Tools
     function deleteLocalStorage() {
@@ -161,7 +158,7 @@ const localStorageManager = (() => {
         updateLocalStorageTodoEntry,
         deleteLocalStorage,
         logLocalStorageItems,
-        getTodos,
+        // getTodos,
     };
 
 

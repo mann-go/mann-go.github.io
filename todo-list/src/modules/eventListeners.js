@@ -55,7 +55,6 @@ export default function setupEventListeners() {
     // Edit todo form
     const submitEditTodoForm = document.getElementById('todo-edit-modal');
     if (submitEditTodoForm) {
-        console.log("Edit todo");
         submitEditTodoForm.addEventListener("submit", handleEditTodoSubmit);
     }
 }

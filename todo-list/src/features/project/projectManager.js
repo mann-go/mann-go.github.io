@@ -6,8 +6,8 @@ import { reRenderProjectTodos } from "./projectRenderer";
 
 let currentProject = null; // Holds active project
 
-export function createNewProject(id, name, desc, dueDate, todos = []) {
-    currentProject = new projectObject(id, name, desc, dueDate, todos);
+export function createNewProject(id, name, description, dueDate, todos = []) {
+    currentProject = new projectObject(id, name, description, dueDate, todos);
     saveProjectToLocalStorage(currentProject);
     // loadProjectById(currentProject.id);
     // console.log(loadProjectById(currentProject.id));

@@ -106,20 +106,20 @@
                     <div class="tooltip"><label for="todo-name">To Do:</label>
                         <span class="tooltip-text">Should be between 6 and 25 characters</span>
                     </div>
-                    <input type="text" name="todo-name" id="todo-name" minlength="6" maxlength="25" placeholder="">
+                    <input type="text" name="todo-name" id="todo-name" minlength="6" maxlength="25" required placeholder="A new todo">
                     
                     <div class="tooltip"><label for="todo-description">Description:</label>
                         <span class="tooltip-text">Should be between 10 and 35 characters</span>
                     </div>
-                    <input type="text" name="todo-description" id="todo-description" minlength="10" maxlength="35" required>
+                    <input type="text" name="todo-description" id="todo-description" minlength="10" maxlength="35" required placeholder="Some description">
 
                     <div class="tooltip"><label for="todo-due">Due Date:</label>
-                        <span class="tooltip-text">Should be between 6 and 25 characters</span>
+                        <span class="tooltip-text">Should be a valid date</span>
                     </div>
                     <input type="datetime-local" name="todo-due" id="todo-due" required>
 
                     <div class="tooltip"><label for="todo-priority">Priority:</label>
-                        <span class="tooltip-text">Should be between 6 and 25 characters</span>
+                        <span class="tooltip-text">Pick from 'High', 'Medium' or 'Low'</span>
                     </div>
                     <select name="todo-priority" id="todo-priority" required>
                         <option value="high">High</option>
@@ -130,7 +130,7 @@
                     <div class="tooltip"><label for="todo-notes">Notes:</label>
                         <span class="tooltip-text">Optional, can be left blank.</span>
                     </div>
-                    <input type="text" name="todo-notes" id="todo-notes">
+                    <input type="text" name="todo-notes" id="todo-notes" placeholder="I have some notes...">
                     <button type="submit" class="action-button">Create Todo</button>
                 </form>
             </div>
@@ -145,6 +145,7 @@
                 </div>
 
                 <form action="" id="todo-edit-form">
+                    <p id="edit-todo-id"></p>
                     <label for="edit-todo-name">To Do:</label>
                     <input type="text" name="edit-todo-name" id="edit-todo-name" required>
                     <label for="edit-todo-description">Description:</label>

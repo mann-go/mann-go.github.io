@@ -1,5 +1,5 @@
 import { todoObject } from "../features/todo/todoObject";
-import { extractTodoForm } from "../features/todo/ui/TodoUI";
+import { extractTodoEditForm, extractTodoForm, saveTodo } from "../features/todo/ui/TodoUI";
 import { createTodoElement } from "../features/todo/ui/TodoRenderer";
 import { toggleModal, resetForm } from "./modalManager";
 import { attachListeners } from "../features/todo/ui/TodoListeners";
@@ -28,7 +28,7 @@ export function handleNewTodoSubmit(e) {
 export function handleNewProjectSubmit(e) {
     e.preventDefault();
     const projectInfo = extractNewProjectForm();
-    createNewProject(null, projectInfo.name, projectInfo.desc, projectInfo.dueDate, []);
+    createNewProject(null, projectInfo.name, projectInfo.description, projectInfo.dueDate, []);
     updateProjectList();
     alert("Project created successfully");
     toggleModal('new-project-modal', false);
@@ -36,17 +36,6 @@ export function handleNewProjectSubmit(e) {
 
 export function handleEditTodoSubmit(e) {
     e.preventDefault();
-    console.log("Attempt edit todo submit:");
-    // const updatedTodo = saveTodo(todoDiv);
-    // handleEditTodoSubmit(updatedTodo);
-    // // editTodoInCurrentProject(updatedTodo);
-    // // localStorageManager.updateLocalStorageTodoEntry('todos', updatedTodo);
-
-    // console.log(updatedTodo.id, "has been updated");
-    // // editTodoInCurrentProject(updatedTodo);
-    // // const updatedTodo = saveTodo(todoDiv);
-    // // editTodoInCurrentProject(updatedTodo);
-    // // console.log("Handle edit todo submit");
-
-
+    saveTodo();
+    toggleModal('todo-edit-modal', false);
 }
