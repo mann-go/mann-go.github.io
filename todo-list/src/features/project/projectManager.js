@@ -2,20 +2,27 @@
 import { projectObject } from "./projectObject";
 import { saveProjectToLocalStorage, loadProjectsFromLocalStorage } from "./projectActions";
 import { todoObject } from "../todo/todoObject";
-import { reRenderProjectTodos } from "./projectRenderer";
+import { createProjectInstance, reRenderProjectTodos } from "./projectRenderer";
 
-let currentProject = null; // Holds active project
+let currentProject = null;
 
 export function createNewProject(id, name, description, dueDate, todos = []) {
     currentProject = new projectObject(id, name, description, dueDate, todos);
     saveProjectToLocalStorage(currentProject);
-    // loadProjectById(currentProject.id);
-    // console.log(loadProjectById(currentProject.id));
+    loadProjectById(currentProject.id);
     return currentProject;
 }
 
 export function getCurrentProject() {
     return currentProject;
+}
+
+// Kind of works, kind of scuffed. Needs improving to find last project accessed.
+export function loadProjectNextDue() {
+    const projects = loadProjectsFromLocalStorage();
+    const nextProjectDue = projects[0];
+    const projectToLoad = loadProjectById(nextProjectDue.id);
+    createProjectInstance(projectToLoad);
 }
 
 export function loadProjectById(id) {
@@ -45,8 +52,6 @@ export function loadProjectById(id) {
 }
 
 export function addTodoToCurrentProject(todo) {
-    console.log("Project:", currentProject);
-    console.log("Todo to be added:", todo);
     if (currentProject) {
         currentProject.addTodo(todo);
         saveProjectToLocalStorage(currentProject);
@@ -55,11 +60,7 @@ export function addTodoToCurrentProject(todo) {
     }
 }
 
-// TODO:
-// This submits the form before even updating the todo.
 export function editTodoInCurrentProject(todo) {
-    console.log("Project:", currentProject);
-    console.log("Todo to be edited:", todo);
     if (currentProject) {
         currentProject.editTodo(todo);
         saveProjectToLocalStorage(currentProject);
@@ -80,8 +81,6 @@ export function updateTodoStatusInCurrentProject(todoId) {
 }
 
 export function deleteTodoFromCurrentProject(todoId) {
-    console.log("Project:", currentProject);
-    console.log("Todo to be deleted:", todoId);
     if (currentProject) {
         currentProject.deleteTodoById(todoId);
         saveProjectToLocalStorage(currentProject);

@@ -3,10 +3,7 @@ import { projectObject } from "../features/project/projectObject";
 
 const localStorageManager = (() => {
 
-    /* Finish localStorage accessibility */
-
     var projects = [];
-    // var todos = [];
 
     // Add a valid type of array to localStorage
     function addToLocalStorage(arrayName, item) {
@@ -18,11 +15,6 @@ const localStorageManager = (() => {
             return;
         }
 
-        // Validate the type of item
-        // if (arrayName === "todos" && !(item instanceof todoObject)) {
-        //     console.error("Invalid object: Must be an instance of todoObject.");
-        //     return;
-        // }
         if (arrayName === "projects" && !(item instanceof projectObject)) {
             console.error("Invalid object: Must be an instance of projectObject.");
             return;
@@ -59,29 +51,8 @@ const localStorageManager = (() => {
         }
     }
 
-    // Load localStorage data
     function loadLocalStorage() {
         if (isStorageAvailable("localStorage")) {
-            // localStorage = window["localStorage"];
-            console.log("Local storage is available.");
-    
-            // // Load todos from localStorage
-            // const todosData = localStorage.getItem("todos");
-            // if (todosData) {
-            //     todos = JSON.parse(todosData).map((item) => 
-            //         new todoObject(
-            //             item.id,
-            //             item.name, 
-            //             item.desc, 
-            //             item.dueDate, 
-            //             item.priority, 
-            //             item.notes,
-            //             item.completed
-            //         )
-            //     );
-            //     console.log("Loaded todos:", todosData);
-            // }
-             // Load projects from localStorage
             const projectsData = localStorage.getItem("projects");
             if (projectsData) {
                 projects = JSON.parse(projectsData).map((item) => {
@@ -128,37 +99,11 @@ const localStorageManager = (() => {
         localStorage.setItem(arrayKey, JSON.stringify(updatedArray));
     }
 
-    // function getTodos() {
-    //     return todos;
-    // }
-    
-    // Dev Tools
-    function deleteLocalStorage() {
-        localStorage.clear();
-    }
-
-    function logLocalStorageItems() {
-        if (localStorage.length === 0) {
-            console.log("LocalStorage is empty.");
-            return;
-        }
-
-        console.log("Contents of LocalStorage:");
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            const value = localStorage.getItem(key);
-            console.log(`Key: ${key}, Value: ${value}`);
-        }
-    }
-    
     return {
         addToLocalStorage,
         loadLocalStorage,
         removeLocalStorageEntry,
         updateLocalStorageTodoEntry,
-        deleteLocalStorage,
-        logLocalStorageItems,
-        // getTodos,
     };
 
 

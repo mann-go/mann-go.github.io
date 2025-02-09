@@ -1,5 +1,4 @@
 export function createTodoElement(todoObject) {
-    console.log("Creating todo:", todoObject.name);
     const template = document.getElementById('todo-template');
     const gridContainer = document.getElementById('grid-container');
 
@@ -34,10 +33,9 @@ export function createTodoElement(todoObject) {
             todoBody.appendChild(todoBodyItem);
         }
     }
-        
     const isCompleted = todoObject.completed !== undefined ? todoObject.completed : false;
-    todoDiv.classList.toggle('todo-done', isCompleted);
-    
+    isCompleted ? todoDiv.classList.add('todo-done') : todoDiv.classList.remove('todo-done');
+
     // Append todo to grid container
     gridContainer.appendChild(todoElement);
 }

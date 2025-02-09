@@ -30,7 +30,6 @@ export function handleNewProjectSubmit(e) {
     const projectInfo = extractNewProjectForm();
     createNewProject(null, projectInfo.name, projectInfo.description, projectInfo.dueDate, []);
     updateProjectList();
-    alert("Project created successfully");
     toggleModal('new-project-modal', false);
 }
 
