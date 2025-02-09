@@ -52,9 +52,9 @@ export function updateProjectList() {
 
 export function extractNewProjectForm() {
     const name = document.getElementById('project-name-input').value;
-    const desc = document.getElementById('project-description-input').value;
+    const description = document.getElementById('project-description-input').value;
     const dueDate = document.getElementById('project-dueDate-input').value;
 
-    const projectInfo = { name, desc, dueDate };
+    const projectInfo = { name, description, dueDate };
     return projectInfo;
 }
