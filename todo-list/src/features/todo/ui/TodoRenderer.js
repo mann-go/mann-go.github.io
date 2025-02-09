@@ -1,26 +1,43 @@
 export function createTodoElement(todoObject) {
+    console.log("Creating todo:", todoObject.name);
     const template = document.getElementById('todo-template');
     const gridContainer = document.getElementById('grid-container');
 
     // Clone template content
     const todoElement = template.content.cloneNode(true);
-    todoElement.querySelector(".todo").setAttribute('data-id', todoObject.id);
+    const todoDiv = todoElement.querySelector(".todo"); 
+    todoDiv.setAttribute('data-id', todoObject.id);
 
     // Populate todo name
-    const name = todoElement.getElementById('name');
+    const name = todoDiv.querySelector('#name');
     name.textContent = todoObject.name;
 
     // Populate todo body
-    const todoBody = todoElement.querySelector('.todo-body');
+    const todoBody = todoDiv.querySelector('.todo-body');
     for (const [key, value] of Object.entries(todoObject)) {
-        if (key !== "name" && key !== "id") {
+        if (key !== "name" && key !== "id" && key !== "completed") {
+            if (value === null) {
+                console.log("Would be empty");
+                const element = document.createElement('p');
+                element.textContent = "No", key;
+            }
+
+            const label = document.createElement('label');
+            label.id = key + "-label";
+            label.setAttribute("for", key);
+            label.textContent =  key.toLocaleUpperCase();
+
             const todoBodyItem = document.createElement('p');
             todoBodyItem.id = key;
             todoBodyItem.textContent = value;
+            todoBody.appendChild(label);
             todoBody.appendChild(todoBodyItem);
         }
     }
-
+        
+    const isCompleted = todoObject.completed !== undefined ? todoObject.completed : false;
+    todoDiv.classList.toggle('todo-done', isCompleted);
+    
     // Append todo to grid container
     gridContainer.appendChild(todoElement);
 }

@@ -7,6 +7,7 @@ export function saveProjectToLocalStorage(project) {
     const existingIndex = projects.findIndex(p => p.name === project.name);
 
     if (existingIndex !== -1) {
+        console.log("Updating project");
         // Updates existing project
         projects[existingIndex] = project.getProject(); 
     } else {

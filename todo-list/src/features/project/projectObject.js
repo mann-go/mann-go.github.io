@@ -2,12 +2,16 @@ import { todoObject } from "../todo/todoObject";
 
 export class projectObject {
 
-    constructor(id, name, desc, dueDate, todos = []) {
+    constructor(id, name, description, dueDate, todos = []) {
         this.id = id || this.generateUniqueId();
         this.name = name;
-        this.desc = desc;
+        this.description = description;
         this.dueDate = dueDate;
-        this.todos = todos;
+        this.todos = Array.isArray(todos)
+            ? todos.map(todo => todo instanceof todoObject
+                ? todo
+                : new todoObject(todo.id, todo.name, todo.description, todo.dueDate, todo.priority, todo.notes, todo.completed))
+            : [];
     }
 
     addTodo(todo) {
@@ -18,6 +22,22 @@ export class projectObject {
         this.todos.push(todo);
     }
 
+    editTodo(updatedTodo) {
+        this.todos = this.todos.map(todo => 
+            todo.id === updatedTodo.id ? { ...todo, ...updatedTodo } : todo
+        );
+    }
+
+    updateTodoCompletionStatus(todoId) {
+        this.todos = this.todos.map(todo =>
+            todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
+        );
+    }
+
+    deleteTodoById(todoId) {        
+        this.todos = this.todos.filter(t => t.id !== todoId);
+    }
+
     setProject(updatedData) {
         Object.assign(this, updatedData);
     };
@@ -26,9 +46,9 @@ export class projectObject {
         return {
             id: this.id,
             name: this.name,
-            desc: this.desc,
+            description: this.description,
             dueDate: this.dueDate,
-            todos: Array.isArray(this.todos) ? this.todos.map((todo) => todo.getTodo()) : [],
+            todos: this.todos.map(todo => todo instanceof todoObject ? todo.getTodo() : todo)
         };
     }
     

@@ -2,12 +2,15 @@
 import { projectObject } from "./projectObject";
 import { saveProjectToLocalStorage, loadProjectsFromLocalStorage } from "./projectActions";
 import { todoObject } from "../todo/todoObject";
+import { reRenderProjectTodos } from "./projectRenderer";
 
 let currentProject = null; // Holds active project
 
 export function createNewProject(id, name, desc, dueDate, todos = []) {
     currentProject = new projectObject(id, name, desc, dueDate, todos);
     saveProjectToLocalStorage(currentProject);
+    // loadProjectById(currentProject.id);
+    // console.log(loadProjectById(currentProject.id));
     return currentProject;
 }
 
@@ -23,15 +26,16 @@ export function loadProjectById(id) {
         currentProject = new projectObject(
             foundProject.id,
             foundProject.name,
-            foundProject.desc,
+            foundProject.description,
             foundProject.dueDate,
             foundProject.todos.map(todo => new todoObject(
                 todo.id,
                 todo.name,
-                todo.desc,
+                todo.description,
                 todo.dueDate,
                 todo.priority,
-                todo.notes
+                todo.notes,
+                todo.completed,
             )),
         );
         return currentProject;
@@ -45,6 +49,41 @@ export function addTodoToCurrentProject(todo) {
     console.log("Todo to be added:", todo);
     if (currentProject) {
         currentProject.addTodo(todo);
+        saveProjectToLocalStorage(currentProject);
+    } else {
+        console.error("No active project selected");
+    }
+}
+
+// TODO:
+// This submits the form before even updating the todo.
+export function editTodoInCurrentProject(todo) {
+    console.log("Project:", currentProject);
+    console.log("Todo to be edited:", todo);
+    if (currentProject) {
+        currentProject.editTodo(todo);
+        saveProjectToLocalStorage(currentProject);
+        reRenderProjectTodos(currentProject.id);
+    } else {
+        console.error("No active project selected");
+    } 
+}
+
+export function updateTodoStatusInCurrentProject(todoId) {
+    if (currentProject) {
+        currentProject.updateTodoCompletionStatus(todoId);
+        saveProjectToLocalStorage(currentProject);
+        reRenderProjectTodos(currentProject.id);
+    } else {
+        console.error("No active project selected");
+    }
+}
+
+export function deleteTodoFromCurrentProject(todoId) {
+    console.log("Project:", currentProject);
+    console.log("Todo to be deleted:", todoId);
+    if (currentProject) {
+        currentProject.deleteTodoById(todoId);
         saveProjectToLocalStorage(currentProject);
     } else {
         console.error("No active project selected");
