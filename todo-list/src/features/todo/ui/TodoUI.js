@@ -12,12 +12,12 @@ export function renderTodos(todos) {
 
 export function extractTodoForm() {
     const name = document.getElementById('todo-name').value;
-    const desc = document.getElementById('todo-desc').value;
+    const description = document.getElementById('todo-description').value;
     const dueDate = document.getElementById('todo-due').value;
     const priority = document.getElementById('todo-priority').value;
     const notes = document.getElementById('todo-notes').value;
 
-    const todoInfo = { name, desc, dueDate, priority, notes };
+    const todoInfo = { name, description, dueDate, priority, notes };
 
     return todoInfo; 
 }    
@@ -25,7 +25,7 @@ export function extractTodoForm() {
 export function extractTodoData(todoDiv) {
     return {
         name: todoDiv.querySelector('#name').textContent,
-        description: todoDiv.querySelector('#desc').textContent,
+        description: todoDiv.querySelector('#description').textContent,
         dueDate: todoDiv.querySelector('#dueDate').textContent,
         priority: todoDiv.querySelector('#priority').textContent,
         notes: todoDiv.querySelector('#notes').textContent
@@ -35,7 +35,7 @@ export function extractTodoData(todoDiv) {
 // Populates the form with the data of the todo the user is trying to update
 export function populateForm(todoData) {
     document.getElementById('edit-todo-name').value = todoData.name;
-    document.getElementById('edit-todo-desc').value = todoData.description;
+    document.getElementById('edit-todo-description').value = todoData.description;
     document.getElementById('edit-todo-due').value = todoData.dueDate;
     document.getElementById('edit-todo-priority').value = todoData.priority;
     document.getElementById('edit-todo-notes').value = todoData.notes;
@@ -46,7 +46,7 @@ export function saveTodo(todoDiv) {
     const updatedData = {
         id: todoDiv.dataset.id,
         name: document.getElementById('edit-todo-name').value,
-        description: document.getElementById('edit-todo-desc').value,
+        description: document.getElementById('edit-todo-description').value,
         dueDate: document.getElementById('edit-todo-due').value,
         priority: document.getElementById('edit-todo-priority').value,
         notes: document.getElementById('edit-todo-notes').value
@@ -54,7 +54,7 @@ export function saveTodo(todoDiv) {
 
     // Update todo
     todoDiv.querySelector('#name').textContent = updatedData.name;
-    todoDiv.querySelector('#desc').textContent = updatedData.description;
+    todoDiv.querySelector('#description').textContent = updatedData.description;
     todoDiv.querySelector('#dueDate').textContent = updatedData.dueDate;
     todoDiv.querySelector('#priority').textContent = updatedData.priority;
     todoDiv.querySelector('#notes').textContent = updatedData.notes;

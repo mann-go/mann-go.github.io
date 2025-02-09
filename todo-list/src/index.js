@@ -1,15 +1,17 @@
 import "./styles.css";
-import { updateProjectList } from "./features/project/projectUI.js";
+import { loadLastProject, updateProjectList } from "./features/project/projectUI.js";
 import { attachListeners } from "./features/todo/ui/TodoListeners.js";
 import localStorageManager from "./modules/localStorage.js";
 import setupEventListeners from "./modules/eventListeners.js";
 
+// TODO: Fix loading last project
 document.addEventListener("DOMContentLoaded", () => {
     // STORAGE
     localStorageManager.loadLocalStorage();
 
     // Init project list
     updateProjectList();
+    // loadLastProject();
     
     // LISTENERS 
     attachListeners();

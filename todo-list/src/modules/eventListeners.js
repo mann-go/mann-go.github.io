@@ -1,4 +1,4 @@
-import { handleNewProjectSubmit, handleNewTodoSubmit } from "./formHandlers";
+import { handleEditTodoSubmit, handleNewProjectSubmit, handleNewTodoSubmit } from "./formHandlers";
 import { toggleModal } from "./modalManager";
 
 export default function setupEventListeners() {
@@ -50,5 +50,12 @@ export default function setupEventListeners() {
     const submitNewTodoForm = document.getElementById('todo-add-modal');
     if (submitNewTodoForm) {
         submitNewTodoForm.addEventListener("submit", handleNewTodoSubmit);
+    }
+
+    // Edit todo form
+    const submitEditTodoForm = document.getElementById('todo-edit-modal');
+    if (submitEditTodoForm) {
+        console.log("Edit todo");
+        submitEditTodoForm.addEventListener("submit", handleEditTodoSubmit);
     }
 }

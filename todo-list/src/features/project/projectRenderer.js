@@ -1,3 +1,4 @@
+import { attachListeners } from "../todo/ui/TodoListeners";
 import { createTodoElement } from "../todo/ui/TodoRenderer";
 
 // Used within the `My Projects` modal
@@ -15,11 +16,11 @@ export function createProjectElement(projectObject) {
     const name = projectTemplate.getElementById('project-name');
     name.textContent = projectObject.name;
 
-    const desc = projectTemplate.getElementById('project-desc');
+    const desc = projectTemplate.getElementById('project-description');
     desc.textContent = projectObject.desc;
     
     const dueDate = projectTemplate.getElementById('project-dueDate');
-    dueDate.textContent = projectObject.dueDate;
+    dueDate.textContent = 'Date due:', projectObject.dueDate;
 
     const todoUl = projectTemplate.getElementById('todos');
     if(projectObject.todos.length !== 0) {
@@ -41,15 +42,42 @@ export function createProjectInstance(projectObject) {
     const gridContainer = document.getElementById('grid-container');
     gridContainer.innerHTML = "";
 
+    // Populate project fields
     document.getElementById('project-title').textContent = projectObject.name;
-    document.getElementById('project-description').textContent = projectObject.desc;
+    document.getElementById('project-description').textContent = projectObject.description;
+    document.getElementById('project-dueDate').textContent = projectObject.dueDate;
+
+    // Show 'create todo' button
+    const createTodoButton = document.getElementById('main-header-actions');
+    createTodoButton.style.display = "flex";
+
     if(projectObject.todos.length !== 0) {
         projectObject.todos.forEach(todo => {
             createTodoElement(todo);
         });
     } else {
-        const h2 = document.createElement('h2');
-        gridContainer.append(h2);
-        h2.textContent = "No todos to display.";
+        // const h2 = document.createElement('h2');
+        // gridContainer.append(h2);
+        // h2.textContent = "No todos to display.";
+    }
+}
+
+export function reRenderProjectTodos(projectId) {
+    const gridContainer = document.getElementById('grid-container');
+
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
+    const project = projects.find(p => p.id === projectId);
+
+    if (project) {
+        // Clear existing todos
+        gridContainer.innerHTML = "";
+
+        // Rerender todos
+        project.todos.forEach(todo => {
+            createTodoElement(todo);
+            attachListeners();
+        });
+    } else {
+        console.error("Project not found");
     }
 }

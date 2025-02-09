@@ -77,10 +77,11 @@ const localStorageManager = (() => {
                         item.desc, 
                         item.dueDate, 
                         item.priority, 
-                        item.notes
+                        item.notes,
+                        item.completed
                     )
                 );
-                // console.log("Loaded todos:", todosData);
+                console.log("Loaded todos:", todosData);
             }
              // Load projects from localStorage
             const projectsData = localStorage.getItem("projects");

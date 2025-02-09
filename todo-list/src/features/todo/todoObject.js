@@ -1,11 +1,12 @@
 export class todoObject {
-    constructor(id, name, desc, dueDate, priority, notes) {
+    constructor(id, name, description, dueDate, priority, notes, completed) {
         this.id = id || this.generateUniqueId();
         this.name = name;
-        this.desc = desc;
+        this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
+        this.completed = (completed === undefined) ? false : completed;
     }
 
     setTodo(updatedData) {
@@ -16,10 +17,11 @@ export class todoObject {
         return {
             id: this.id,
             name: this.name,
-            desc: this.desc,
+            description: this.description,
             dueDate: this.dueDate,
             priority: this.priority,
             notes: this.notes,
+            completed: this.completed,
         };
     }
     

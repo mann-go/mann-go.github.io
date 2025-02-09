@@ -1,25 +1,27 @@
 import { extractTodoData, populateForm, saveTodo  } from "./ui/TodoUI";
 import { toggleModal } from "../../modules/modalManager";
-import localStorageManager from "../../modules/localStorage";
+import { editTodoInCurrentProject, deleteTodoFromCurrentProject, updateTodoStatusInCurrentProject } from "../project/projectManager";
+import { handleEditTodoSubmit } from "../../modules/formHandlers";
 
+// TODO: Needs fixed, needs split into more pieces.
 export function handleEditTodo(todoDiv) {
     const todoData = extractTodoData(todoDiv);
     populateForm(todoData);
-    toggleModal('todo-edit-modal', () => {
-        const updatedTodo = saveTodo(todoDiv);
-        localStorageManager.updateLocalStorageTodoEntry('todos', updatedTodo);
-    });
+    toggleModal('todo-edit-modal');
 }
 
 export function handleChangeTodoStatus(todo) {
-    todo.classList.toggle('todo-done'); 
+    console.log("Change todo status:");
+    const todoId = todo.dataset.id;
+    updateTodoStatusInCurrentProject(todoId);
 }
 
-export function handleDeleteTodo(todo) {    
+export function handleDeleteTodo(todo) {  
+    console.log(todo.id);  
     const confirmDelete = confirm('Are you sure you want to delete this todo item?');
     if(confirmDelete) {
         const todoId = todo.dataset.id;
-        localStorageManager.removeLocalStorageEntry('todos', todoId);
+        deleteTodoFromCurrentProject(todoId);
         todo.parentNode.remove();
         console.log('Todo item deleted');
     }
