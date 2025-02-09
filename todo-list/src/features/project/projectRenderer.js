@@ -55,10 +55,6 @@ export function createProjectInstance(projectObject) {
         projectObject.todos.forEach(todo => {
             createTodoElement(todo);
         });
-    } else {
-        // const h2 = document.createElement('h2');
-        // gridContainer.append(h2);
-        // h2.textContent = "No todos to display.";
     }
 }
 

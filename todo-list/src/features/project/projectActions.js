@@ -1,5 +1,3 @@
-import { projectObject } from "./projectObject";
-
 export function saveProjectToLocalStorage(project) {
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
 
@@ -10,6 +8,7 @@ export function saveProjectToLocalStorage(project) {
         console.log("Updating project");
         // Updates existing project
         projects[existingIndex] = project.getProject(); 
+
     } else {
         // Add a new project
         projects.push(project.getProject()); 

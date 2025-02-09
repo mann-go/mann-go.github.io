@@ -1,11 +1,9 @@
 import { attachListeners } from "../todo/ui/TodoListeners";
-import { loadProjectById } from "./projectManager";
+import { createNewProject, loadProjectById } from "./projectManager";
 import { createProjectElement, createProjectInstance } from "./projectRenderer";
 
 const eventHandlers = [
-        { selector: '#project', action: 'click', handler: handleLoadingProject },
-        // { selector: '#loadProjectButton', action: 'click', handler: handleLoadingProject },
-        
+        { selector: '#project', action: 'click', handler: handleLoadingProject },        
 ]
 
 export function attachProjectUIListeners() {
@@ -22,24 +20,19 @@ export function attachProjectUIListeners() {
 }
 
 function handleLoadingProject(e) {
-    console.log("Loading project:");
     const projectId = e.currentTarget.dataset.id;
     const projectObject = loadProjectById(projectId);
     createProjectInstance(projectObject);
     attachListeners();
 }
 
-// export function loadLastProject() {
-//     if(localStorage.getItem("projects")[0] !== null) {
-//         console.log(localStorage.getItem("projects")[0]);
-//     }
-// }
 
 export function updateProjectList() {
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
     const projectList = document.getElementById('grid-container-modal');
     if (projects.length === 0) { 
-        projectList.textContent = "No projects to display" 
+        const formattedDate = new Intl.DateTimeFormat(navigator.language).format(new Date());
+        createNewProject(null, "I am a test project", "Feel free to keep me or delete me!", formattedDate, []);
         return;
     }
     projectList.innerHTML = "";
