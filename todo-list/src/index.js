@@ -4,8 +4,8 @@ import { attachListeners } from "./features/todo/ui/TodoListeners.js";
 import localStorageManager from "./modules/localStorage.js";
 import setupEventListeners from "./modules/eventListeners.js";
 import { loadProjectNextDue } from "./features/project/projectManager.js";
+import { attachTodaysDateToDateTimeInputs } from "./modules/datetimeHandler.js";
 
-// TODO: Fix loading last project
 document.addEventListener("DOMContentLoaded", () => {
     // STORAGE
     localStorageManager.loadLocalStorage();
@@ -17,4 +17,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // LISTENERS 
     attachListeners();
     setupEventListeners();    
+    attachTodaysDateToDateTimeInputs();
 });

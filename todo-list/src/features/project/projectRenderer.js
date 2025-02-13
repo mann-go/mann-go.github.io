@@ -13,16 +13,16 @@ export function createProjectElement(projectObject) {
     projectElement.setAttribute('data-id', projectObject.id);
 
     // Populate project name
-    const name = projectTemplate.getElementById('project-name');
+    const name = projectTemplate.querySelector('#project-name');
     name.textContent = projectObject.name;
 
-    const description = projectTemplate.getElementById('project-description');
+    const description = projectTemplate.querySelector('#project-description');
     description.textContent = projectObject.description;
     
-    const dueDate = projectTemplate.getElementById('project-dueDate');
-    dueDate.textContent = 'Date due:', projectObject.dueDate;
+    const dueDate = projectTemplate.querySelector('#project-dueDate');
+    dueDate.textContent = 'Date due: ' + projectObject.dueDate;
 
-    const todoUl = projectTemplate.getElementById('todos');
+    const todoUl = projectTemplate.querySelector('#todos');
     if(projectObject.todos.length !== 0) {
         projectObject.todos.forEach(todo => {
             let todoLi = document.createElement('li');

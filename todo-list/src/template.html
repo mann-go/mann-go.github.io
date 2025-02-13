@@ -11,14 +11,12 @@
         <nav>
             <ul>
                 <li>
-                    <!-- Displays projects like todo grid items, clicking shows a preview? -->
                     <button type="button" id="my-projects">
                         <i class='bx bxs-folder-open'></i>
                         <span>My Projects</span>
                     </button>
                 </li>
                 <li>
-                    <!-- Display the new project form -->
                     <button type="button" id="create-project-btn">
                         <i class='bx bxs-folder-plus'></i>
                         <span>New Project</span>
@@ -35,14 +33,16 @@
     </aside>
     <main>
         <div class="main-header">
-            <h1 id="project-title">Dashboard</h1>  
-            <p id="project-description"></p>
-            <p id="project-dueDate"></p>
-            <div class="actions" id="main-header-actions">
-                <button type="button" class="action-button" id="add-todo">
-                    <i class='bx bxs-message-square-add'></i>
-                    <span>Create Todo</span>
-                </button>  
+            <div class="main-header-text">
+                <h1 id="project-title"></h1>  
+                <p id="project-description"></p>
+                <p id="project-dueDate"></p>
+                <div class="actions" id="main-header-actions">
+                    <button type="button" class="action-button" id="add-todo">
+                        <i class='bx bxs-message-square-add'></i>
+                        <span>Create Todo</span>
+                    </button>  
+                </div>
             </div>
         </div>
         <div id="grid-container" class="grid-container">
@@ -69,12 +69,20 @@
                     <span class="close">&times;</span>
                 </div>
                 <form action="" id="new-project-form">
-                    <label for="project-name-input">Project Name: </label>
+                    <div class="tooltip"><label for="project-name-input">Project Name:</label>
+                        <span class="tooltip-text">Should be between 6 and 25 characters</span>
+                    </div>
                     <input type="text" name="project-name-input" id="project-name-input" minlength="6" maxlength="25" required>
-                    <label for="project-description-input">Project Description</label>
-                    <input type="text" name="project-description-input" id="project-description-input" required>
-                    <label for="project-dueDate-input">Due Date:</label>
-                    <input type="datetime-local" name="project-dueDate-input" id="project-dueDate-input" required>
+                    
+                    <div class="tooltip"><label for="project-description-input">Project Description:</label>
+                        <span class="tooltip-text">Should be between 10 and 50 characters</span>
+                    </div>
+                    <input type="text" name="project-description-input" id="project-description-input" minlength="10" maxlength="50" required>
+
+                    <div class="tooltip"><label for="project-dueDate-input">Due Date:</label>
+                        <span class="tooltip-text">Pick a valid date</span>
+                    </div>
+                    <input type="date" name="project-dueDate-input" id="project-dueDate-input" required>
                     <button type="submit" class="action-button">Create New Project</button>
                 </form>
             </div>
@@ -94,14 +102,14 @@
                     <input type="text" name="todo-name" id="todo-name" minlength="6" maxlength="25" required placeholder="A new todo">
                     
                     <div class="tooltip"><label for="todo-description">Description:</label>
-                        <span class="tooltip-text">Should be between 10 and 35 characters</span>
+                        <span class="tooltip-text">Should be between 10 and 50 characters</span>
                     </div>
-                    <input type="text" name="todo-description" id="todo-description" minlength="10" maxlength="35" required placeholder="Some description">
+                    <input type="text" name="todo-description" id="todo-description" minlength="10" maxlength="50" required placeholder="Some description">
 
                     <div class="tooltip"><label for="todo-due">Due Date:</label>
-                        <span class="tooltip-text">Should be a valid date</span>
+                        <span class="tooltip-text">Pick a valid date</span>
                     </div>
-                    <input type="datetime-local" name="todo-due" id="todo-due" required>
+                    <input type="date" name="todo-due" id="todo-due" required>
 
                     <div class="tooltip"><label for="todo-priority">Priority:</label>
                         <span class="tooltip-text">Pick from 'High', 'Medium' or 'Low'</span>
@@ -131,19 +139,33 @@
 
                 <form action="" id="todo-edit-form">
                     <p id="edit-todo-id"></p>
-                    <label for="edit-todo-name">To Do:</label>
-                    <input type="text" name="edit-todo-name" id="edit-todo-name" required>
-                    <label for="edit-todo-description">Description:</label>
-                    <input type="text" name="edit-todo-description" id="edit-todo-description" required>
-                    <label for="edit-todo-due">Due Date:</label>
+                    <div class="tooltip"><label for="edit-todo-name">To Do:</label>
+                        <span class="tooltip-text">Should be between 6 and 25 characters</span>
+                    </div>
+                    <input type="text" name="edit-todo-name" id="edit-todo-name" minlength="6" maxlength="25" required>
+
+                    <div class="tooltip"><label for="edit-todo-description">Description:</label>
+                        <span class="tooltip-text">Should be between 10 and 50 characters</span>
+                    </div>
+                    <input type="text" name="edit-todo-description" id="edit-todo-description" minlength="10" maxlength="50" required>
+                    
+                    <div class="tooltip"><label for="edit-todo-due">Due Date:</label>
+                        <span class="tooltip-text">Pick a valid date</span>
+                    </div>
                     <input type="datetime-local" name="edit-todo-due" id="edit-todo-due" required>
-                    <label for="edit-todo-priority">Priority:</label>
+
+                    <div class="tooltip"><label for="edit-todo-priority">Priority:</label>
+                        <span class="tooltip-text">Pick from 'High', 'Medium' or 'Low'</span>
+                    </div>
                     <select name="edit-todo-priority" id="edit-todo-priority" required>
                         <option value="high">High</option>
                         <option value="medium" selected>Medium</option>
                         <option value="low">Low</option>
                     </select>
-                    <label for="edit-todo-notes">Notes:</label>
+
+                    <div class="tooltip"><label for="edit-todo-notes">Notes:</label>
+                        <span class="tooltip-text">Optional, can be left blank.</span>
+                    </div>
                     <input type="text" name="edit-todo-notes" id="edit-todo-notes">
                     <button type="submit" class="action-button" id="saveTodoButton">Save changes</button>
                 </form>

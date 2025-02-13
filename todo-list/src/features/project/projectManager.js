@@ -7,9 +7,10 @@ import { createProjectInstance, reRenderProjectTodos } from "./projectRenderer";
 let currentProject = null;
 
 export function createNewProject(id, name, description, dueDate, todos = []) {
+    // // Create project after formating datetime
     currentProject = new projectObject(id, name, description, dueDate, todos);
     saveProjectToLocalStorage(currentProject);
-    loadProjectById(currentProject.id);
+    createProjectInstance(loadProjectById(currentProject.id));
     return currentProject;
 }
 
@@ -17,7 +18,7 @@ export function getCurrentProject() {
     return currentProject;
 }
 
-// Kind of works, kind of scuffed. Needs improving to find last project accessed.
+// Kind of works, kind of scuffed.
 export function loadProjectNextDue() {
     const projects = loadProjectsFromLocalStorage();
     const nextProjectDue = projects[0];

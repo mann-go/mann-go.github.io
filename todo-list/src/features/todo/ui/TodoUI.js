@@ -1,15 +1,3 @@
-import { attachListeners } from './TodoListeners';
-import { createTodoElement } from "./TodoRenderer";
-
-export function renderTodos(todos) {
-    todos.forEach(todo => {
-        console.log("Adding: " + todo.name);
-        createTodoElement(todo);
-    });
-    
-    attachListeners();
-}
-
 export function extractTodoForm() {
     const name = document.getElementById('todo-name').value;
     const description = document.getElementById('todo-description').value;
@@ -48,7 +36,6 @@ export function extractTodoData(todoId, todoDiv) {
 
 // Populates the form with the data of the todo the user is trying to update
 export function populateForm(todoData) {
-    // console.log("Populate form with:", todoData);
     document.getElementById('edit-todo-id').textContent = todoData.id,
     document.getElementById('edit-todo-name').value = todoData.name;
     document.getElementById('edit-todo-description').value = todoData.description;
@@ -79,7 +66,6 @@ export function saveTodo() {
         localStorage.setItem("projects", JSON.stringify(projects));
     }
     updateTodoUI(updatedData);
-    // return updatedData;
 }
 
 function updateTodoUI(updatedData) {
