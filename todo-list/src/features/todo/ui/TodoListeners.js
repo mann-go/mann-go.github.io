@@ -11,7 +11,10 @@ export function attachListeners() {
         const elements = document.querySelectorAll(selector);
         if (elements.length > 0) {
             elements.forEach((element) => {
+                if (element.dataset.listener === "true") return;
+
                 element.addEventListener(action, (e) => handler(e.target.closest('.todo')));
+                element.dataset.listener = "true";
             });
         } else {
             console.warn(`No elements found for selector: ${selector}`);

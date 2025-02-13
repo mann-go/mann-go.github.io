@@ -16,7 +16,6 @@ export function createTodoElement(todoObject) {
     for (const [key, value] of Object.entries(todoObject)) {
         if (key !== "name" && key !== "id" && key !== "completed") {
             if (value === null) {
-                console.log("Would be empty");
                 const element = document.createElement('p');
                 element.textContent = "No", key;
             }
@@ -33,9 +32,9 @@ export function createTodoElement(todoObject) {
             todoBody.appendChild(todoBodyItem);
         }
     }
+
     const isCompleted = todoObject.completed !== undefined ? todoObject.completed : false;
     isCompleted ? todoDiv.classList.add('todo-done') : todoDiv.classList.remove('todo-done');
-
     // Append todo to grid container
     gridContainer.appendChild(todoElement);
 }

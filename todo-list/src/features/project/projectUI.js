@@ -1,9 +1,12 @@
 import { attachListeners } from "../todo/ui/TodoListeners";
 import { createNewProject, loadProjectById } from "./projectManager";
 import { createProjectElement, createProjectInstance } from "./projectRenderer";
+import { deleteProjectFromLocalStorage } from "./projectActions";
+import { toggleModal } from "../../modules/modalManager";
 
 const eventHandlers = [
-        { selector: '#project', action: 'click', handler: handleLoadingProject },        
+        { selector: '#project', action: 'click', handler: handleLoadingProject }, 
+        { selector: '#deleteProjectButton', action: 'click', handler: deleteProjectFromLocalStorage }       
 ]
 
 export function attachProjectUIListeners() {
@@ -24,8 +27,8 @@ function handleLoadingProject(e) {
     const projectObject = loadProjectById(projectId);
     createProjectInstance(projectObject);
     attachListeners();
+    toggleModal('select-project-modal', false);
 }
-
 
 export function updateProjectList() {
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
@@ -41,6 +44,19 @@ export function updateProjectList() {
     });
 
     attachProjectUIListeners();
+}
+
+export function clearProjectDisplay() {
+    document.getElementById("grid-container").innerHTML = "<p>No projects available.</p>";
+    document.getElementById("project-title").textContent = "No Project Selected";
+    document.getElementById("project-description").textContent = "";
+    document.getElementById("project-dueDate").textContent = "";
+    
+    // Hide "Create Todo" button if no projects remain
+    const createTodoButton = document.getElementById('main-header-actions');
+    if (createTodoButton) {
+        createTodoButton.style.display = "none";
+    }
 }
 
 export function extractNewProjectForm() {

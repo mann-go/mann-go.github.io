@@ -1,3 +1,7 @@
+import { attachListeners } from "../todo/ui/TodoListeners";
+import { createProjectInstance } from "./projectRenderer";
+import { clearProjectDisplay } from "./projectUI";
+
 export function saveProjectToLocalStorage(project) {
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
 
@@ -21,8 +25,29 @@ export function loadProjectsFromLocalStorage() {
     return JSON.parse(localStorage.getItem("projects")) || [];
 }
 
-export function deleteProjectFromLocalStorage(projectName) {
+export function deleteProjectFromLocalStorage(e) {
+    // Stops event `bubbling up` to parent div
+    e.stopPropagation();
+    
+    // Delete project
+    const confirmDelete = confirm('Are you sure you want to delete this project?');
+    if (!confirmDelete) { return; }
+    
+    const project = e.target.closest(".project");
+    const projectId = project.dataset.id;
     let projects = JSON.parse(localStorage.getItem("projects")) || [];
-    projects = projects.filter(p => p.name !== projectName);
+    projects = projects.filter(p => p.id !== projectId);
     localStorage.setItem("projects", JSON.stringify(projects));
+
+    project.remove();
+
+    // Load next project in storage
+    if (projects.length > 0) { 
+        createProjectInstance(projects[0]);
+        attachListeners();
+    } else {
+        clearProjectDisplay();
+    }
+    
+
 }

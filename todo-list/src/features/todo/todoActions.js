@@ -1,4 +1,4 @@
-import { extractTodoData, populateForm, saveTodo  } from "./ui/TodoUI";
+import { extractTodoData, populateForm } from "./ui/TodoUI";
 import { toggleModal } from "../../modules/modalManager";
 import { deleteTodoFromCurrentProject, updateTodoStatusInCurrentProject } from "../project/projectManager";
 
