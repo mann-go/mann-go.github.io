@@ -1,0 +1,44 @@
+:root {
+    --padding: 1.2rem;
+}
+
+body {
+    margin: 0;
+    padding: var(--padding);
+}
+
+header {
+    text-align: center;
+    background-color: brown;
+}
+
+main {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.portfolio {
+    background-color: yellow;
+    grid-column: 1 / 4;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.portfolio-header {
+    grid-row: 1;
+    grid-column: 1 / 5;
+}
+
+.portfolio-item {
+    border: 2px solid black;
+    padding: var(--padding);
+    grid-row-start: 2;
+}
+
+.portfolio-item:hover {
+    transition: 0.85s ease-in-out;
+    transform: scale(1.1);
+}
