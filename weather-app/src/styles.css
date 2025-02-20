@@ -1,0 +1,74 @@
+:root {
+    --timberwolf: #d6ccca;
+    --paynes-gray: #56667d;
+    --lapis-lazuli: #016390;
+    --indigo-dye: #013f72;
+    --rich-black: #051a2b;
+    --padding: 0.85rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: var(--paynes-gray);
+}
+
+header {
+    min-height: 15vh;
+    border-bottom: 2px solid var(--rich-black);
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    min-height: 75vh;
+    margin: auto;
+}
+
+.form-container {
+    grid-row: 1;
+    grid-column: 2 / 5;
+
+    border: 2px solid var(--rich-black);
+    padding: var(--padding);
+    margin: 0 auto;
+    min-width: 35vw;
+}
+
+.form-item {
+    padding: var(--padding);
+}
+
+/* label {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 40%;
+    width: 50%;
+} */
+
+.weather-container {
+
+}
+
+.weather-item {
+
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 7.5vh;
+    background-color: var(--rich-black);
+    color: white;
+    font-weight: bolder;
+    text-align: center;
+    place-content: center;
+}
