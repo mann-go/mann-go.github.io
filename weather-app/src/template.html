@@ -12,18 +12,75 @@
     </header>
     <main>
         <div class="form-container">
-            <form action="">
-                <div class="form-item">
-                    <label for="location-input" id="location-input-label">Location:
-                        <input type="text" id="location-input" required>
-                        <button><i class='bx bx-search'></i></button> 
-                    </label>  
-                </div>
+            <form action="" id="weather-forecast-form">
+                <label class="form-item" for="location-input" id="location-input-label" aria-label="location">
+                    <input type="text" id="location-input" placeholder="What's the weather in..." required>
+                    <button type="submit"><i class='bx bx-search'></i></button> 
+                </label>
             </form>
+        </div>
+
+        <div class="weather-container">
+            <div class="weather-item">
+                <div class="weather-item-header">
+                    <h2>DAY</h2>
+                    <p>AVG TEMP</p>
+                </div>
+                <div class="weather-item-body">
+                    <div class="forecast-item">
+                        <img src="" alt="weather icon">
+                        <h3>temp 1</h3>
+                        <p>% chance</p>
+                    </div>
+                    <div class="forecast-item">
+                        <img src="" alt="weather icon">
+                        <p>temp 2</p>
+                        <p>% chance</p>
+                    </div>
+                    <div class="forecast-item">
+                        <img src="" alt="weather icon">
+                        <p>temp 3</p>
+                        <p>% chance</p>
+                    </div>
+                    <div class="forecast-item">
+                        <img src="" alt="weather icon">
+                        <p>temp 4</p>
+                        <p>% chance</p>
+                    </div>
+                    <div class="forecast-item">
+                        <img src="" alt="weather icon">
+                        <p>temp 5</p>
+                        <p>% chance</p>
+                    </div>
+                    <div class="forecast-item">
+                        <img src="" alt="weather icon">
+                        <p>temp 6</p>
+                        <p>% chance</p>
+                    </div>
+                    <div class="forecast-item">
+                        <img src="" alt="weather icon">
+                        <p>temp 7</p>
+                        <p>% chance</p>
+                    </div>
+                    <div class="forecast-item">
+                        <img src="" alt="weather icon">
+                        <p>temp 8</p>
+                        <p>% chance</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <footer>
-        <p>Copyright</p>
+        <!-- <p>Copyright</p> -->
     </footer>
+
+    <template id="forecast-item">
+        <div class="forecast-item">
+            <img src="" alt="weather icon">
+            <p></p>
+            <p></p>
+        </div>   
+    </template>
 </body>
 </html>
