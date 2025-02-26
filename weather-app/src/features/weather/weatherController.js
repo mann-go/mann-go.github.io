@@ -1,5 +1,6 @@
 import { dayObject } from "../../api/visual-crossing/dayObject";
 import { hourObject } from "../../api/visual-crossing/hourObject";
+import { renderWeatherItem } from "./ui/renderWeatherItem";
 
 const baseURL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/'; 
 const apiKey = 'key=RJKAGKTXNGDLPHYW6PU6ZZ3TM&';
@@ -14,7 +15,7 @@ export async function getWeatherByLocation(location) {
         const response = await fetchWeather(location, options)
         const body = await response.json();
         processWeatherByLocation(body);
-        console.log(days);
+        renderWeatherItem(days);
         if (!response.ok) {
             throw new Error(`Error grabbing weather by location.`);
         }
@@ -24,23 +25,7 @@ export async function getWeatherByLocation(location) {
     }
 }
 
-async function fetchWeather(location, options) {
-    const request = baseURL + location + options + apiKey + contentType; 
-    try {  
-        const response = await fetch(request)   
-
-        if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
-        }
-
-        return response;
-    } catch (error) {
-        console.error(error.message);
-    }
-}
-
 function processWeatherByLocation(data) {
-    console.log(data.days);
     data.days.map((day) => {
         days.push(new dayObject(
             day.datetime,
@@ -71,4 +56,19 @@ function processWeatherByLocation(data) {
             )) : [] 
         ));
     });
+}
+
+async function fetchWeather(location, options) {
+    const request = baseURL + location + options + apiKey + contentType; 
+    try {  
+        const response = await fetch(request)   
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        return response;
+    } catch (error) {
+        console.error(error.message);
+    }
 }
