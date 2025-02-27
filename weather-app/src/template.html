@@ -7,84 +7,57 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    <header>
-
-    </header>
-    <main>
-        <div class="form-container">
-            <form action="" id="weather-forecast-form">
-                <label class="form-item" for="location-input" id="location-input-label" aria-label="location">
-                    <input type="text" id="location-input" placeholder="What's the weather in..." required>
+    <div class="wrapper">
+        <header>
+        </header>
+        <main>
+            <div class="form-container">
+                <form action="" class="flex" id="weather-forecast-form">
+                    <label class="form-item" for="location-input" id="location-input-label" aria-label="location">
+                        <input type="text" id="location-input" placeholder="What's the weather in..." required>
+                    </label>
                     <button type="submit"><i class='bx bx-search'></i></button> 
-                </label>
-            </form>
-        </div>
+                </form>
+            </div>
 
+            <div class="weather-container-wrapper">
+            </div>
+        </main>
+        <footer>
+            <!-- <p>Copyright</p> -->
+        </footer>
+
+    </div>
+
+    <template id="weather-container-template">
         <div class="weather-container">
             <div class="weather-item">
                 <div class="weather-item-header">
-                    <h2 id="date">DATE</h2>
-                    <p id="conditions">condition</p>
-                    <p id="curr-temp">CURR TEMP</p>
+                    <h2 class="date"></h2>
+                    <p class="conditions"></p>
+                    <p class="curr-temp">Now: </p>
+                    <p class="max-temp">Max: </p>
+                    <p class="min-temp">Min: </p>
                 </div>
-                <div class="weather-item-body">
-                    <div class="forecast-item">
-                        <img src="" alt="weather icon">
-                        <h3>temp 1</h3>
-                        <p>% chance</p>
-                    </div>
-                    <div class="forecast-item">
-                        <img src="" alt="weather icon">
-                        <p>temp 2</p>
-                        <p>% chance</p>
-                    </div>
-                    <div class="forecast-item">
-                        <img src="" alt="weather icon">
-                        <p>temp 3</p>
-                        <p>% chance</p>
-                    </div>
-                    <div class="forecast-item">
-                        <img src="" alt="weather icon">
-                        <p>temp 4</p>
-                        <p>% chance</p>
-                    </div>
-                    <div class="forecast-item">
-                        <img src="" alt="weather icon">
-                        <p>temp 5</p>
-                        <p>% chance</p>
-                    </div>
-                    <div class="forecast-item">
-                        <img src="" alt="weather icon">
-                        <p>temp 6</p>
-                        <p>% chance</p>
-                    </div>
-                    <div class="forecast-item">
-                        <img src="" alt="weather icon">
-                        <p>temp 7</p>
-                        <p>% chance</p>
-                    </div>
-                    <div class="forecast-item">
-                        <img src="" alt="weather icon">
-                        <p>temp 8</p>
-                        <p>% chance</p>
-                    </div>
+                <div class="weather-item-body" id="weather-item-body">
                 </div>
             </div>
         </div>
-    </main>
-    <footer>
-        <!-- <p>Copyright</p> -->
-    </footer>
+    </template>
 
     <template id="forecast-item-template">
         <div class="forecast-item">
-            <h3 id="datetime"></h3>
-            <img id="icon" src="" alt="weather icon">
-            <p id="conditions"></p>
-            <p id="feelslike"></p>
-            <p id="humidity"></p>
-            <p id="temp"></p>
-        </div>   
+            <div class="forecast-item-header flex">
+                <h3 class="datetime"></h3>
+                <i class="icon" src="" alt="weather icon"></i>
+            </div>
+            <div class="forecast-item-body flex">
+                <p class="conditions"></p>
+                <p class="feelslike">Feels like: </p>
+                <p class="humidity">Humidity: </p>
+                <p class="temp">Temperature: </p>   
+            </div>
+        </div>
     </template>
 </body>
 </html>

@@ -47,7 +47,7 @@ function processWeatherByLocation(data) {
             day.description,
             day.icon,
             day.hours ? day.hours.map((hour) => new hourObject(
-                hour.datetime,
+                hour.datetime.substring(1, 5),
                 hour.temp,
                 hour.feelslike,
                 hour.humidity,
