@@ -1,8 +1,9 @@
 import { hourObject } from "./hourObject";
 
 export class dayObject {
-    constructor(datetime, tempmax, tempmin, temp, feelslikemax, feelslikemin, feelslike, dew, humidity, precip, precipprob, precipcover, preciptype, sunrise, sunset, conditions, description, icon, hours = []) {
+    constructor(datetime, day, tempmax, tempmin, temp, feelslikemax, feelslikemin, feelslike, dew, humidity, precip, precipprob, precipcover, preciptype, sunrise, sunset, conditions, description, icon, hours = []) {
         this.datetime = datetime;
+        this.day = day;
         this.tempmax = tempmax;
         this.tempmin = tempmin;
         this.temp = temp;
@@ -20,6 +21,6 @@ export class dayObject {
         this.conditions = conditions;
         this.description = description;
         this.icon = icon;
-        this.hours = hours.map(hour => new hourObject(hour.datetime, hour.temp, hour.feelslike, hour.humidity, hour.conditions, hour.icon));
+        this.hours = hours.map(hour => new hourObject(hour.datetime, hour.temp, hour.feelslike, hour.humidity, hour.precip, hour.precipprob, hour.conditions, hour.icon));
     }
 }

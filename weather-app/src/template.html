@@ -8,7 +8,12 @@
 </head>
 <body>
     <div class="wrapper">
-        <header>
+        <header class="flex">
+            <div class="cloud" data-count="1"></div>
+            <div class="cloud" data-count="2"></div>
+            <div class="sun"></div>
+            <div class="cloud" data-count="3"></div>
+            <div class="cloud" data-count="4"></div>
         </header>
         <main>
             <div class="form-container">
@@ -17,16 +22,19 @@
                         <input type="text" id="location-input" placeholder="What's the weather in..." required>
                     </label>
                     <button type="submit"><i class='bx bx-search'></i></button> 
+                    <label class="switch form-item" for="fahrenheit-or-degree"> 
+                        <input type="checkbox" name="fahrenheit-or-degree" id="fahrenheit-or-degree">
+                        <span class="slider round"></span>
+                    </label>
                 </form>
             </div>
 
+            <div class="location-container">
+                <h1 id="location"></h1>
+            </div>
             <div class="weather-container-wrapper">
             </div>
         </main>
-        <footer>
-            <!-- <p>Copyright</p> -->
-        </footer>
-
     </div>
 
     <template id="weather-container-template">
@@ -48,14 +56,16 @@
     <template id="forecast-item-template">
         <div class="forecast-item">
             <div class="forecast-item-header flex">
-                <h3 class="datetime"></h3>
                 <i class="icon" src="" alt="weather icon"></i>
+                <h3 class="datetime"></h3>
             </div>
             <div class="forecast-item-body flex">
-                <p class="conditions"></p>
-                <p class="feelslike">Feels like: </p>
-                <p class="humidity">Humidity: </p>
-                <p class="temp">Temperature: </p>   
+                <label for="conditions"></label><p class="conditions"></p>
+                <label for="feelslike">Feels like:<p class="feelslike"></p></label>
+                <label for="humidity">Humidity:<p class="humidity"></p></label>
+                <label for="temp">Temperature: <p class="temp"></p></label>
+                <label for="precip">Precipitation: <p class="precip"></p></label>
+                <label for="precipprob">Chance of Percipitation: <p class="precipprob"></p></label>
             </div>
         </div>
     </template>
