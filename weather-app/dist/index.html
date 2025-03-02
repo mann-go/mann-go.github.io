@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<script defer src="main.js"></script></head>
+<body>
+    <div class="wrapper">
+        <header class="flex">
+            <div class="cloud" data-count="1"></div>
+            <div class="cloud" data-count="2"></div>
+            <div class="sun"></div>
+            <div class="cloud" data-count="3"></div>
+            <div class="cloud" data-count="4"></div>
+        </header>
+        <main>
+            <div class="form-container">
+                <form action="" class="flex" id="weather-forecast-form">
+                    <label class="form-item" for="location-input" id="location-input-label" aria-label="location">
+                        <input type="text" id="location-input" placeholder="What's the weather in..." required>
+                    </label>
+                    <button type="submit"><i class='bx bx-search'></i></button> 
+                    <label class="switch form-item" for="fahrenheit-or-degree"> 
+                        <input type="checkbox" name="fahrenheit-or-degree" id="fahrenheit-or-degree">
+                        <span class="slider round"></span>
+                    </label>
+                </form>
+            </div>
+
+            <div class="location-container">
+                <h1 id="location"></h1>
+            </div>
+            <div class="weather-container-wrapper">
+            </div>
+        </main>
+    </div>
+
+    <template id="weather-container-template">
+        <div class="weather-container">
+            <div class="weather-item">
+                <div class="weather-item-header">
+                    <h2 class="date"></h2>
+                    <p class="conditions"></p>
+                    <p class="curr-temp">Now: </p>
+                    <p class="max-temp">Max: </p>
+                    <p class="min-temp">Min: </p>
+                </div>
+                <div class="weather-item-body" id="weather-item-body">
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="forecast-item-template">
+        <div class="forecast-item">
+            <div class="forecast-item-header flex">
+                <i class="icon" src="" alt="weather icon"></i>
+                <h3 class="datetime"></h3>
+            </div>
+            <div class="forecast-item-body flex">
+                <label for="conditions"></label><p class="conditions"></p>
+                <label for="feelslike">Feels like:<p class="feelslike"></p></label>
+                <label for="humidity">Humidity:<p class="humidity"></p></label>
+                <label for="temp">Temperature: <p class="temp"></p></label>
+                <label for="precip">Precipitation: <p class="precip"></p></label>
+                <label for="precipprob">Chance of Percipitation: <p class="precipprob"></p></label>
+            </div>
+        </div>
+    </template>
+</body>
+</html>
