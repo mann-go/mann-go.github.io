@@ -1,44 +1,74 @@
 :root {
     --padding: 1.2rem;
+
+    --eerie-black: #1a1816;
+    --old-gold: #d6bf5a;
+    --french-grey: #b2b6c0;
+    --ebony: #66665b;
+    --sea-green: #358540;
 }
 
 body {
     margin: 0;
-    padding: var(--padding);
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: auto;
 }
 
 header {
+    z-index: 1;
     text-align: center;
-    background-color: brown;
+    background-color: var(--old-gold);
+    min-height: 10vh;
+    box-shadow: 0 5px 5px 0 var(--eerie-black);
 }
 
 main {
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    padding: var(--padding);
+    background-color: var(--french-grey);
+    height: 100%;
 }
 
 .portfolio {
-    background-color: yellow;
+    /* background-color: yellow; */
     grid-column: 1 / 4;
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     gap: 30px;
+    /* height: 100%; */
 }
 
 .portfolio-header {
     grid-row: 1;
     grid-column: 1 / 5;
+    background-color: var(--sea-green);
+    border-radius: 1.2rem;
+    padding: var(--padding);
+    border: 3px solid var(--eerie-black);
 }
 
 .portfolio-item {
-    border: 2px solid black;
+    width: clamp(15vw, 17.5vw, 20vw);
+    height: clamp(12vh, 14vh, 16vh);
+    box-shadow: 0 5px 5px 0 var(--eerie-black);
+    background-color: var(--ebony);
+    border-radius: 1.1rem;
     padding: var(--padding);
     grid-row-start: 2;
+
 }
 
 .portfolio-item:hover {
-    transition: 0.85s ease-in-out;
-    transform: scale(1.1);
+    transition: 0.85s ease;
+    transform: scale(1.05);
 }
