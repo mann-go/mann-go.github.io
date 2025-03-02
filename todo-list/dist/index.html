@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<script defer src="main.js"></script></head>
+<body class="sb-expanded">
+    <aside>
+        <nav>
+            <ul>
+                <li>
+                    <!-- Displays projects like todo grid items, clicking shows a preview? -->
+                    <button type="button" id="my-projects">
+                        <i class='bx bxs-folder-open'></i>
+                        <span>My Projects</span>
+                    </button>
+                </li>
+                <li>
+                    <!-- Display the new project form -->
+                    <button type="button" id="create-project-btn">
+                        <i class='bx bxs-folder-plus'></i>
+                        <span>New Project</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-resize-btn>
+                        <i class='bx bxs-chevrons-right'></i>
+                        <span>Collapse</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <main>
+        <div class="main-header">
+            <h1 id="project-title">Dashboard</h1>  
+            <p id="project-description"></p>
+            <p id="project-dueDate"></p>
+            <div class="actions" id="main-header-actions">
+                <button type="button" class="action-button" id="add-todo">
+                    <i class='bx bxs-message-square-add'></i>
+                    <span>Create Todo</span>
+                </button>  
+            </div>
+        </div>
+        <div id="grid-container" class="grid-container">
+            <h2>Load a project...</h2>
+        </div>
+
+        <!-- SELECT PROJECT MODAL -->
+        <div class="modal" id="select-project-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1>My Projects</h1>
+                    <span class="close">&times;</span>    
+                </div>
+                <div id="grid-container-modal" class="grid-container-modal">
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW PROJECT MODAL -->
+        <div class="modal" id="new-project-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>New Project</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <form action="" id="new-project-form">
+                    <label for="project-name-input">Project Name: </label>
+                    <input type="text" name="project-name-input" id="project-name-input" minlength="6" maxlength="25" required>
+                    <label for="project-description-input">Project Description</label>
+                    <input type="text" name="project-description-input" id="project-description-input" required>
+                    <label for="project-dueDate-input">Due Date:</label>
+                    <input type="datetime-local" name="project-dueDate-input" id="project-dueDate-input" required>
+                    <button type="submit" class="action-button">Create New Project</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- TODO: further form validation -->
+        <div class="modal" id="todo-add-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add Todo</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <form action="" id="todo-add-form">
+                    <div class="tooltip"><label for="todo-name">To Do:</label>
+                        <span class="tooltip-text">Should be between 6 and 25 characters</span>
+                    </div>
+                    <input type="text" name="todo-name" id="todo-name" minlength="6" maxlength="25" required placeholder="A new todo">
+                    
+                    <div class="tooltip"><label for="todo-description">Description:</label>
+                        <span class="tooltip-text">Should be between 10 and 35 characters</span>
+                    </div>
+                    <input type="text" name="todo-description" id="todo-description" minlength="10" maxlength="35" required placeholder="Some description">
+
+                    <div class="tooltip"><label for="todo-due">Due Date:</label>
+                        <span class="tooltip-text">Should be a valid date</span>
+                    </div>
+                    <input type="datetime-local" name="todo-due" id="todo-due" required>
+
+                    <div class="tooltip"><label for="todo-priority">Priority:</label>
+                        <span class="tooltip-text">Pick from 'High', 'Medium' or 'Low'</span>
+                    </div>
+                    <select name="todo-priority" id="todo-priority" required>
+                        <option value="high">High</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+
+                    <div class="tooltip"><label for="todo-notes">Notes:</label>
+                        <span class="tooltip-text">Optional, can be left blank.</span>
+                    </div>
+                    <input type="text" name="todo-notes" id="todo-notes" placeholder="I have some notes...">
+                    <button type="submit" class="action-button">Create Todo</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- TODO: further form validation -->
+        <div class="modal" id="todo-edit-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Todo</h2>
+                    <span class="close">&times;</span>     
+                </div>
+
+                <form action="" id="todo-edit-form">
+                    <p id="edit-todo-id"></p>
+                    <label for="edit-todo-name">To Do:</label>
+                    <input type="text" name="edit-todo-name" id="edit-todo-name" required>
+                    <label for="edit-todo-description">Description:</label>
+                    <input type="text" name="edit-todo-description" id="edit-todo-description" required>
+                    <label for="edit-todo-due">Due Date:</label>
+                    <input type="datetime-local" name="edit-todo-due" id="edit-todo-due" required>
+                    <label for="edit-todo-priority">Priority:</label>
+                    <select name="edit-todo-priority" id="edit-todo-priority" required>
+                        <option value="high">High</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                    <label for="edit-todo-notes">Notes:</label>
+                    <input type="text" name="edit-todo-notes" id="edit-todo-notes">
+                    <button type="submit" class="action-button" id="saveTodoButton">Save changes</button>
+                </form>
+            </div>
+        </div>
+  
+        <!-- PROJECT TEMPLATE -->
+        <template id="project-template">
+                <div class="grid-item">
+                    <div id="project" class="project hoverable">
+                        <div class="project-header">
+                            <h2 id="project-name"></h2>
+                            <div class="actions">
+                                <button class="action-button-small" id="deleteProjectButton">
+                                    <span><i class="bx bx-trash"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <p id="project-description"></p>
+                            <p id="project-dueDate"></p>
+                            <ul id="todos">
+                                <h2>TODOs:</h2>
+                            </ul> 
+                        </div>
+
+                    </div>
+                </div> 
+        </template>
+
+        <!-- TODO TEMPLATE -->
+        <template id="todo-template">
+            <div class="grid-item">
+                <div class="todo todo-done hoverable">
+                    <div class="todo-header">
+                        <h2 id="name"></h2>
+                        <div class="actions">
+                            <button class="action-button-small" id="editTodoButton">
+                                <span><i class="bx bx-edit"></i></span>
+                            </button>
+                            <button class="action-button-small" id="todoStatusButton">
+                                <span><i class="bx bx-check"></i></span>
+                            </button>
+                            <button class="action-button-small" id="deleteTodoButton">
+                                <span><i class="bx bx-trash"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="todo-body"></div>
+                </div>
+            </div>
+        </template>
+    </main>
+</body>
+</html>
