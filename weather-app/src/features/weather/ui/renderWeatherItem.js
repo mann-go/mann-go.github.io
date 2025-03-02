@@ -6,27 +6,36 @@ const icons = {
     sun: 'bx bx-sun',
 }
 
-
 export function renderWeatherItem(data) {
+
+    if (!data) {
+        console.log("no data");
+        return;
+    }
+    const location = document.getElementById('location');
+    location.textContent = `14 Day Forecast: ` + data.resolvedAddress;
+
     const weatherTemplate = document.getElementById('weather-container-template');
     const forecastTemplate = document.getElementById('forecast-item-template');
-    const weatherBodyContainer = document.querySelector('.weather-container-wrapper'); 
-    if (!weatherTemplate || !forecastTemplate || !weatherBodyContainer) {
+    const weatherBodyWrapper = document.querySelector('.weather-container-wrapper'); 
+
+    if (!weatherTemplate || !forecastTemplate || !weatherBodyWrapper) {
         console.error("Missing templates or container in DOM");
         return;
     }
 
-    if (weatherBodyContainer.hasChildNodes()) {
-        console.log("Clear html");
-        weatherBodyContainer.innerHTML = "";
+    if (weatherBodyWrapper.hasChildNodes()) {
+        while (weatherBodyWrapper.firstChild) {
+            weatherBodyWrapper.removeChild(weatherBodyWrapper.firstChild);
+        }
     }
 
-    for (const value of data) {
+    for (const value of data.daysArray) {
         // Clone weather container template
         let weatherContainerTemplate = weatherTemplate.content.cloneNode(true);
         
         let date = weatherContainerTemplate.querySelector('.date');
-        date.textContent = value.datetime;
+        date.textContent = value.day;
 
         let conditions = weatherContainerTemplate.querySelector('.conditions');
         conditions.textContent = value.conditions;
@@ -84,6 +93,6 @@ export function renderWeatherItem(data) {
         });
 
         // Append filled weather container to the main wrapper
-        weatherBodyContainer.appendChild(weatherContainerTemplate);
+        weatherBodyWrapper.appendChild(weatherContainerTemplate);
     }
 }
