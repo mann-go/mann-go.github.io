@@ -7,7 +7,7 @@ export default class Gameboard {
     }
 
     placePiece(ship, x, y) {
-        if (x > this.width || y > this.width || x < 0 || y < 0) {
+        if (x > this.width || y > this.height || x < 0 || y < 0) {
             return new Error("Can't place ship out of bounds!");
         }
 
