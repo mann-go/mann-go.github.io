@@ -6,6 +6,10 @@ export default class Gameboard {
         this.attacks = []; // Stores missed attacks
     }
 
+    getShips() {
+        return this.ships;
+    }
+
     placePiece(ship, x, y) {
         if (x > this.width || y > this.height || x < 0 || y < 0) {
             return new Error("Can't place ship out of bounds!");
@@ -19,7 +23,13 @@ export default class Gameboard {
             return new Error("A ship is already placed here!");
         }
 
-        this.ships.push([ship, x, y]);
+        let ship_object = {
+            ship: ship,
+            coord_x: x,
+            coord_y: y,
+        }
+
+        this.ships.push(ship_object);
     }
 
     recieveAttack(hit_x, hit_y) {
