@@ -1,13 +1,13 @@
 {
   "name": "battleship",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Battleship clone in JavaScript",
   "main": "index.js",
   "scripts": {
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
+  "author": "Peter Pasieka",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.26.10",

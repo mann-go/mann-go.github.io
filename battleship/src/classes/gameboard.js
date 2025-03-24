@@ -23,23 +23,27 @@ export default class Gameboard {
             return new Error("A ship is already placed here!");
         }
 
-        let ship_object = {
-            ship: ship,
-            coord_x: x,
-            coord_y: y,
+        for(let i = 0; i < ship.length; i++) {
+            ship.coords.push({x: x + i, y: y});
         }
 
-        this.ships.push(ship_object);
+        this.ships.push(ship);
     }
 
     recieveAttack(hit_x, hit_y) {
-        for (let ship in this.ships) {
-            if (ship.x === hit_x && ship.y === hit_y) {
-                ship.piece.isHit();
-                return this.attacks.push([hit_x, hit_y]);
-            } else {
-                return this.attacks.push([hit_x, hit_y]);
-            }
-        } 
+        console.log("hitting", hit_x, hit_y);
+        this.ships.forEach(ship => {
+            ship.coords.forEach(coord => {
+                if (coord.x === hit_x && coord.y === hit_y) {
+                    ship.hit(); // Doesn't work
+                    console.log("Hit", coord.x, coord.y);
+                    return this.attacks.push([hit_x, hit_y]);
+                } else {
+                    console.log("Miss");
+                    return this.attacks.push([hit_x, hit_y]);
+                }
+            })
+
+        });
     }
 }

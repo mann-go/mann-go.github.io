@@ -1,10 +1,18 @@
 :root {
+    /* Main colours */
     --paynes-gray: #4e5d6b;
     --charcoal: #333b46;
     --ship-gray: #617382;
     --rasin-black: #191b21;
     --black: #000000;
     --alabaster: #edeade;
+
+    /* Grid / water colours */
+    --picton-blue: #00a6fb;
+    --steel-blue: #0582ca;
+    --lapis-lazuli: #006494;
+    --prussian-blue: #003554;
+    --rich-black: #051923;
 }
 
 * {
@@ -29,8 +37,9 @@ main {
 
 .container {
     grid-row: 2 / 6;
-    grid-column: 2 / 6;
+    grid-column: 3 / 5;
     border: 2px solid black;
+    background-color: var(--alabaster);
     width: 100%;
     height: 100%;
     padding: 1rem;
@@ -50,14 +59,22 @@ main {
 }
 
 .grid-box {
-    border: 2px solid var(--black);
+    border: 1px solid var(--black);
     width: 100%;
     height: 100%;
-    background-color: var(--alabaster);
+    background-color: var(--picton-blue);
+}
+
+.grid-box:nth-of-type(3n) {
+    background-color: var(--steel-blue);
+}
+
+.grid-box:nth-of-type(4n) {
+    background-color: var(--lapis-lazuli);
 }
 
 .grid-box:hover {
-    background-color: var(--paynes-gray);
+    background-color: var(--prussian-blue);
     cursor: pointer;
 }
 
@@ -68,14 +85,38 @@ main {
 }
 
 .ship {
-    background-color: var(--paynes-gray);
-    /* padding: 1rem; */
-    width: 50%;
-    margin: 0 auto;
+    background-color: var(--charcoal);
+    /* border: 2px dotted black; */
+    border-radius: 1rem;
+    /* box-shadow: 0 5px 10px 0 var(--black); */
+    /* width: 50%; */
+    /* margin: 0 auto; */
+}
+
+.miss {
+    height: auto;
+    width: auto;
+    background-color: var(--charcoal);
+    /* border-radius: 5px; */
+    position: relative;
+}
+
+.miss::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: "\274c"; /* use the hex value here... */
+    font-size: 40px; 
+    color: #FFF;
+    /* line-height: 100px; */
+    text-align: center;
 }
 
 .ship:hover {
     transform: scale(1.1);
+    background-color: var(--charcoal);
 }
 
 
