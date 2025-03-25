@@ -1,19 +1,17 @@
 export default class Ship {
-    constructor(length, times_hit, hasSunk, coords = []) {
-        this.length = length;
-        this.times_hit = times_hit;
-        this.hasSunk = hasSunk;
-        this.coords = coords;
-    }
+  constructor(length, times_hit, hasSunk, coords = []) {
+    this.length = length;
+    this.times_hit = times_hit;
+    this.hasSunk = hasSunk;
+    this.coords = coords;
+  }
 
-    hit() {
-        return this.times_hit++;
-    }
+  hit() {
+    return ++this.times_hit;
+  }
 
-    isSunk() {
-        if (this.length === this.times_hit) {
-            return this.hasSunk = true;
-        }
-    }
-
+  isSunk() {
+    this.hasSunk = this.times_hit >= this.length;
+    return this.hasSunk;
+  }
 }
