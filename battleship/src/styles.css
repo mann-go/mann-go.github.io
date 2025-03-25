@@ -55,7 +55,7 @@ main {
     grid-template-rows: repeat(10, 1fr);
     /* width: 100%; */
     height: 100%;
-    background-color: var(--alabaster);
+    background-color: var(--lapis-lazuli);
 }
 
 .grid-box {
@@ -63,14 +63,6 @@ main {
     width: 100%;
     height: 100%;
     background-color: var(--picton-blue);
-}
-
-.grid-box:nth-of-type(3n) {
-    background-color: var(--steel-blue);
-}
-
-.grid-box:nth-of-type(4n) {
-    background-color: var(--lapis-lazuli);
 }
 
 .grid-box:hover {
@@ -86,17 +78,24 @@ main {
 
 .ship {
     background-color: var(--charcoal);
-    /* border: 2px dotted black; */
-    border-radius: 1rem;
-    /* box-shadow: 0 5px 10px 0 var(--black); */
-    /* width: 50%; */
-    /* margin: 0 auto; */
+    border: 2px dotted black;
+    border-radius: 0.25rem;
+    box-shadow: 0 5px 10px 0 var(--black);
+    width: 50%;
+    margin: 0 auto;
 }
+
+.hit {
+    background-color: red;
+    width: 50%;
+    margin: 0 auto;
+}
+
 
 .miss {
     height: auto;
     width: auto;
-    background-color: var(--charcoal);
+    background-color: var(--rasin-black);
     /* border-radius: 5px; */
     position: relative;
 }
@@ -108,7 +107,11 @@ main {
     left: 0;
     right: 0;
     content: "\274c"; /* use the hex value here... */
-    font-size: 40px; 
+    width: fit-content;
+    height: fit-content;
+    font-size: 32px;
+    justify-self: center;
+    align-self: center;
     color: #FFF;
     /* line-height: 100px; */
     text-align: center;

@@ -17,8 +17,8 @@ let player1_ships = player1.gameboard.getShips();
 
 // Handle attack logic
 function handleAttack(x, y, grid_box) {
-    let isHit = player1.gameboard.recieveAttack(x, y);
-    updateGrid(grid_box, isHit);
+  let isHit = player1.gameboard.recieveAttack(x, y);
+  updateGrid(grid_box, isHit);
 }
 
 createGameBoardUI(handleAttack);
