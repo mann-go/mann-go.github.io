@@ -11,23 +11,26 @@ export default class Gameboard {
     return this.ships;
   }
 
-  placePiece(ship, x, y) {
-    if (x > this.width || y > this.height || x < 0 || y < 0) {
-      return new Error("Can't place ship out of bounds!");
+  placePiece(ship, x, y, direction = "horizontal") {
+    if (direction === "horizontal" && x + ship.length > this.width) {
+      return new Error("Ship exceeds grid width!");
     }
-
-    if (ship.length > x || ship.length > y) {
-      return new Error("Your ship cannot be placed here!");
+    if (direction === "vertical" && y + ship.length > this.height) {
+      return new Error("Ship exceeds grid height!");
     }
-
-    if (this.ships.includes([x, y])) {
+  
+    if (this.ships.some(ship => ship.coords.some(coord => coord.x === x && coord.y === y))) {
       return new Error("A ship is already placed here!");
     }
-
+  
     for (let i = 0; i < ship.length; i++) {
-      ship.coords.push({ x: x + i, y: y });
+      if (direction === "horizontal") {
+        ship.coords.push({ x: x + i, y: y });
+      } else {
+        ship.coords.push({ x: x, y: y + i });
+      }
     }
-
+  
     this.ships.push(ship);
   }
 
@@ -53,11 +56,14 @@ export default class Gameboard {
         if (coord.x === hit_x && coord.y === hit_y) {
           ship.hit();
 
-          console.log("Hit", coord.x, coord.y);
+          // console.log("Hit", coord.x, coord.y);
           this.hits.push({ x: hit_x, y: hit_y });
           // If ship is sunk, end
           if (ship.isSunk()) {
             console.log("Sunk battleship!");
+            if (this.ships.every((ship) => ship.isSunk())) {
+              console.log("You lose!");
+            }
             return true;
           }
 
@@ -68,7 +74,7 @@ export default class Gameboard {
     }
 
     // Missed
-    console.log("Miss");
+    // console.log("Miss");
     this.misses.push({ x: hit_x, y: hit_y });
     return false;
   }
