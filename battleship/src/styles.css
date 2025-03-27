@@ -32,13 +32,15 @@ main {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(6, 1fr);
+  padding: 1rem;
   background-color: var(--charcoal);
 }
 
 .container {
   grid-row: 2 / 6;
-  grid-column: 2 / 4;
-  border: 2px solid black;
+  grid-column: 1 / 5;
+  border-radius: 1rem;
+  box-shadow: 0 5px 5px 7.5px var(--rasin-black);
   background-color: var(--alabaster);
   width: 100%;
   height: 100%;
@@ -46,28 +48,24 @@ main {
 
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  /* flex: 3 30px; */
   gap: 1rem;
 }
 
-.container2 {
-  grid-row: 2 / 6;
-  grid-column: 4 / 6;
-  border: 2px solid black;
-  background-color: var(--alabaster);
-  width: 100%;
-  height: 100%;
-  padding: 1rem;
-
+.board-container {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  justify-content: center;
+  gap: 20px;
+  height: 85%;
+  width: 100%;
 }
 
 .board {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
-  /* width: 100%; */
+  width: 50%;
   height: 100%;
   background-color: var(--lapis-lazuli);
 }
@@ -87,22 +85,50 @@ main {
 .settings {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  width: 30%;
   gap: 0.2rem;
+}
+
+.active {
+  opacity: 1;
+}
+
+.active > .ship {
+  background-color: var(--picton-blue);
+}
+
+.inactive {
+  opacity: 0.3;
+  background-color: var(--charcoal);
+}
+
+.board.inactive {
+  display: none;
+  background-color: var(--black);
+  width: 100%;
 }
 
 .ship {
   background-color: var(--charcoal);
-  /* border: 2px dotted black; */
   border-radius: 0.25rem;
   /* box-shadow: 0 5px 10px 0 var(--black); */
-  /* width: 50%; */
-  /* margin: 0 auto; */
 }
+
+/* .horizontal {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.vertical {
+  height: 50%;
+  margin: auto 0;
+} */
 
 .hit {
   background-color: red;
-  /* width: 50%;
-  margin: 0 auto; */
+  width: 100%;
+  margin: 0 auto;
 }
 
 .miss {

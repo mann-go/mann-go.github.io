@@ -11,26 +11,30 @@ export default class Gameboard {
     return this.ships;
   }
 
-  placePiece(ship, x, y, direction = "horizontal") {
-    if (direction === "horizontal" && x + ship.length > this.width) {
+  placePiece(ship, x, y) {
+    if (ship.orientation === "horizontal" && x + ship.length > this.width) {
       return new Error("Ship exceeds grid width!");
     }
-    if (direction === "vertical" && y + ship.length > this.height) {
+    if (ship.orientation === "vertical" && y + ship.length > this.height) {
       return new Error("Ship exceeds grid height!");
     }
-  
-    if (this.ships.some(ship => ship.coords.some(coord => coord.x === x && coord.y === y))) {
+
+    if (
+      this.ships.some((ship) =>
+        ship.coords.some((coord) => coord.x === x && coord.y === y)
+      )
+    ) {
       return new Error("A ship is already placed here!");
     }
-  
+
     for (let i = 0; i < ship.length; i++) {
-      if (direction === "horizontal") {
+      if (ship.orientation === "horizontal") {
         ship.coords.push({ x: x + i, y: y });
       } else {
         ship.coords.push({ x: x, y: y + i });
       }
     }
-  
+
     this.ships.push(ship);
   }
 
@@ -74,7 +78,6 @@ export default class Gameboard {
     }
 
     // Missed
-    // console.log("Miss");
     this.misses.push({ x: hit_x, y: hit_y });
     return false;
   }
