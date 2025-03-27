@@ -103,11 +103,22 @@ li:hover {
 
 .board {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(11, 1fr);
   width: 50%;
   height: 100%;
   background-color: var(--lapis-lazuli);
+  box-shadow: 0 7.5px 10px 0 var(--black);
+}
+
+.coordinate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background: lightgray;
+  border: 1px solid black;
+  width: 100%;
 }
 
 .grid-box {
@@ -166,9 +177,14 @@ li:hover {
 } */
 
 .hit {
-  background-color: red;
+  background-color: darkred;
   width: 100%;
   margin: 0 auto;
+  position: relative;
+}
+
+.hit::after {
+  content: "Y";
 }
 
 .miss {
@@ -179,6 +195,11 @@ li:hover {
 }
 
 .miss::after {
+  content: "\274c";
+}
+
+.hit::after,
+.miss::after {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -187,10 +208,10 @@ li:hover {
   content: "\274c";
   width: fit-content;
   height: fit-content;
-  font-size: 32px;
+  font-size: 28px;
   justify-self: center;
   align-self: center;
-  color: #fff;
+  /* color: #720c0c; */
   text-align: center;
 }
 

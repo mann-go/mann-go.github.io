@@ -11,6 +11,5 @@ export default class Player {
     this.name = name;
     this.type = type;
     this.gameboard = new Gameboard();
-    this.player_ships = []; // Might not need this
   }
 }

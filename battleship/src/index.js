@@ -19,9 +19,9 @@ const players = {
 let currentPlayer = "p1";
 
 // P1
-let ship1 = new Ship(2, 0, false, "vertical");
-let ship2 = new Ship(3, 0, false, "horizontal");
-let ship3 = new Ship(4, 0, false, "horizontal");
+let ship1 = new Ship(2, 0, false, "vertical",  "Patrol Boat");
+let ship2 = new Ship(3, 0, false, "horizontal", "Submarine");
+let ship3 = new Ship(4, 0, false, "horizontal", "Battleship");
 
 players.p1.gameboard.placePiece(ship1, 4, 2);
 players.p1.gameboard.placePiece(ship2, 6, 4);
@@ -33,14 +33,14 @@ createGameBoardUI(players.p1, handleAttack);
 drawShips(players.p1, players.p1.player_ships);
 
 // P2
-let ship4 = new Ship(3, 0, false, "horizontal");
-let ship5 = new Ship(2, 0, false, "vertical");
-let ship6 = new Ship(2, 0, false, "horizontal");
-let ship7 = new Ship(5, 0, false, "vertical");
+let ship4 = new Ship(3, 0, false, "horizontal", "Submarine",);
+let ship5 = new Ship(2, 0, false, "vertical", "Patrol Boat");
+let ship6 = new Ship(4, 0, false, "horizontal", "Battleship");
+let ship7 = new Ship(5, 0, false, "vertical", "Carrier");
 
 players.p2.gameboard.placePiece(ship4, 1, 1);
 players.p2.gameboard.placePiece(ship5, 4, 3);
-players.p2.gameboard.placePiece(ship6, 7, 5);
+players.p2.gameboard.placePiece(ship6, 5, 6);
 players.p2.gameboard.placePiece(ship7, 1, 4);
 
 players.p2.player_ships = players.p2.gameboard.getShips();

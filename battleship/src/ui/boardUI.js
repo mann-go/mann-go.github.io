@@ -3,14 +3,28 @@ export function createGameBoardUI(player, handleAttack) {
   let board = document.createElement("div");
   board.className = `board ${player.name}`;
 
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      let grid_box = document.createElement("div");
-      grid_box.className = "grid-box";
-      grid_box.id = "grid-box";
-      grid_box.dataset.id = `${i},${j}`;
-      grid_box.addEventListener("click", () => handleAttack(i, j, grid_box));
-      board.appendChild(grid_box);
+  for (let i = 0; i < 11; i++) {
+    for (let j = 0; j < 11; j++) {
+      let cell = document.createElement("div");
+
+      if (i === 0 && j === 0) {
+        // Empty corner cell
+        cell.className = "coordinate";
+      } else if (i === 0) {
+        // Column labels A-J
+        cell.className = "coordinate";
+        cell.innerText = String.fromCharCode(64 + j);
+      } else if (j === 0) {
+        // Row labels 1-10
+        cell.className = "coordinate";
+        cell.innerText = i;
+      } else {
+        // Game grid cells
+        cell.className = "grid-box";
+        cell.dataset.id = `${i - 1}, ${j - 1}`;
+        cell.addEventListener("click", () => handleAttack(i - 1, j - 1, cell));
+      }
+      board.appendChild(cell);
     }
   }
 
