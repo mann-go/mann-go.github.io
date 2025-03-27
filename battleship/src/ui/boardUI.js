@@ -19,6 +19,7 @@ export function createGameBoardUI(player, handleAttack) {
 
 export function updateGrid(grid_box, isHit) {
   grid_box.className = isHit ? "hit" : "miss";
+  grid_box.classList += " inactive";
 }
 
 export function drawShips(player, ships) {
@@ -62,5 +63,40 @@ export function playTurn(player) {
       board.classList.remove("inactive");
       board.style.pointerEvents = "auto";
     }
+  });
+}
+
+export function updateCombatLog(currentPlayer, x, y, result) {
+  let combat_log = document.querySelector("#combat-log");
+  let attack = document.createElement("li");
+
+  if (result === "sunk") {
+    attack.textContent = `${currentPlayer} ${result} a ship at (${x}, ${y})`;
+    combat_log.appendChild(attack);
+    return;
+  } 
+
+  let has_hit = result ? "hit" : "missed";
+  attack.textContent = `${currentPlayer} ${has_hit} (${x}, ${y})`;
+  combat_log.appendChild(attack);
+}
+
+export function updateCurrentPlayerUI(currentPlayer) {
+  let active_player = document.querySelector(".active-player");
+  active_player.textContent = `${currentPlayer} is picking...`;
+}
+
+export function processWin(player) {
+  let allBoards = document.querySelectorAll(".board");
+  let winner = document.createElement('li');
+  winner.textContent = "The Winner is: " + player;
+  let combat_log = document.querySelector("#combat-log");
+  combat_log.appendChild(winner);
+  document.querySelector(".active-player").textContent = "";
+
+  allBoards.forEach((board) => {
+    board.classList.add("inactive");
+    board.classList.remove("active");
+    board.style.pointerEvents = "none";
   });
 }

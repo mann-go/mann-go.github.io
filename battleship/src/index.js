@@ -3,6 +3,9 @@ import {
   createGameBoardUI,
   drawShips,
   playTurn,
+  processWin,
+  updateCombatLog,
+  updateCurrentPlayerUI,
   updateGrid,
 } from "./ui/boardUI";
 import Ship from "./classes/ship";
@@ -31,14 +34,14 @@ drawShips(players.p1, players.p1.player_ships);
 
 // P2
 let ship4 = new Ship(3, 0, false, "horizontal");
-let ship5 = new Ship(2, 0, false, "horizontal");
+let ship5 = new Ship(2, 0, false, "vertical");
 let ship6 = new Ship(2, 0, false, "horizontal");
-let ship7 = new Ship(5, 0, false, "horizontal");
+let ship7 = new Ship(5, 0, false, "vertical");
 
 players.p2.gameboard.placePiece(ship4, 1, 1);
-players.p2.gameboard.placePiece(ship5, 6, 3);
+players.p2.gameboard.placePiece(ship5, 4, 3);
 players.p2.gameboard.placePiece(ship6, 7, 5);
-players.p2.gameboard.placePiece(ship7, 1, 8);
+players.p2.gameboard.placePiece(ship7, 1, 4);
 
 players.p2.player_ships = players.p2.gameboard.getShips();
 
@@ -47,18 +50,21 @@ drawShips(players.p2, players.p2.player_ships);
 
 // Handle attack logic
 function handleAttack(x, y, grid_box) {
-  // Get parent board
-  let player_container = grid_box.closest(".board");
-  let player_name = player_container.classList.contains("p1") ? "p1" : "p2";
-  let attacking_player = players[player_name];
+  let defending_player = players[currentPlayer === "p1" ? "p2" : "p1"];
 
-  console.log(`Attack at (${x}, ${y}) on ${player_name}`);
+  let result = defending_player.gameboard.recieveAttack(x, y);
+  updateGrid(grid_box, result);
 
-  let is_hit = attacking_player.gameboard.recieveAttack(x, y);
+  setTimeout(() => {
+    playTurn(currentPlayer);
+    updateCombatLog(currentPlayer, x, y, result);
 
-  updateGrid(grid_box, is_hit);
-  playTurn(currentPlayer);
+    if (result === "lost") {
+      processWin(currentPlayer);
+      return;
+    }
 
-  // Swap turns
-  currentPlayer = currentPlayer === "p1" ? "p2" : "p1";
+    currentPlayer = currentPlayer === "p1" ? "p2" : "p1";
+    updateCurrentPlayerUI(currentPlayer);
+  }, 1000);
 }

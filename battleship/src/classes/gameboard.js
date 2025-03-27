@@ -66,9 +66,9 @@ export default class Gameboard {
           if (ship.isSunk()) {
             console.log("Sunk battleship!");
             if (this.ships.every((ship) => ship.isSunk())) {
-              console.log("You lose!");
+              return "lost";
             }
-            return true;
+            return "sunk";
           }
 
           // If ship can take more hits
