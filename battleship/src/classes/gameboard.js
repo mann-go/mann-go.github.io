@@ -29,7 +29,8 @@ export default class Gameboard {
 
     for (let i = 0; i < ship.length; i++) {
       if (ship.orientation === "horizontal") {
-        ship.coords.push({ x: x + i, y: y });
+        let coordToNumber = x.charCodeAt(0);
+        ship.coords.push({ x: String.fromCharCode(coordToNumber + i), y: y});
       } else {
         ship.coords.push({ x: x, y: y + i });
       }

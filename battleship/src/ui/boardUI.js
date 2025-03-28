@@ -1,14 +1,16 @@
 export function createGameBoardUI(player, handleAttack) {
+  let size = 11;
   let board_container = document.querySelector(".board-container");
   let board = document.createElement("div");
   board.className = `board ${player.name}`;
 
-  for (let i = 0; i < 11; i++) {
-    for (let j = 0; j < 11; j++) {
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
       let cell = document.createElement("div");
 
       if (i === 0 && j === 0) {
         // Empty corner cell
+        cell.textContent = `${player.name}`;
         cell.className = "coordinate";
       } else if (i === 0) {
         // Column labels A-J
@@ -20,9 +22,10 @@ export function createGameBoardUI(player, handleAttack) {
         cell.innerText = i;
       } else {
         // Game grid cells
+        let letterToNumber = String.fromCharCode(64 + j);
         cell.className = "grid-box";
-        cell.dataset.id = `${i - 1}, ${j - 1}`;
-        cell.addEventListener("click", () => handleAttack(i - 1, j - 1, cell));
+        cell.dataset.id = `${letterToNumber},${i}`;
+        cell.addEventListener("click", () => handleAttack(letterToNumber, i, cell));
       }
       board.appendChild(cell);
     }
@@ -36,19 +39,22 @@ export function updateGrid(grid_box, isHit) {
   grid_box.classList += " inactive";
 }
 
+export function placeShips() {}
+
 export function drawShips(player, ships) {
   let player_container = document.querySelector(`.${player.name}`);
 
   let grid_boxes = player_container.querySelectorAll(".grid-box");
 
   ships.forEach((ship) => {
+    console.log(ship.coords);
     let orientation = ship.orientation;
     ship.coords.forEach((coords) => {
       grid_boxes.forEach((box) => {
-        let box_id = box.dataset.id.split(",").map(Number);
+        let box_id = box.dataset.id.split(",");
         let box_id_object = { x: box_id[0], y: box_id[1] };
 
-        if (box_id_object.x === coords.x && box_id_object.y === coords.y) {
+        if (letterToIndex(box_id_object.x) === letterToIndex(coords.x) && Number(box_id_object.y) === Number(coords.y)) {
           box.classList.add("ship");
 
           if (orientation === "horizontal") {
@@ -88,7 +94,7 @@ export function updateCombatLog(currentPlayer, x, y, result) {
     attack.textContent = `${currentPlayer} ${result} a ship at (${x}, ${y})`;
     combat_log.appendChild(attack);
     return;
-  } 
+  }
 
   let has_hit = result ? "hit" : "missed";
   attack.textContent = `${currentPlayer} ${has_hit} (${x}, ${y})`;
@@ -102,7 +108,7 @@ export function updateCurrentPlayerUI(currentPlayer) {
 
 export function processWin(player) {
   let allBoards = document.querySelectorAll(".board");
-  let winner = document.createElement('li');
+  let winner = document.createElement("li");
   winner.textContent = "The Winner is: " + player;
   let combat_log = document.querySelector("#combat-log");
   combat_log.appendChild(winner);
@@ -113,4 +119,9 @@ export function processWin(player) {
     board.classList.remove("active");
     board.style.pointerEvents = "none";
   });
+}
+
+/* Helper function to converted lettered coordinates to numbers */
+function letterToIndex(letter) {
+  return letter.trim().charCodeAt(0) - 65;
 }
