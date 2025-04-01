@@ -8,13 +8,22 @@
 <body>
     <header></header>
     <main>
-        <div class="container">
-            <div class="board-container">
+        <div class="container flex">
+            <div class="board-container flex">
             </div>
-            <div class="settings">
-                <input type="text" placeholder="player1">
-                <input type="text" placeholder="player2">
+            <div class="player_names flex">
+                <label for="player1_name">Player 1:<input type="text" id="player1_name" placeholder="player1" value="p1" required></label>
+                <label for="vs_type">Player 2 Type:
+                <select name="vs_type" id="vs_type">
+                    <option value="Player" selected>Player</option>
+                    <option value="CPU">CPU</option>
+                </select>
+                </label>
+                <label for="player2_name">Player 2:<input type="text" id="player2_name" placeholder="player2" value="p2" required></label>
+            </div>
+            <div class="button-container flex">
                 <button type="button" id="start-game">Start Game</button>
+                <button type="button" id="restart-game">Restart?</button>   
             </div>
         </div>
         <div class="info-container">
@@ -26,11 +35,88 @@
             <div class="active-player">
 
             </div>
-            <div class="ship-container">
-                
-            </div>
         </div>
     </main>
     <footer></footer>
+
+    <div id="plot-ships-modal" class="plot-ships">
+        <div class="ship-container flex">
+            <div class="ship-container-header flex">
+                <h1 id="plot-ships-modal-player-name">Player Name</h1>
+                <span class="close">&times;</span>
+            </div>
+            <form action="" class="" id="plot-ships-form">
+                <fieldset>
+                    <legend>Plot your ships!</legend>
+                <div class="ship-input flex">
+                    <h3>Carrier: (5)</h3>
+                    <div class="coordinate flex-child">
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="carrier-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="carrier-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="carrier-orientation">Direction:
+                            <select name="carrier-orientation" id="orientation">
+                                <option value="horizontal">Horizontal</option>
+                                <option value="vertical">Vertical</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="ship-input flex">
+                    <h3>Battleship: (4)</h3>
+                    <div class="coordinate flex-child">
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="battleship-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="battleship-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="battleship-orientation">Direction:
+                            <select name="battleship-orientation" id="orientation">
+                                <option value="horizontal">Horizontal</option>
+                                <option value="vertical">Vertical</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="ship-input flex">
+                    <h3>Destroyer: (3)</h3>
+                    <div class="coordinate flex-child">
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="destroyer-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="destroyer-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="destroyer-orientation">Direction:
+                        <select name="destroyer-orientation" id="orientation">
+                            <option value="horizontal">Horizontal</option>
+                            <option value="vertical">Vertical</option>
+                        </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="ship-input flex">
+                    <h3>Submarine: (3)</h3>
+                    <div class="coordinate flex-child">
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="submarine-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="submarine-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="submarine-orientation">Direction:
+                        <select name="submarine-orientation" id="orientation">
+                            <option value="horizontal">Horizontal</option>
+                            <option value="vertical">Vertical</option>
+                        </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="ship-input flex">
+                    <h3>Patrol Boat: (2)</h3>
+                    <div class="coordinate flex-child">
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="patrol-boat-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="patrol-boat-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="patrol-boat-orientation">Direction:
+                        <select name="patrol-boat-orientation" id="orientation">
+                            <option value="horizontal">Horizontal</option>
+                            <option value="vertical">Vertical</option>
+                        </select>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" id="plot-ships">Place Ships</button>
+            </fieldset>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

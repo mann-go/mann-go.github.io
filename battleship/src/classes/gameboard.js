@@ -1,7 +1,7 @@
 export default class Gameboard {
   constructor() {
-    this.width = 10;
-    this.height = 10;
+    this.width = 11;
+    this.height = 11;
     this.ships = [];
     this.hits = [];
     this.misses = [];
@@ -12,11 +12,16 @@ export default class Gameboard {
   }
 
   placePiece(ship, x, y) {
-    if (ship.orientation === "horizontal" && x + ship.length > this.width) {
-      return new Error("Ship exceeds grid width!");
+    let convertXCoord = x.charCodeAt(0) - 64;
+    if (ship.orientation === "horizontal" && convertXCoord + ship.length > this.width) {
+      console.warn("Ship exceeds grid width!");
+      x = this.width - ship.length;
+      
+      x = String.fromCharCode(x + 64);
     }
     if (ship.orientation === "vertical" && y + ship.length > this.height) {
-      return new Error("Ship exceeds grid height!");
+      console.warn("Ship exceeds grid height! Coordinates changed.");
+      y = this.height - ship.length;
     }
 
     if (
@@ -24,13 +29,16 @@ export default class Gameboard {
         ship.coords.some((coord) => coord.x === x && coord.y === y)
       )
     ) {
-      return new Error("A ship is already placed here!");
+      console.warn("A ship is already placed here!");
+      x = convertXCoord + 1;
+      x = String.fromCharCode(x + 64);
+      y = Number(y) + 1;
     }
 
     for (let i = 0; i < ship.length; i++) {
       if (ship.orientation === "horizontal") {
         let coordToNumber = x.charCodeAt(0);
-        ship.coords.push({ x: String.fromCharCode(coordToNumber + i), y: y});
+        ship.coords.push({ x: String.fromCharCode(coordToNumber + i), y: y });
       } else {
         ship.coords.push({ x: x, y: y + i });
       }
@@ -58,17 +66,14 @@ export default class Gameboard {
       // Get coords of ship
       for (let coord of ship.coords) {
         // If coords match, process hit
-        if (coord.x === hit_x && coord.y === hit_y) {
+        if (coord.x === hit_x && Number(coord.y) === Number(hit_y)) {
           ship.hit();
 
-          // console.log("Hit", coord.x, coord.y);
           this.hits.push({ x: hit_x, y: hit_y });
           // If ship is sunk, end
-          if (ship.isSunk()) {
-            console.log("Sunk battleship!");
-            if (this.ships.every((ship) => ship.isSunk())) {
-              return "lost";
-            }
+          if (ship.isSunk() && this.ships.every((ship) => ship.isSunk())) {
+            return "lost";
+          } else if (ship.isSunk()) {
             return "sunk";
           }
 

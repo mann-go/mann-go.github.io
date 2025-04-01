@@ -6,6 +6,7 @@
   --rasin-black: #191b21;
   --black: #000000;
   --alabaster: #edeade;
+  --powder: #fbfcfa;
 
   /* Grid / water colours */
   --picton-blue: #00a6fb;
@@ -13,6 +14,11 @@
   --lapis-lazuli: #006494;
   --prussian-blue: #003554;
   --rich-black: #051923;
+
+  --border-radius: 1rem;
+  --universal-padding: 1rem;
+  --small-padding: 0.5rem;
+  --x-small-padding: 0.25rem;
 }
 
 * {
@@ -25,6 +31,12 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
 }
 
 main {
@@ -45,24 +57,22 @@ main {
 
   display: flex;
   flex-direction: column;
-  padding: 1rem;  
+  padding: var(--universal-padding);
   gap: 20px;
+  border-radius: var(--border-radius);
 }
 
 .info-container > * {
   flex: 33%;
 }
 
-
 .combat-log-container {
-  /* width: 90%; */
   text-align: center;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 .active-player {
-  /* justify-self: flex-end; */
   width: auto;
   border: 2px solid black;
 }
@@ -73,7 +83,7 @@ ul {
 
 .combat-log-container li {
   border-bottom: 2px dotted var(--paynes-gray);
-  padding: 0.5rem;
+  padding: var(--small-padding);
 }
 
 li:hover {
@@ -89,24 +99,18 @@ li:hover {
 .container {
   grid-row: 2 / 6;
   grid-column: 2 / 6;
-  border-radius: 1rem;
+  border-radius: var(--border-radius);
   box-shadow: 0 5px 5px 7.5px var(--rasin-black);
   background-color: var(--alabaster);
   width: 100%;
   height: 100%;
-  padding: 1rem;
+  padding: var(--universal-padding);
 
-  display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  gap: 1rem;
 }
 
 .board-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  height: 85%;
+  height: 80%;
   width: 100%;
 }
 
@@ -142,11 +146,39 @@ li:hover {
   cursor: pointer;
 }
 
-.settings {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+.player_names {
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: 0.2rem;
+  border: 2px solid black;
+}
+
+.player_names > label {
+  flex: 33%;
+}
+
+input,
+button,
+select {
+  height: 25px;
+  width: 50%;
+  border: 2px solid var(--charcoal);
+  padding: 0.2rem;
+  transition: 0.2s linear;
+  appearance: none;
+}
+
+input:hover,
+button:hover,
+select:hover {
+  border-color: var(--picton-blue);
+  border-radius: var(--small-padding);
+  cursor: pointer;
+}
+
+#restart-game {
+  display: none;
 }
 
 .active {
@@ -163,27 +195,17 @@ li:hover {
 }
 
 .board.inactive {
-  /* display: none; */
+  display: none;
   opacity: 0.8;
   background-color: var(--black);
-  /* width: 100%; */
 }
 
 .ship {
-  background-color: var(--charcoal);
-  /* border-radius: 0.25rem; */
+  border: 2px solid black;
+  background-color: var(--paynes-gray);
+  border-radius: var(--x-small-padding);
   /* box-shadow: 0 5px 10px 0 var(--black); */
 }
-
-/* .horizontal {
-  width: 50%;
-  margin: 0 auto;
-}
-
-.vertical {
-  height: 50%;
-  margin: auto 0;
-} */
 
 .hit {
   background-color: darkred;
@@ -220,14 +242,8 @@ li:hover {
   font-size: 28px;
   justify-self: center;
   align-self: center;
-  /* color: #720c0c; */
   text-align: center;
 }
-
-/* .ship:hover {
-  transform: scale(1.1);
-  background-color: var(--charcoal);
-} */
 
 header,
 footer {
@@ -235,4 +251,94 @@ footer {
   background-color: var(--rasin-black);
   width: 100%;
   height: 75px;
+}
+
+/* Plot Ships Modal */
+.plot-ships {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.ship-container {
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 50%;
+  height: 80%;
+  margin: 0 auto;
+  padding: var(--universal-padding);
+  background-color: var(--alabaster);
+}
+
+.ship-container-header {
+  flex-grow: 1;
+  justify-content: space-between;
+  height: min-content;
+}
+
+span.close {
+  font-size: 32px;
+  border-bottom: 2px solid var(--charcoal);
+  transition: 0.2s linear;
+}
+
+span.close:hover {
+  cursor: pointer;
+  color: red;
+}
+
+form {
+  padding: var(--universal-padding);
+  width: 100%;
+  height: 80%;
+  overflow-y: scroll;
+  scrollbar-width: 5px;
+  gap: 25px;
+}
+
+form > * {
+  padding: var(--universal-padding);
+}
+
+.ship-input {
+  flex-wrap: wrap;
+  padding: var(--universal-padding);
+
+  border: 2px solid var(--black);
+  border-radius: 0.5rem;
+
+  border-bottom: 2px solid var(--black);
+  /* border-bottom-right-radius: 4rem;
+  border-bottom-left-radius: 8rem; */
+  background-color: var(--ship-gray);
+  margin: 1rem;
+  /* width: 100%; */
+}
+
+.window {
+  border: 2px solid black;
+  background-color: var(--lapis-lazuli);
+  color: var(--lapis-lazuli);
+  border-radius: 1rem;
+  width: 10%;
+  height: 2rem;
+}
+
+.flex-child {
+  display: flex;
+  justify-content: space-evenly;
+  padding: var(--universal-padding);
+  width: 100%;
+}
+
+.flex-child > * {
+  width: 100%;
 }

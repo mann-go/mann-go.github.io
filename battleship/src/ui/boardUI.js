@@ -2,7 +2,7 @@ export function createGameBoardUI(player, handleAttack) {
   let size = 11;
   let board_container = document.querySelector(".board-container");
   let board = document.createElement("div");
-  board.className = `board ${player.name}`;
+  board.className = `board ${player.name} inactive`;
 
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
@@ -25,7 +25,9 @@ export function createGameBoardUI(player, handleAttack) {
         let letterToNumber = String.fromCharCode(64 + j);
         cell.className = "grid-box";
         cell.dataset.id = `${letterToNumber},${i}`;
-        cell.addEventListener("click", () => handleAttack(letterToNumber, i, cell));
+        cell.addEventListener("click", () =>
+          handleAttack(letterToNumber, i, cell)
+        );
       }
       board.appendChild(cell);
     }
@@ -39,22 +41,22 @@ export function updateGrid(grid_box, isHit) {
   grid_box.classList += " inactive";
 }
 
-export function placeShips() {}
-
 export function drawShips(player, ships) {
   let player_container = document.querySelector(`.${player.name}`);
 
   let grid_boxes = player_container.querySelectorAll(".grid-box");
 
   ships.forEach((ship) => {
-    console.log(ship.coords);
     let orientation = ship.orientation;
     ship.coords.forEach((coords) => {
       grid_boxes.forEach((box) => {
         let box_id = box.dataset.id.split(",");
         let box_id_object = { x: box_id[0], y: box_id[1] };
 
-        if (letterToIndex(box_id_object.x) === letterToIndex(coords.x) && Number(box_id_object.y) === Number(coords.y)) {
+        if (
+          letterToIndex(box_id_object.x) === letterToIndex(coords.x) &&
+          Number(box_id_object.y) === Number(coords.y)
+        ) {
           box.classList.add("ship");
 
           if (orientation === "horizontal") {
@@ -72,16 +74,16 @@ export function playTurn(player) {
   let allBoards = document.querySelectorAll(".board");
 
   allBoards.forEach((board) => {
-    // Disable active player's board
     if (board.classList.contains(player)) {
-      board.classList.add("inactive");
-      board.classList.remove("active");
-      board.style.pointerEvents = "none";
-    } else {
       // Enable opponent's board
       board.classList.add("active");
       board.classList.remove("inactive");
       board.style.pointerEvents = "auto";
+    } else {
+      // Disable active player's board
+      board.classList.add("inactive");
+      board.classList.remove("active");
+      board.style.pointerEvents = "none";
     }
   });
 }
@@ -115,10 +117,24 @@ export function processWin(player) {
   document.querySelector(".active-player").textContent = "";
 
   allBoards.forEach((board) => {
-    board.classList.add("inactive");
-    board.classList.remove("active");
+    board.classList.add("active");
+    // board.classList.remove("active");
     board.style.pointerEvents = "none";
   });
+
+  document.querySelector(".player_names").style.display = "flex";
+  document.querySelector("#restart-game").style.display = "block";
+}
+
+export function restartGame() {
+  let board_container = document.querySelector(".board-container");
+  while (board_container.firstChild) {
+    board_container.removeChild(board_container.firstChild);
+  }
+
+  let player_names_container = document.querySelector(".player_names");
+  player_names_container.style.display = "flex"; // Fix later
+  document.querySelector("#restart-game").style.display = "none";
 }
 
 /* Helper function to converted lettered coordinates to numbers */
