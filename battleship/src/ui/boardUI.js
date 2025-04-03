@@ -74,7 +74,7 @@ export function playTurn(player) {
   let allBoards = document.querySelectorAll(".board");
 
   allBoards.forEach((board) => {
-    if (board.classList.contains(player)) {
+    if (!board.classList.contains(player)) {
       // Enable opponent's board
       board.classList.add("active");
       board.classList.remove("inactive");
@@ -171,6 +171,8 @@ export function processWin(player) {
 export function startGame(players, p1, p1_ships, p2, p2_ships, handleAttack) {
   let gameContainer = document.querySelector(".container");
   gameContainer.style.width = "100%";
+
+  console.log("Start game: ", players);
 
   createGameBoardUI(players[p1], handleAttack);
   createGameBoardUI(players[p2], handleAttack);

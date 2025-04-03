@@ -39,6 +39,21 @@ body {
   gap: 25px;
 }
 
+header,
+footer {
+  text-align: center;
+  place-content: center;
+  letter-spacing: 0.25rem;
+  font-size: larger;
+  text-transform: uppercase;
+}
+
+h1 {
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: var(--black);
+  color: var(--powder);
+}
+
 main {
   height: 100%;
   display: grid;
@@ -91,7 +106,6 @@ main {
   color: var(--paynes-gray);
 }
 
-
 .active-player {
   width: auto;
   text-align: center;
@@ -115,7 +129,7 @@ ul {
   border-radius: var(--border-radius);
   box-shadow: 0 5px 5px 7.5px var(--rasin-black);
   background-color: var(--alabaster);
-  width: 160%;
+  width: 170%;
   height: 100%;
   padding: var(--universal-padding);
   transition: 1s ease-in-out;
@@ -151,17 +165,20 @@ ul {
 }
 
 .settings-container {
+  width: 75%;
+  margin: 0 auto;
   padding: var(--small-padding);
 }
 
-.player_names {
+.player-names {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  min-height: min-content;
   gap: 0.2rem;
 }
 
-.player_names > label {
+.player-names > label {
   flex: 33%;
 }
 
@@ -169,7 +186,7 @@ input,
 button,
 select {
   /* height: 25px; */
-  width: 50%;
+  width: 100%;
   border: 2px solid var(--charcoal);
   padding: 0.2rem;
   transition: 0.2s linear;
@@ -282,6 +299,7 @@ footer {
   margin: 0 auto;
   padding: var(--universal-padding);
   background-color: var(--alabaster);
+  overflow-y: scroll;
 }
 
 .ship-container-header {
@@ -304,14 +322,16 @@ span.close:hover {
 form {
   padding: var(--universal-padding);
   width: 100%;
-  height: 80%;
-  overflow-y: scroll;
   scrollbar-width: 5px;
-  gap: 25px;
 }
 
 form > * {
   padding: var(--universal-padding);
+}
+
+fieldset {
+  border: 5px solid var(--black);
+  margin-bottom: 20px;
 }
 
 .ship-input {
@@ -336,8 +356,19 @@ form > * {
   width: 100%;
 }
 
-input:valid {
-  background-color: green;
+input:valid::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: "";
+  width: fit-content;
+  height: fit-content;
+  font-size: 28px;
+  justify-self: center;
+  align-self: center;
+  text-align: center;
 }
 
 .flex-child {
@@ -345,6 +376,7 @@ input:valid {
   justify-content: space-around;
   padding: var(--universal-padding);
   width: 100%;
+  gap: 50px;
 }
 
 .flex-child > * {

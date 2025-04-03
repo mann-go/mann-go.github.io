@@ -6,13 +6,15 @@
     <title>Battleships</title>
 </head>
 <body>
-    <header></header>
+    <header>
+        <h1>Battleships</h1>
+    </header>
     <main>
         <div class="container flex">
             <div class="board-container flex">
             </div>
             <div class="settings-container">
-                <div class="player_names flex">
+                <div class="player-names flex">
                     <form action="" class="flex" id="form-get-player-names">
                         <label for="player1_name">Player 1:<input type="text" id="player1_name" placeholder="player1" value="p1" required></label>
                         <label for="vs_type">Player 2 Type:
@@ -31,12 +33,12 @@
             </div>
         </div>
     </main>
-    <footer></footer>
+    <footer>Peter Pasieka 2025</footer>
 
     <div id="plot-ships-modal" class="plot-ships">
         <div class="ship-container flex">
             <div class="ship-container-header flex">
-                <h1 id="plot-ships-modal-player-name">Player Name</h1>
+                <h2 id="plot-ships-modal-player-name">Player Name</h2>
             </div>
             <form action="" id="plot-ships-form">
                 <fieldset>
@@ -106,8 +108,8 @@
                         </label>
                     </div>
                 </div>
-                <button type="submit" id="plot-ships">Place Ships</button>
             </fieldset>
+            <button type="submit" id="plot-ships">Place Ships</button>
             </form>
         </div>
     </div>

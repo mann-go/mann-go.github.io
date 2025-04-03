@@ -37,11 +37,13 @@ let currentPlayer = "";
 let plotShipModal = document.querySelector("#plot-ships-modal");
 let startButton = document.querySelector("#start-game");
 let plotShipsButton = document.querySelector("#plot-ships");
-let playerNamesContainer = document.querySelector(".player_names");
+let playerNamesContainer = document.querySelector(".player-names");
 let restartGameButton = document.querySelector("#restart-game");
 
 startButton.addEventListener("click", function (e) {
   e.preventDefault();
+
+  generateCPUCoordinates();
 
   let playerForm = document.querySelector("#form-get-player-names");
   let checkPlayerFormValidity = playerForm.checkValidity();
@@ -54,14 +56,26 @@ startButton.addEventListener("click", function (e) {
   }
 
   let player1_name = document.querySelector("#player1_name").value.trim();
-  let player2_name = document.querySelector("#player2_name").value.trim();
+  let player2_name;
+  let vsOppenentType = document.querySelector("#vs_type").value;
 
-  players[player1_name] = new Player(player1_name, "player");
-  players[player2_name] = new Player(player2_name, "player");
+  let isCPU = vsOppenentType === "CPU" ? true : false;
+
+  if (vsOppenentType === "CPU") {
+    player2_name = "p2";
+  } else {
+    player2_name = document.querySelector("#player2_name").value.trim();
+  }
+
+  players[player1_name] = new Player(player1_name, "Player");
+  players[player2_name] = new Player(player2_name, vsOppenentType);
 
   // Store names for future use
   sessionStorage.setItem("player1_name", player1_name);
-  sessionStorage.setItem("player2_name", player2_name);
+  sessionStorage.setItem(
+    "player2_name",
+    JSON.stringify({ name: player2_name, isCPU: isCPU })
+  );
 
   document.querySelector("#plot-ships-modal-player-name").textContent =
     player1_name;
@@ -99,57 +113,52 @@ function processForm(event) {
 
   const formData = new FormData(shipPlacementForm);
   const shipPlacementData = Object.fromEntries(formData);
-  console.log(shipPlacementData);
 
-  processShipPlacements(playerName, shipPlacementData);
+  // Process form data into suitable objects for placing ships
+  let processedShipPlacementData = processFormData(shipPlacementData);
 
+  // Place the processed ship objects
+  processShipPlacements(playerName, processedShipPlacementData);
+
+  // Get the current players ships
   players[playerName].ships = players[playerName].gameboard.getShips();
 
   currentPlayer = players[playerName];
 
   shipPlacementForm.reset();
+
+  let player2Data = JSON.parse(sessionStorage.getItem("player2_name"));
+  let player2Name = player2Data.name;
+
   // Move to next player or start game
-  if (playerName === sessionStorage.getItem("player1_name")) {
+  if (JSON.parse(sessionStorage.getItem("player2_name")).isCPU === false && players[player2Name].ships == null) {
     // Switch to Player 2
     document.querySelector("#plot-ships-modal-player-name").textContent =
-      sessionStorage.getItem("player2_name");
+      player2Name;
     shipPlacementForm.reset();
     return;
-  } else {
-    // Both players have submitted ship placements
-    plotShipModal.style.display = "none";
-
-    let p1 = sessionStorage.getItem("player1_name");
-    let p2 = sessionStorage.getItem("player2_name");
-
-    let p1_ships = players[p1].ships;
-    let p2_ships = players[p2].ships;
-
-    startGame(players, p1, p1_ships, p2, p2_ships, handleAttack);
+  } else if (
+    playerName === sessionStorage.getItem("player1_name") &&
+    JSON.parse(sessionStorage.getItem("player2_name")).isCPU === true
+  ) {
+    let cpuCoodinates = generateCPUCoordinates();
+    processShipPlacements(player2Name, cpuCoodinates);
+    players["p2"].ships = players["p2"].gameboard.getShips();
   }
+
+  // Both players have submitted ship placements
+  plotShipModal.style.display = "none";
+
+  let p1 = sessionStorage.getItem("player1_name");
+  let p2 = JSON.parse(sessionStorage.getItem("player2_name")).name;
+
+  let p1_ships = players[p1].ships;
+  let p2_ships = players[p2].ships;
+
+  startGame(players, p1, p1_ships, p2, p2_ships, handleAttack);
 }
 
-function processShipPlacements(playerName, dataObj) {
-  let ships = {};
-
-  for (const key in dataObj) {
-    const [shipName, property] = key.split("-");
-    const value = dataObj[key];
-
-    if (!ships[shipName]) {
-      ships[shipName] = {};
-    }
-
-    if (property === "x") {
-      // Ensures user input is correctly formatted
-      ships[shipName].x = value.toUpperCase();
-    } else if (property === "y") {
-      ships[shipName].y = value;
-    } else if (property === "orientation") {
-      ships[shipName].orientation = value;
-    }
-  }
-
+function processShipPlacements(playerName, ships) {
   for (const ship_type in ships) {
     if (Object.hasOwn(ship_data, ship_type)) {
       let length = ship_data[ship_type].length;
@@ -165,16 +174,19 @@ function processShipPlacements(playerName, dataObj) {
 
 // Handle attack logic
 function handleAttack(x, y, grid_box) {
+  let result;
   let p1 = sessionStorage.getItem("player1_name");
-  let p2 = sessionStorage.getItem("player2_name");
+  let p2Data = JSON.parse(sessionStorage.getItem("player2_name"));
+  let p2 = p2Data.name;
+  let isCPU = p2Data.isCPU;
 
   let defending_player = players[currentPlayer.name === p1 ? p2 : p1];
 
-  let result = defending_player.gameboard.recieveAttack(x, y);
+  // Execute player attack
+  result = defending_player.gameboard.recieveAttack(x, y);
   updateGrid(grid_box, result);
 
   setTimeout(() => {
-    playTurn(currentPlayer.name);
     updateCombatLog(currentPlayer.name, x, y, result);
 
     if (result === "lost") {
@@ -182,7 +194,121 @@ function handleAttack(x, y, grid_box) {
       return;
     }
 
+    // Switch players
     currentPlayer = players[currentPlayer.name === p1 ? p2 : p1];
     updateCurrentPlayerUI(currentPlayer.name);
+    playTurn(currentPlayer.name);
+
+    // If the new current player is CPU, make it attack
+    if (isCPU) {
+      setTimeout(() => {
+        cpuAttacks();
+      }, 1000);
+    }
   }, 1000);
+}
+
+function cpuAttacks() {
+  let playerName = sessionStorage.getItem("player1_name"); // Human player
+  let humanPlayer = players[playerName];
+
+  let attackCoords = generateCPUAttack(); // Get random coordinates
+
+  console.log("CPU attacking: ", attackCoords.x, attackCoords.y);
+
+  let result = humanPlayer.gameboard.recieveAttack(
+    attackCoords.x,
+    attackCoords.y
+  );
+
+  let gridBox = document.querySelector(
+    `[data-id="${attackCoords.x},${attackCoords.y}"]`
+  );
+  updateGrid(gridBox, result);
+  updateCombatLog("CPU", attackCoords.x, attackCoords.y, result);
+
+  setTimeout(() => {
+    if (result === "lost") {
+      processWin("CPU");
+      return;
+    }
+
+    currentPlayer = players[playerName]; // Switch back to human
+    updateCurrentPlayerUI(playerName);
+    playTurn(currentPlayer.name);
+  }, 1000);
+}
+
+// To be moved to another module
+function generateCPUCoordinates() {
+  let coordinates = {};
+  let availableXCoordinates = "ABCDEFGHIJ";
+  let availableYCoordinates = "123456789";
+  let availableOrientation = ["horizontal", "vertical"];
+
+  for (const ship in ship_data) {
+    if (!coordinates[ship]) {
+      coordinates[ship] = {};
+    }
+
+    let xCoordinate = availableXCoordinates.charAt(
+      Math.floor(Math.random() * availableXCoordinates.length)
+    );
+    let yCoordinate = availableYCoordinates.charAt(
+      Math.floor(Math.random() * availableYCoordinates.length)
+    );
+    let orientation =
+      availableOrientation[
+        Math.floor(Math.random() * availableOrientation.length)
+      ];
+
+    coordinates[ship].x = xCoordinate;
+    coordinates[ship].y = yCoordinate;
+    coordinates[ship].orientation = orientation;
+  }
+
+  return coordinates;
+}
+
+function generateCPUAttack() {
+  let attack;
+  let availableXCoordinates = "ABCDEFGHIJ";
+  let availableYCoordinates = "123456789";
+
+  let x = availableXCoordinates.charAt(
+    Math.floor(Math.random() * availableXCoordinates.length)
+  );
+  let y = availableYCoordinates.charAt(
+    Math.floor(Math.random() * availableYCoordinates.length)
+  );
+
+  attack = { x, y };
+
+  console.log("Random CPU attack: ", attack);
+
+  return attack;
+}
+
+function processFormData(shipPlacementData) {
+  let ships = {};
+
+  for (const key in shipPlacementData) {
+    const [shipName, property] = key.split("-"); // Extract ship name and property
+    const value = shipPlacementData[key]; // Get the value
+
+    if (!ships[shipName]) {
+      ships[shipName] = {}; // Initialize ship object
+    }
+
+    // Assign x, y, or orientation
+    if (property === "x") {
+      ships[shipName].x = value;
+    } else if (property === "y") {
+      ships[shipName].y = value;
+    } else if (property === "orientation") {
+      ships[shipName].orientation = value;
+    }
+  }
+
+  return ships;
 }
