@@ -88,9 +88,51 @@ export function playTurn(player) {
   });
 }
 
+export function createCombatLog() {
+  let main = document.querySelector("main");
+
+  // Not an elegant solution, but it works
+  if (main.lastChild) {
+    main.removeChild(main.lastChild);
+  }
+
+  let infoContainer = document.createElement("div");
+  infoContainer.className = "info-container";
+
+  // Create combat log
+  let combatLogContainer = document.createElement("div");
+  combatLogContainer.className = "combat-log-container";
+
+  let combatLogTitle = document.createElement("h2");
+  combatLogTitle.textContent = "Combat Log:";
+
+  let combatLogList = document.createElement("ul");
+  combatLogList.id = "combat-log";
+
+  // Add combat log to info container
+  combatLogContainer.appendChild(combatLogTitle);
+  combatLogContainer.appendChild(combatLogList);
+  infoContainer.appendChild(combatLogContainer);
+
+  // Create active player 
+  let activePlayer = document.createElement("h3");
+  activePlayer.className = "active-player";
+
+  // Add active player to info container
+  combatLogContainer.appendChild(activePlayer);
+
+  // Add combat log and active player to parent container
+  infoContainer.appendChild(combatLogContainer);
+  infoContainer.appendChild(activePlayer);
+
+  // Finally add info container to main container
+  main.appendChild(infoContainer);
+}
+
 export function updateCombatLog(currentPlayer, x, y, result) {
   let combat_log = document.querySelector("#combat-log");
   let attack = document.createElement("li");
+  attack.className = "combat-log-item"; 
 
   if (result === "sunk") {
     attack.textContent = `${currentPlayer} ${result} a ship at (${x}, ${y})`;
@@ -111,6 +153,7 @@ export function updateCurrentPlayerUI(currentPlayer) {
 export function processWin(player) {
   let allBoards = document.querySelectorAll(".board");
   let winner = document.createElement("li");
+  winner.className = "combat-log-item";
   winner.textContent = "The Winner is: " + player;
   let combat_log = document.querySelector("#combat-log");
   combat_log.appendChild(winner);
@@ -118,12 +161,24 @@ export function processWin(player) {
 
   allBoards.forEach((board) => {
     board.classList.add("active");
-    // board.classList.remove("active");
+    board.classList.remove("inactive");
     board.style.pointerEvents = "none";
   });
 
-  document.querySelector(".player_names").style.display = "flex";
   document.querySelector("#restart-game").style.display = "block";
+}
+
+export function startGame(players, p1, p1_ships, p2, p2_ships, handleAttack) {
+  let gameContainer = document.querySelector(".container");
+  gameContainer.style.width = "100%";
+
+  createGameBoardUI(players[p1], handleAttack);
+  createGameBoardUI(players[p2], handleAttack);
+  drawShips(players[p1], p1_ships);
+  drawShips(players[p2], p2_ships);
+  createCombatLog();
+
+  playTurn(p1);
 }
 
 export function restartGame() {
@@ -135,6 +190,7 @@ export function restartGame() {
   let player_names_container = document.querySelector(".player_names");
   player_names_container.style.display = "flex"; // Fix later
   document.querySelector("#restart-game").style.display = "none";
+  document.querySelector("#start-game").style.display = "block";
 }
 
 /* Helper function to converted lettered coordinates to numbers */

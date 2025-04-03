@@ -1,13 +1,12 @@
 import "./styles.css";
 import {
-  createGameBoardUI,
-  drawShips,
   playTurn,
   processWin,
   updateCombatLog,
   updateCurrentPlayerUI,
   updateGrid,
   restartGame,
+  startGame,
 } from "./ui/boardUI";
 import Ship from "./classes/ship";
 import Player from "./classes/player";
@@ -27,7 +26,7 @@ const ship_data = {
   submarine: {
     length: 3,
   },
-  patrol_board: {
+  patrol_boat: {
     length: 2,
   },
 };
@@ -38,16 +37,21 @@ let currentPlayer = "";
 let plotShipModal = document.querySelector("#plot-ships-modal");
 let startButton = document.querySelector("#start-game");
 let plotShipsButton = document.querySelector("#plot-ships");
-let closeModalButton = document.querySelector(".close");
-let settings = document.querySelector(".player_names");
+let playerNamesContainer = document.querySelector(".player_names");
 let restartGameButton = document.querySelector("#restart-game");
-
-closeModalButton.onclick = function () {
-  plotShipModal.style.display = "none";
-};
 
 startButton.addEventListener("click", function (e) {
   e.preventDefault();
+
+  let playerForm = document.querySelector("#form-get-player-names");
+  let checkPlayerFormValidity = playerForm.checkValidity();
+  playerForm.reportValidity();
+
+  // Prevent empty values for names being submitted
+  if (!checkPlayerFormValidity) {
+    console.warn("Player names have not been selected!");
+    return;
+  }
 
   let player1_name = document.querySelector("#player1_name").value.trim();
   let player2_name = document.querySelector("#player2_name").value.trim();
@@ -63,13 +67,14 @@ startButton.addEventListener("click", function (e) {
     player1_name;
   plotShipModal.style.display = "block";
 
-  settings.style.display = "none";
+  playerNamesContainer.style.display = "none";
+  startButton.style.display = "none";
 });
 
 restartGameButton.addEventListener("click", function (e) {
   e.preventDefault();
   restartGame();
-})
+});
 
 plotShipsButton.addEventListener("click", function (e) {
   processForm(e);
@@ -78,13 +83,23 @@ plotShipsButton.addEventListener("click", function (e) {
 function processForm(event) {
   event.preventDefault();
 
+  let shipPlacementForm = document.querySelector("#plot-ships-form");
+  let checkPlayerFormValidity = shipPlacementForm.checkValidity();
+  shipPlacementForm.reportValidity();
+
+  // Prevent empty values for names being submitted
+  if (!checkPlayerFormValidity) {
+    console.warn("Invalid placement(s)");
+    return;
+  }
+
   let playerName = document.querySelector(
     "#plot-ships-modal-player-name"
   ).textContent;
-  let form = document.querySelector("#plot-ships-form");
 
-  const formData = new FormData(form);
+  const formData = new FormData(shipPlacementForm);
   const shipPlacementData = Object.fromEntries(formData);
+  console.log(shipPlacementData);
 
   processShipPlacements(playerName, shipPlacementData);
 
@@ -92,12 +107,13 @@ function processForm(event) {
 
   currentPlayer = players[playerName];
 
+  shipPlacementForm.reset();
   // Move to next player or start game
   if (playerName === sessionStorage.getItem("player1_name")) {
     // Switch to Player 2
     document.querySelector("#plot-ships-modal-player-name").textContent =
       sessionStorage.getItem("player2_name");
-    form.reset();
+    shipPlacementForm.reset();
     return;
   } else {
     // Both players have submitted ship placements
@@ -109,12 +125,7 @@ function processForm(event) {
     let p1_ships = players[p1].ships;
     let p2_ships = players[p2].ships;
 
-    createGameBoardUI(players[p1], handleAttack);
-    createGameBoardUI(players[p2], handleAttack);
-    drawShips(players[p1], p1_ships);
-    drawShips(players[p2], p2_ships);
-
-    playTurn(p1);
+    startGame(players, p1, p1_ships, p2, p2_ships, handleAttack);
   }
 }
 

@@ -11,29 +11,23 @@
         <div class="container flex">
             <div class="board-container flex">
             </div>
-            <div class="player_names flex">
-                <label for="player1_name">Player 1:<input type="text" id="player1_name" placeholder="player1" value="p1" required></label>
-                <label for="vs_type">Player 2 Type:
-                <select name="vs_type" id="vs_type">
-                    <option value="Player" selected>Player</option>
-                    <option value="CPU">CPU</option>
-                </select>
-                </label>
-                <label for="player2_name">Player 2:<input type="text" id="player2_name" placeholder="player2" value="p2" required></label>
-            </div>
-            <div class="button-container flex">
-                <button type="button" id="start-game">Start Game</button>
-                <button type="button" id="restart-game">Restart?</button>   
-            </div>
-        </div>
-        <div class="info-container">
-            <div class="combat-log-container">
-                <h2>Combat Log:</h2>
-                <ul id="combat-log">
-                </ul> 
-            </div>
-            <div class="active-player">
-
+            <div class="settings-container">
+                <div class="player_names flex">
+                    <form action="" class="flex" id="form-get-player-names">
+                        <label for="player1_name">Player 1:<input type="text" id="player1_name" placeholder="player1" value="p1" required></label>
+                        <label for="vs_type">Player 2 Type:
+                        <select name="vs_type" id="vs_type">
+                            <option value="Player" selected>Player</option>
+                            <option value="CPU">CPU</option>
+                        </select>
+                        </label>
+                        <label for="player2_name">Player 2:<input type="text" id="player2_name" placeholder="player2" value="p2" required></label>
+                    </form>
+                </div>
+                <div class="button-container flex">
+                    <button type="button" id="start-game">Start Game</button>
+                    <button type="button" id="restart-game">Restart?</button>   
+                </div>
             </div>
         </div>
     </main>
@@ -43,12 +37,11 @@
         <div class="ship-container flex">
             <div class="ship-container-header flex">
                 <h1 id="plot-ships-modal-player-name">Player Name</h1>
-                <span class="close">&times;</span>
             </div>
-            <form action="" class="" id="plot-ships-form">
+            <form action="" id="plot-ships-form">
                 <fieldset>
                     <legend>Plot your ships!</legend>
-                <div class="ship-input flex">
+                <!-- <div class="ship-input flex">
                     <h3>Carrier: (5)</h3>
                     <div class="coordinate flex-child">
                         <label for="x-coordinate">X: <input id="x-coordinate" name="carrier-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
@@ -99,14 +92,14 @@
                         </select>
                         </label>
                     </div>
-                </div>
+                </div> -->
                 <div class="ship-input flex">
                     <h3>Patrol Boat: (2)</h3>
                     <div class="coordinate flex-child">
-                        <label for="x-coordinate">X: <input id="x-coordinate" name="patrol-boat-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
-                        <label for="y-coordinate">Y: <input id="y-coordinate" name="patrol-boat-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
-                        <label for="patrol-boat-orientation">Direction:
-                        <select name="patrol-boat-orientation" id="orientation">
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="patrol_boat-x-coordinate" maxlength="1" minlength="1" pattern="[A-Ja-j]" type="text" required title="Use letters between A-J"></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="patrol_boat-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="patrol_boat-orientation">Direction:
+                        <select name="patrol_boat-orientation" id="orientation">
                             <option value="horizontal">Horizontal</option>
                             <option value="vertical">Vertical</option>
                         </select>
