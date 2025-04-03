@@ -114,7 +114,7 @@ export function createCombatLog() {
   combatLogContainer.appendChild(combatLogList);
   infoContainer.appendChild(combatLogContainer);
 
-  // Create active player 
+  // Create active player
   let activePlayer = document.createElement("h3");
   activePlayer.className = "active-player";
 
@@ -132,7 +132,7 @@ export function createCombatLog() {
 export function updateCombatLog(currentPlayer, x, y, result) {
   let combat_log = document.querySelector("#combat-log");
   let attack = document.createElement("li");
-  attack.className = "combat-log-item"; 
+  attack.className = "combat-log-item";
 
   if (result === "sunk") {
     attack.textContent = `${currentPlayer} ${result} a ship at (${x}, ${y})`;
@@ -187,7 +187,7 @@ export function restartGame() {
     board_container.removeChild(board_container.firstChild);
   }
 
-  let player_names_container = document.querySelector(".player_names");
+  let player_names_container = document.querySelector(".player-names");
   player_names_container.style.display = "flex"; // Fix later
   document.querySelector("#restart-game").style.display = "none";
   document.querySelector("#start-game").style.display = "block";
