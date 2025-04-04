@@ -12,29 +12,43 @@ export default class Gameboard {
   }
 
   placePiece(ship, x, y) {
+    console.log(
+      `Placing ${ship.ship_class} (${ship.length}) at ${x}${y} (${ship.orientation})`
+    );
+
     let convertXCoord = x.charCodeAt(0) - 64;
-    if (ship.orientation === "horizontal" && convertXCoord + ship.length > this.width) {
-      console.warn("Ship exceeds grid width!");
-      x = this.width - ship.length;
-      
-      x = String.fromCharCode(x + 64);
-    }
-    if (ship.orientation === "vertical" && y + ship.length > this.height) {
-      console.warn("Ship exceeds grid height! Coordinates changed.");
-      y = this.height - ship.length;
+    y = Number(y);
+
+    // The coordinate change isn't perfect but it gets the job done,
+    // about a 1 in 10 chance of getting a game you can't win
+    // but I've been at this for a while so that's how it's gonna be
+    // TODO: 
+    // Needs reworked
+    if (
+      ship.orientation === "horizontal" &&
+      convertXCoord + ship.length - 1 > this.width
+    ) {
+      convertXCoord = this.width - ship.length + 1;
+      x = String.fromCharCode(convertXCoord + 64);
+      console.warn("Ship exceeds grid width! Coordinates changed.");
     }
 
-    if (
+    if (ship.orientation === "vertical" && y + ship.length - 1 > this.height) {
+      y = this.height - ship.length + 1;
+      console.warn("Ship exceeds grid height! Coordinates changed.");
+    }
+
+    while (
       this.ships.some((ship) =>
         ship.coords.some((coord) => coord.x === x && coord.y === y)
       )
     ) {
-      console.warn("A ship is already placed here!");
-      x = convertXCoord + 1;
-      x = String.fromCharCode(x + 64);
-      y = Number(y) + 1;
-    }
+      console.warn("Overlapping ships, retrying...");
+      convertXCoord = Math.floor(Math.random() * this.width) + 1;
+      y = Math.floor(Math.random() * this.height) + 1;
 
+      x = String.fromCharCode(convertXCoord + 64);
+    }
     for (let i = 0; i < ship.length; i++) {
       if (ship.orientation === "horizontal") {
         let coordToNumber = x.charCodeAt(0);

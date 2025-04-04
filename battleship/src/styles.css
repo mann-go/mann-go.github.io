@@ -150,6 +150,18 @@ ul {
   height: 100%;
   background-color: var(--lapis-lazuli);
   box-shadow: 0 7.5px 10px 0 var(--black);
+
+  animation: myAnim 0.15s ease 0s 1 normal forwards;
+}
+
+@keyframes myAnim {
+  0% {
+    transform: scaleX(0);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
 }
 
 .grid-box {
@@ -157,11 +169,15 @@ ul {
   width: 100%;
   height: 100%;
   background-color: var(--picton-blue);
+  transition: 0.05s linear;
 }
 
 .grid-box:hover {
   background-color: var(--prussian-blue) !important;
+  border-radius: var(--x-small-padding);
   cursor: pointer;
+  z-index: 1;
+  transform: scale(1.15);
 }
 
 .settings-container {
@@ -209,10 +225,6 @@ select:hover {
   opacity: 1;
 }
 
-.active > .ship {
-  background-color: var(--picton-blue);
-}
-
 .inactive {
   pointer-events: none;
   background-color: var(--charcoal);
@@ -224,28 +236,31 @@ select:hover {
   background-color: var(--black);
 }
 
+
 .ship {
-  /* border: 2px solid black; */
-  background-color: var(--paynes-gray);
+  /* z-index: 1; */
+  width: 100%;
+  height: 100%;
+  background-color: var(--black);
   /* border-radius: var(--x-small-padding); */
+}
+
+.hit,
+.miss {
+  border: 1px solid black;
+  position: relative;
+  transition: 0.5s ease-in;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .hit {
   background-color: darkred;
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-}
-
-.hit::after {
-  content: "Y";
 }
 
 .miss {
-  height: auto;
-  width: auto;
   background-color: var(--rasin-black);
-  position: relative;
 }
 
 .miss::after {
@@ -308,17 +323,6 @@ footer {
   height: min-content;
 }
 
-span.close {
-  font-size: 32px;
-  border-bottom: 2px solid var(--charcoal);
-  transition: 0.2s linear;
-}
-
-span.close:hover {
-  cursor: pointer;
-  color: red;
-}
-
 form {
   padding: var(--universal-padding);
   width: 100%;
@@ -351,7 +355,8 @@ fieldset {
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  background: lightgray;
+  background: var(--powder);
+  color: var(--black);
   border: 1px solid black;
   width: 100%;
 }

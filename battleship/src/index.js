@@ -8,6 +8,11 @@ import {
   restartGame,
   startGame,
 } from "./ui/boardUI";
+import {
+  generateAttackDirection,
+  generateCPUAttack,
+  generateCPUCoordinates,
+} from "./classes/cpu";
 import Ship from "./classes/ship";
 import Player from "./classes/player";
 
@@ -42,8 +47,6 @@ let restartGameButton = document.querySelector("#restart-game");
 
 startButton.addEventListener("click", function (e) {
   e.preventDefault();
-
-  generateCPUCoordinates();
 
   let playerForm = document.querySelector("#form-get-player-names");
   let checkPlayerFormValidity = playerForm.checkValidity();
@@ -131,7 +134,10 @@ function processForm(event) {
   let player2Name = player2Data.name;
 
   // Move to next player or start game
-  if (JSON.parse(sessionStorage.getItem("player2_name")).isCPU === false && players[player2Name].ships == null) {
+  if (
+    JSON.parse(sessionStorage.getItem("player2_name")).isCPU === false &&
+    players[player2Name].ships == null
+  ) {
     // Switch to Player 2
     document.querySelector("#plot-ships-modal-player-name").textContent =
       player2Name;
@@ -141,7 +147,7 @@ function processForm(event) {
     playerName === sessionStorage.getItem("player1_name") &&
     JSON.parse(sessionStorage.getItem("player2_name")).isCPU === true
   ) {
-    let cpuCoodinates = generateCPUCoordinates();
+    let cpuCoodinates = generateCPUCoordinates(ship_data);
     processShipPlacements(player2Name, cpuCoodinates);
     players["p2"].ships = players["p2"].gameboard.getShips();
   }
@@ -151,6 +157,9 @@ function processForm(event) {
 
   let p1 = sessionStorage.getItem("player1_name");
   let p2 = JSON.parse(sessionStorage.getItem("player2_name")).name;
+
+  // Stinky fix, ensures player 1 doesn't get a free shot at the start of the game.
+  currentPlayer = players[p1];
 
   let p1_ships = players[p1].ships;
   let p2_ships = players[p2].ships;
@@ -182,7 +191,7 @@ function handleAttack(x, y, grid_box) {
 
   let defending_player = players[currentPlayer.name === p1 ? p2 : p1];
 
-  // Execute player attack
+  // Player attack
   result = defending_player.gameboard.recieveAttack(x, y);
   updateGrid(grid_box, result);
 
@@ -209,23 +218,49 @@ function handleAttack(x, y, grid_box) {
 }
 
 function cpuAttacks() {
-  let playerName = sessionStorage.getItem("player1_name"); // Human player
+  let playerName = sessionStorage.getItem("player1_name");
   let humanPlayer = players[playerName];
 
-  let attackCoords = generateCPUAttack(); // Get random coordinates
+  let hitsArray = players[playerName].gameboard.hits;
+  let missesArray = players[playerName].gameboard.misses;
+  let nextAttack;
+  let attempts = 0;
 
-  console.log("CPU attacking: ", attackCoords.x, attackCoords.y);
+  do {
+    // Break out clause
+    if (attempts > 4) {
+      console.log("Prevented stack overflow");
+      nextAttack = generateCPUAttack();
+      break;
+    }
 
-  let result = humanPlayer.gameboard.recieveAttack(
-    attackCoords.x,
-    attackCoords.y
+    if (hitsArray.length !== 0) {
+      // Make an educated guess based on previous hit
+      let prevAttack = hitsArray[hitsArray.length - 1];
+      console.log("Previously hit: ", prevAttack);
+      nextAttack = generateAttackDirection(prevAttack);
+    } else {
+      // Get random coordinates
+      nextAttack = generateCPUAttack();
+    }
+
+    attempts++;
+  } while (
+    hitsArray.some(
+      (value) => value.x === nextAttack.x && value.y === nextAttack.y
+    ) ||
+    missesArray.some(
+      (value) => value.x === nextAttack.x && value.y === nextAttack.y
+    )
   );
+
+  let result = humanPlayer.gameboard.recieveAttack(nextAttack.x, nextAttack.y);
 
   let gridBox = document.querySelector(
-    `[data-id="${attackCoords.x},${attackCoords.y}"]`
+    `[data-id="${nextAttack.x},${nextAttack.y}"]`
   );
   updateGrid(gridBox, result);
-  updateCombatLog("CPU", attackCoords.x, attackCoords.y, result);
+  updateCombatLog("CPU", nextAttack.x, nextAttack.y, result);
 
   setTimeout(() => {
     if (result === "lost") {
@@ -233,71 +268,25 @@ function cpuAttacks() {
       return;
     }
 
-    currentPlayer = players[playerName]; // Switch back to human
+    // Switch back to player
+    currentPlayer = players[playerName];
     updateCurrentPlayerUI(playerName);
     playTurn(currentPlayer.name);
   }, 1000);
-}
-
-// To be moved to another module
-function generateCPUCoordinates() {
-  let coordinates = {};
-  let availableXCoordinates = "ABCDEFGHIJ";
-  let availableYCoordinates = "123456789";
-  let availableOrientation = ["horizontal", "vertical"];
-
-  for (const ship in ship_data) {
-    if (!coordinates[ship]) {
-      coordinates[ship] = {};
-    }
-
-    let xCoordinate = availableXCoordinates.charAt(
-      Math.floor(Math.random() * availableXCoordinates.length)
-    );
-    let yCoordinate = availableYCoordinates.charAt(
-      Math.floor(Math.random() * availableYCoordinates.length)
-    );
-    let orientation =
-      availableOrientation[
-        Math.floor(Math.random() * availableOrientation.length)
-      ];
-
-    coordinates[ship].x = xCoordinate;
-    coordinates[ship].y = yCoordinate;
-    coordinates[ship].orientation = orientation;
-  }
-
-  return coordinates;
-}
-
-function generateCPUAttack() {
-  let attack;
-  let availableXCoordinates = "ABCDEFGHIJ";
-  let availableYCoordinates = "123456789";
-
-  let x = availableXCoordinates.charAt(
-    Math.floor(Math.random() * availableXCoordinates.length)
-  );
-  let y = availableYCoordinates.charAt(
-    Math.floor(Math.random() * availableYCoordinates.length)
-  );
-
-  attack = { x, y };
-
-  console.log("Random CPU attack: ", attack);
-
-  return attack;
 }
 
 function processFormData(shipPlacementData) {
   let ships = {};
 
   for (const key in shipPlacementData) {
-    const [shipName, property] = key.split("-"); // Extract ship name and property
-    const value = shipPlacementData[key]; // Get the value
+    // Get ship name and property
+    const [shipName, property] = key.split("-");
+    // Get the value
+    const value = shipPlacementData[key];
 
+    // Init ship object
     if (!ships[shipName]) {
-      ships[shipName] = {}; // Initialize ship object
+      ships[shipName] = {};
     }
 
     // Assign x, y, or orientation

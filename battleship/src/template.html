@@ -43,11 +43,11 @@
             <form action="" id="plot-ships-form">
                 <fieldset>
                     <legend>Plot your ships!</legend>
-                <!-- <div class="ship-input flex">
+                <div class="ship-input flex">
                     <h3>Carrier: (5)</h3>
                     <div class="coordinate flex-child">
-                        <label for="x-coordinate">X: <input id="x-coordinate" name="carrier-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
-                        <label for="y-coordinate">Y: <input id="y-coordinate" name="carrier-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="carrier-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required value="A"></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="carrier-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required value="2"></label>
                         <label for="carrier-orientation">Direction:
                             <select name="carrier-orientation" id="orientation">
                                 <option value="horizontal">Horizontal</option>
@@ -59,8 +59,8 @@
                 <div class="ship-input flex">
                     <h3>Battleship: (4)</h3>
                     <div class="coordinate flex-child">
-                        <label for="x-coordinate">X: <input id="x-coordinate" name="battleship-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
-                        <label for="y-coordinate">Y: <input id="y-coordinate" name="battleship-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="battleship-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required  value="D"></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="battleship-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required value="3"></label>
                         <label for="battleship-orientation">Direction:
                             <select name="battleship-orientation" id="orientation">
                                 <option value="horizontal">Horizontal</option>
@@ -72,8 +72,8 @@
                 <div class="ship-input flex">
                     <h3>Destroyer: (3)</h3>
                     <div class="coordinate flex-child">
-                        <label for="x-coordinate">X: <input id="x-coordinate" name="destroyer-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
-                        <label for="y-coordinate">Y: <input id="y-coordinate" name="destroyer-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="destroyer-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required value="E"></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="destroyer-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required value="5"></label>
                         <label for="destroyer-orientation">Direction:
                         <select name="destroyer-orientation" id="orientation">
                             <option value="horizontal">Horizontal</option>
@@ -85,8 +85,8 @@
                 <div class="ship-input flex">
                     <h3>Submarine: (3)</h3>
                     <div class="coordinate flex-child">
-                        <label for="x-coordinate">X: <input id="x-coordinate" name="submarine-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required></label>
-                        <label for="y-coordinate">Y: <input id="y-coordinate" name="submarine-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="submarine-x-coordinate" maxlength="1" minlength="1" pattern="[A-J]" type="text" required value="F"></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="submarine-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required value="8"></label>
                         <label for="submarine-orientation">Direction:
                         <select name="submarine-orientation" id="orientation">
                             <option value="horizontal">Horizontal</option>
@@ -94,12 +94,12 @@
                         </select>
                         </label>
                     </div>
-                </div> -->
+                </div>
                 <div class="ship-input flex">
                     <h3>Patrol Boat: (2)</h3>
                     <div class="coordinate flex-child">
-                        <label for="x-coordinate">X: <input id="x-coordinate" name="patrol_boat-x-coordinate" maxlength="1" minlength="1" pattern="[A-Ja-j]" type="text" required title="Use letters between A-J"></label>
-                        <label for="y-coordinate">Y: <input id="y-coordinate" name="patrol_boat-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required></label>
+                        <label for="x-coordinate">X: <input id="x-coordinate" name="patrol_boat-x-coordinate" maxlength="1" minlength="1" pattern="[A-Ja-j]" type="text" required title="Use letters between A-J" value="G"></label>
+                        <label for="y-coordinate">Y: <input id="y-coordinate" name="patrol_boat-y-coordinate" maxlength="1" minlength="1" min="1" max="10" type="number" required  value="5"></label>
                         <label for="patrol_boat-orientation">Direction:
                         <select name="patrol_boat-orientation" id="orientation">
                             <option value="horizontal">Horizontal</option>

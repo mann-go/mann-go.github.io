@@ -2,7 +2,7 @@ export function createGameBoardUI(player, handleAttack) {
   let size = 11;
   let board_container = document.querySelector(".board-container");
   let board = document.createElement("div");
-  board.className = `board ${player.name} inactive`;
+  board.className = `board ${player.name}`;
 
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
@@ -129,6 +129,7 @@ export function createCombatLog() {
   main.appendChild(infoContainer);
 }
 
+// Update combat log with the most recent attack
 export function updateCombatLog(currentPlayer, x, y, result) {
   let combat_log = document.querySelector("#combat-log");
   let attack = document.createElement("li");
@@ -143,6 +144,16 @@ export function updateCombatLog(currentPlayer, x, y, result) {
   let has_hit = result ? "hit" : "missed";
   attack.textContent = `${currentPlayer} ${has_hit} (${x}, ${y})`;
   combat_log.appendChild(attack);
+
+  scrollCombatLog();
+}
+
+// Scroll combat log when updated
+function scrollCombatLog() {
+
+  let combatLog = document.querySelector("#combat-log");
+  let lastCombatLogItem = combatLog.lastElementChild;
+  lastCombatLogItem.scrollIntoView({ behavior: 'smooth', block: 'end'});
 }
 
 export function updateCurrentPlayerUI(currentPlayer) {
@@ -152,6 +163,7 @@ export function updateCurrentPlayerUI(currentPlayer) {
 
 export function processWin(player) {
   let allBoards = document.querySelectorAll(".board");
+  let ships = document.querySelectorAll(".ship");
   let winner = document.createElement("li");
   winner.className = "combat-log-item";
   winner.textContent = "The Winner is: " + player;
@@ -165,14 +177,16 @@ export function processWin(player) {
     board.style.pointerEvents = "none";
   });
 
+  ships.forEach((ship) => {
+    ship.style.backgroundColor = "#333b46";
+  })
+
   document.querySelector("#restart-game").style.display = "block";
 }
 
 export function startGame(players, p1, p1_ships, p2, p2_ships, handleAttack) {
   let gameContainer = document.querySelector(".container");
   gameContainer.style.width = "100%";
-
-  console.log("Start game: ", players);
 
   createGameBoardUI(players[p1], handleAttack);
   createGameBoardUI(players[p2], handleAttack);
@@ -195,7 +209,7 @@ export function restartGame() {
   document.querySelector("#start-game").style.display = "block";
 }
 
-/* Helper function to converted lettered coordinates to numbers */
+// Helper function to converted lettered coordinates to numbers
 function letterToIndex(letter) {
-  return letter.trim().charCodeAt(0) - 65;
+  return letter.trim().charCodeAt(0) - 64;
 }
