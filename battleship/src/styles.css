@@ -74,13 +74,8 @@ main {
   flex-direction: column;
   padding: var(--universal-padding);
   gap: 20px;
-  opacity: 0.5;
   border-radius: var(--border-radius);
   transition: 0.5s linear;
-}
-
-.info-container:hover {
-  opacity: 1;
 }
 
 .combat-log-container {
@@ -93,24 +88,31 @@ main {
 }
 
 .combat-log-item {
-  flex: 0 0 100px;
   padding: var(--universal-padding);
-  border-bottom: 2px dotted var(--paynes-gray);
+  background-color: var(--powder);
+  border: 3px solid var(--ship-gray);
+  border-radius: var(--border-radius);
   transition: transform 0.5s ease, opacity 0.5s ease;
   scroll-snap-align: center;
-  /* transform: scale(0.9); */
+  transform: scale(0.9);
+  color: var(--charcoal);
+}
+
+.combat-log-item:last-child {
+  transform: scale(1);
+  color: var(--powder);
+  background-color: var(--rich-black);
 }
 
 .combat-log-item:hover {
-  transform: scale(1.1);
-  color: var(--paynes-gray);
+  transform: scale(1);
+  color: var(--black);
 }
 
 .active-player {
   width: auto;
   text-align: center;
   margin-top: auto;
-  /* border: 2px solid black; */
 }
 
 ul {
@@ -137,6 +139,31 @@ ul {
   z-index: 1;
 }
 
+.how-to-play {
+  padding: var(--universal-padding);
+  min-width: 45%;
+  min-height: 90%;
+  max-width: 50%;
+  max-height: 90%;
+  background-color: var(--powder);
+  border: 2px solid black;
+  border-radius: var(--border-radius);
+}
+
+.how-to-play > h2 {
+  text-align: center;
+}
+
+.how-to-play > ul {
+  margin: 0 auto;
+  width: 65%;
+}
+
+.how-to-play > ul > li {
+  padding: var(--small-padding);
+  margin: 10px 0;
+}
+
 .board-container {
   height: 80%;
   width: 100%;
@@ -151,7 +178,7 @@ ul {
   background-color: var(--lapis-lazuli);
   box-shadow: 0 7.5px 10px 0 var(--black);
 
-  animation: myAnim 0.15s ease 0s 1 normal forwards;
+  animation: myAnim 0.3s ease 0s 1 normal forwards;
 }
 
 @keyframes myAnim {
@@ -201,7 +228,6 @@ ul {
 input,
 button,
 select {
-  /* height: 25px; */
   width: 100%;
   border: 2px solid var(--charcoal);
   padding: 0.2rem;
@@ -241,8 +267,7 @@ select:hover {
   /* z-index: 1; */
   width: 100%;
   height: 100%;
-  background-color: var(--black);
-  /* border-radius: var(--x-small-padding); */
+  /* background-color: var(--black); */
 }
 
 .hit,
@@ -318,8 +343,9 @@ footer {
 }
 
 .ship-container-header {
+  flex-direction: column;
   flex-grow: 1;
-  justify-content: space-between;
+  justify-content: flex-start;
   height: min-content;
 }
 
