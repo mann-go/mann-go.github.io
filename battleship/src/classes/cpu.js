@@ -123,3 +123,49 @@ export function generateCPUCoordinates(ship_data) {
 
   return coordinates;
 }
+
+// Creates an attack for the CPU using the methods in this file
+export function cpuAttacks(players) {
+  let playerName = sessionStorage.getItem("player1_name");
+  let humanPlayer = players[playerName];
+
+  let hitsArray = players[playerName].gameboard.hits;
+  let missesArray = players[playerName].gameboard.misses;
+  let nextAttack;
+  let attempts = 0;
+
+  do {
+    // Break out clause
+    if (attempts > 4) {
+      nextAttack = generateCPUAttack();
+      break;
+    }
+
+    if (hitsArray.length !== 0) {
+      // Make an educated guess based on previous hit
+      let prevAttack = hitsArray[hitsArray.length - 1];
+      console.log("Previously hit: ", prevAttack);
+      nextAttack = generateAttackDirection(prevAttack);
+    } else {
+      // Get random coordinates
+      nextAttack = generateCPUAttack();
+    }
+
+    attempts++;
+  } while (
+    hitsArray.some(
+      (value) => value.x === nextAttack.x && value.y === nextAttack.y
+    ) ||
+    missesArray.some(
+      (value) => value.x === nextAttack.x && value.y === nextAttack.y
+    )
+  );
+
+  let result = humanPlayer.gameboard.recieveAttack(nextAttack.x, nextAttack.y);
+
+  let gridBox = document.querySelector(
+    `[data-id="${nextAttack.x},${nextAttack.y}"]`
+  );
+
+  return { result, gridBox, playerName, nextAttack };
+}
