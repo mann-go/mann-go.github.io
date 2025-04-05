@@ -91,11 +91,6 @@ export function playTurn(player) {
 export function createCombatLog() {
   let main = document.querySelector("main");
 
-  // Not an elegant solution, but it works
-  if (main.lastChild) {
-    main.removeChild(main.lastChild);
-  }
-
   let infoContainer = document.createElement("div");
   infoContainer.className = "info-container";
 
@@ -150,10 +145,9 @@ export function updateCombatLog(currentPlayer, x, y, result) {
 
 // Scroll combat log when updated
 function scrollCombatLog() {
-
   let combatLog = document.querySelector("#combat-log");
   let lastCombatLogItem = combatLog.lastElementChild;
-  lastCombatLogItem.scrollIntoView({ behavior: 'smooth', block: 'end'});
+  lastCombatLogItem.scrollIntoView({ behavior: "smooth", block: "end" });
 }
 
 export function updateCurrentPlayerUI(currentPlayer) {
@@ -164,10 +158,12 @@ export function updateCurrentPlayerUI(currentPlayer) {
 export function processWin(player) {
   let allBoards = document.querySelectorAll(".board");
   let ships = document.querySelectorAll(".ship");
+  let combat_log = document.querySelector("#combat-log");
+
   let winner = document.createElement("li");
   winner.className = "combat-log-item";
   winner.textContent = "The Winner is: " + player;
-  let combat_log = document.querySelector("#combat-log");
+
   combat_log.appendChild(winner);
   document.querySelector(".active-player").textContent = "";
 
@@ -179,7 +175,7 @@ export function processWin(player) {
 
   ships.forEach((ship) => {
     ship.style.backgroundColor = "#333b46";
-  })
+  });
 
   document.querySelector("#restart-game").style.display = "block";
 }
@@ -199,14 +195,21 @@ export function startGame(players, p1, p1_ships, p2, p2_ships, handleAttack) {
 
 export function restartGame() {
   let board_container = document.querySelector(".board-container");
-  while (board_container.firstChild) {
-    board_container.removeChild(board_container.firstChild);
+  let gameContainer = document.querySelector(".container");
+  let player_names_container = document.querySelector(".player-names");
+  let info_container = document.querySelector(".info-container");
+
+  while (board_container.lastChild.id !== "how-to-play") {
+    board_container.removeChild(board_container.lastChild);
   }
 
-  let player_names_container = document.querySelector(".player-names");
-  player_names_container.style.display = "flex"; // Fix later
+  gameContainer.style.width = "170%";
+
+  player_names_container.style.display = "flex";
   document.querySelector("#restart-game").style.display = "none";
   document.querySelector("#start-game").style.display = "block";
+  document.querySelector("#how-to-play").style.display = "block";
+  info_container.remove();
 }
 
 // Helper function to converted lettered coordinates to numbers
