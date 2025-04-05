@@ -12,9 +12,10 @@ export default function processFormData(shipPlacementData) {
         ships[shipName] = {};
       }
   
+
       // Assign x, y, or orientation
       if (property === "x") {
-        ships[shipName].x = value;
+        ships[shipName].x = value.toUpperCase();
       } else if (property === "y") {
         ships[shipName].y = value;
       } else if (property === "orientation") {
