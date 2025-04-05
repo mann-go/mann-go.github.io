@@ -8,15 +8,13 @@ import {
   restartGame,
   startGame,
 } from "./ui/boardUI";
-import {
-  generateAttackDirection,
-  generateCPUAttack,
-  generateCPUCoordinates,
-} from "./classes/cpu";
+import { generateCPUCoordinates, cpuAttacks } from "./classes/cpu";
 import Ship from "./classes/ship";
 import Player from "./classes/player";
+import processFormData from "./ui/processShipPlacementForm";
 
 const players = {};
+let currentPlayer = "";
 
 const ship_data = {
   carrier: {
@@ -36,7 +34,6 @@ const ship_data = {
   },
 };
 
-let currentPlayer = "";
 
 // Start Game by getting player names first
 let plotShipModal = document.querySelector("#plot-ships-modal");
@@ -44,6 +41,8 @@ let startButton = document.querySelector("#start-game");
 let plotShipsButton = document.querySelector("#plot-ships");
 let playerNamesContainer = document.querySelector(".player-names");
 let restartGameButton = document.querySelector("#restart-game");
+let howToPlayContainer = document.querySelector(".how-to-play");
+document.querySelector(".how-to-play").style.display = "block";
 
 startButton.addEventListener("click", function (e) {
   e.preventDefault();
@@ -58,6 +57,24 @@ startButton.addEventListener("click", function (e) {
     return;
   }
 
+  getPlayerNames();
+
+  plotShipModal.style.display = "block";
+
+  playerNamesContainer.style.display = "none";
+  startButton.style.display = "none";
+});
+
+plotShipsButton.addEventListener("click", function (e) {
+  processForm(e);
+});
+
+restartGameButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  restartGame();
+});
+
+function getPlayerNames() {
   let player1_name = document.querySelector("#player1_name").value.trim();
   let player2_name;
   let vsOppenentType = document.querySelector("#vs_type").value;
@@ -82,20 +99,7 @@ startButton.addEventListener("click", function (e) {
 
   document.querySelector("#plot-ships-modal-player-name").textContent =
     player1_name;
-  plotShipModal.style.display = "block";
-
-  playerNamesContainer.style.display = "none";
-  startButton.style.display = "none";
-});
-
-restartGameButton.addEventListener("click", function (e) {
-  e.preventDefault();
-  restartGame();
-});
-
-plotShipsButton.addEventListener("click", function (e) {
-  processForm(e);
-});
+}
 
 function processForm(event) {
   event.preventDefault();
@@ -154,6 +158,7 @@ function processForm(event) {
 
   // Both players have submitted ship placements
   plotShipModal.style.display = "none";
+  howToPlayContainer.style.display = "none";
 
   let p1 = sessionStorage.getItem("player1_name");
   let p2 = JSON.parse(sessionStorage.getItem("player2_name")).name;
@@ -210,94 +215,29 @@ function handleAttack(x, y, grid_box) {
 
     // If the new current player is CPU, make it attack
     if (isCPU) {
+      document.querySelector(".active").style.pointerEvents = "none";
       setTimeout(() => {
-        cpuAttacks();
+        let cpuTurn = cpuAttacks(players);
+        updateGrid(cpuTurn.gridBox, cpuTurn.result);
+        updateCombatLog(
+          "CPU",
+          cpuTurn.nextAttack.x,
+          cpuTurn.nextAttack.y,
+          cpuTurn.result
+        );
+
+        setTimeout(() => {
+          if (cpuTurn.result === "lost") {
+            processWin("CPU");
+            return;
+          }
+
+          // Switch back to player
+          currentPlayer = players[cpuTurn.playerName];
+          updateCurrentPlayerUI(cpuTurn.playerName);
+          playTurn(currentPlayer.name);
+        }, 1000);
       }, 1000);
     }
   }, 1000);
-}
-
-function cpuAttacks() {
-  let playerName = sessionStorage.getItem("player1_name");
-  let humanPlayer = players[playerName];
-
-  let hitsArray = players[playerName].gameboard.hits;
-  let missesArray = players[playerName].gameboard.misses;
-  let nextAttack;
-  let attempts = 0;
-
-  do {
-    // Break out clause
-    if (attempts > 4) {
-      console.log("Prevented stack overflow");
-      nextAttack = generateCPUAttack();
-      break;
-    }
-
-    if (hitsArray.length !== 0) {
-      // Make an educated guess based on previous hit
-      let prevAttack = hitsArray[hitsArray.length - 1];
-      console.log("Previously hit: ", prevAttack);
-      nextAttack = generateAttackDirection(prevAttack);
-    } else {
-      // Get random coordinates
-      nextAttack = generateCPUAttack();
-    }
-
-    attempts++;
-  } while (
-    hitsArray.some(
-      (value) => value.x === nextAttack.x && value.y === nextAttack.y
-    ) ||
-    missesArray.some(
-      (value) => value.x === nextAttack.x && value.y === nextAttack.y
-    )
-  );
-
-  let result = humanPlayer.gameboard.recieveAttack(nextAttack.x, nextAttack.y);
-
-  let gridBox = document.querySelector(
-    `[data-id="${nextAttack.x},${nextAttack.y}"]`
-  );
-  updateGrid(gridBox, result);
-  updateCombatLog("CPU", nextAttack.x, nextAttack.y, result);
-
-  setTimeout(() => {
-    if (result === "lost") {
-      processWin("CPU");
-      return;
-    }
-
-    // Switch back to player
-    currentPlayer = players[playerName];
-    updateCurrentPlayerUI(playerName);
-    playTurn(currentPlayer.name);
-  }, 1000);
-}
-
-function processFormData(shipPlacementData) {
-  let ships = {};
-
-  for (const key in shipPlacementData) {
-    // Get ship name and property
-    const [shipName, property] = key.split("-");
-    // Get the value
-    const value = shipPlacementData[key];
-
-    // Init ship object
-    if (!ships[shipName]) {
-      ships[shipName] = {};
-    }
-
-    // Assign x, y, or orientation
-    if (property === "x") {
-      ships[shipName].x = value;
-    } else if (property === "y") {
-      ships[shipName].y = value;
-    } else if (property === "orientation") {
-      ships[shipName].orientation = value;
-    }
-  }
-
-  return ships;
 }
