@@ -36,24 +36,28 @@ li {
 .wrapper {
   width: 80%;
   margin: 0 auto;
-  margin-top: 2rem;
+  margin-top: 5rem;
   min-width: 75%;
 }
 
 .about-me {
   z-index: -1;
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-left: -1rem;
   background-color: var(--off-white);
   padding: var(--universal-padding);
-  padding-left: 2rem;
+  padding-left: 5rem;
   border-bottom-right-radius: 1rem;
   border-top-right-radius: 1rem;
   box-shadow: 1px 2px 4px 0px #444;
-  height: min-content;
+  height: fit-content;
   flex-direction: row;
   justify-content: space-around;
+  width: 75%;
+}
 
+.about-me-container > img {
+  transform: scale(1.1);
 }
 
 .actions-container {
@@ -101,7 +105,6 @@ li {
   background-color: var(--night);
   padding: var(--universal-padding);
   justify-content: space-evenly;
-  /* border-top: 3px solid var(--night); */
 }
 
 .info {
@@ -112,13 +115,10 @@ li {
 /* Images */
 img {
   object-fit: fill;
-  /* box-shadow: 1px 2px 2px 0px #444;
-  border-radius: var(--padding-small); */
 }
 
 .portrait {
   height: auto;
-  width: 450px;
   box-shadow: 1px 2px 2px 0px #444;
 }
 
@@ -126,14 +126,9 @@ img {
   width: 30px;
 }
 
-/* .project-image {
-  width: 50%;
-  height: auto;
-} */
-
 .image-container {
   width: fit-content;
-  height: min-content;
+  height: auto;
 }
 
 /* Phone screens */
@@ -144,6 +139,7 @@ img {
   }
 
   .wrapper {
+    margin-top: 1rem;
     width: 90%;
   }
 
@@ -152,17 +148,23 @@ img {
     flex-direction: column;
   }
 
+  .about-me-container > img {
+    transform: scale(1);
+  }
+
   .about-me {
     margin-top: -1rem;
-    margin-left: 0rem;
+    margin-left: -4rem;
     box-shadow: none;
   }
 
   .my-projects {
     grid-template-columns: repeat(1, 1fr);
+    margin: 0 auto;
   }
 
   .contact-me-container {
+    margin-top: 2rem;
     flex-direction: column;
     align-items: center;
   }
@@ -173,9 +175,21 @@ img {
 }
 
 /* Tablet screens */
-@media (min-width: 600px) and (max-width: 1100px) {
+@media (min-width: 600px) and (max-width: 1200px) {
   .about-me-container {
+    width: 90%;
     flex-direction: column;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .about-me-container > img {
+    transform: scale(1.1);
+    height: min-content;
+  }
+
+  .about-me {
+    margin-left: 1rem;
   }
 
   .my-projects {
