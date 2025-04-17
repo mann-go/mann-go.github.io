@@ -1,0 +1,184 @@
+:root {
+  --universal-padding: 1rem;
+  --padding-small: 0.5rem;
+  --padding-xsmall: 0.25rem;
+
+  /* Colours */
+  --black: #000000;
+  --amber: #fdbe01;
+  --school-bus-yellow: #fce003;
+  --off-white: #fcfcfc;
+  --night: #222222;
+  --alabaster: #fef9f3;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--alabaster);
+}
+
+/* Universal */
+.flex {
+  display: flex;
+  gap: 10px;
+}
+
+li {
+  list-style: none;
+  align-self: center;
+}
+
+/* Header */
+.wrapper {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 2rem;
+  min-width: 75%;
+}
+
+.about-me {
+  z-index: -1;
+  margin-top: 2rem;
+  margin-left: -1rem;
+  background-color: var(--off-white);
+  padding: var(--universal-padding);
+  padding-left: 2rem;
+  border-bottom-right-radius: 1rem;
+  border-top-right-radius: 1rem;
+  box-shadow: 1px 2px 4px 0px #444;
+  height: min-content;
+  flex-direction: row;
+  justify-content: space-around;
+
+}
+
+.actions-container {
+  justify-items: end;
+}
+
+/* Main content */
+.my-projects {
+  display: grid;
+  grid-template-columns: repeat(3, 2fr);
+  gap: 50px;
+  margin-bottom: 5rem;
+}
+
+.project {
+  flex-direction: column;
+  border-radius: 2px;
+  box-shadow: 1px 2px 4px 0px #444;
+  padding-bottom: var(--padding-small);
+  transition: 0.2s ease-in-out;
+  border-radius: var(--padding-small);
+  background-color: var(--off-white);
+}
+
+.project:hover {
+  transform: scale(1.01);
+  box-shadow: 4px 5px 7px 0px #444;
+}
+
+.project-header {
+  justify-content: space-between;
+}
+
+.project-info {
+  padding: 20px;
+}
+
+.actions {
+  padding: 0;
+  gap: 15px;
+}
+
+/* Footer */
+.contact-me-container {
+  background-color: var(--night);
+  padding: var(--universal-padding);
+  justify-content: space-evenly;
+  /* border-top: 3px solid var(--night); */
+}
+
+.info {
+  color: var(--off-white);
+  padding: var(--universal-padding);
+}
+
+/* Images */
+img {
+  object-fit: fill;
+  /* box-shadow: 1px 2px 2px 0px #444;
+  border-radius: var(--padding-small); */
+}
+
+.portrait {
+  height: auto;
+  width: 450px;
+  box-shadow: 1px 2px 2px 0px #444;
+}
+
+.icon {
+  width: 30px;
+}
+
+/* .project-image {
+  width: 50%;
+  height: auto;
+} */
+
+.image-container {
+  width: fit-content;
+  height: min-content;
+}
+
+/* Phone screens */
+@media (max-width: 599px) {
+  h1,
+  h2 {
+    text-align: center;
+  }
+
+  .wrapper {
+    width: 90%;
+  }
+
+  .about-me-container {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .about-me {
+    margin-top: -1rem;
+    margin-left: 0rem;
+    box-shadow: none;
+  }
+
+  .my-projects {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .contact-me-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .actions-container {
+    place-items: center;
+  }
+}
+
+/* Tablet screens */
+@media (min-width: 600px) and (max-width: 1100px) {
+  .about-me-container {
+    flex-direction: column;
+  }
+
+  .my-projects {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
