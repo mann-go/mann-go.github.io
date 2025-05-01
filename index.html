@@ -16,28 +16,41 @@
         <ul>
           <li><a href="#about">About</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <!-- <li><a href="#contact">Contact</a></li> -->
         </ul>
       </nav>
     </header>
     <main>
       <div class="about" id="about">
-        <h2>Hello!</h2> 
-        <p>- I'm a Computer Science graduate with a passion for web development -</p>
-        <p>- In my spare time, I work on solo projects to deepen my understanding of various web technologies -</p>
+        <div class="card-container">
+            <div class="card-header">
+                      <h2>Hello!</h2> 
+            </div>
+            <div class="card-subheader">
+              <h3>A little about me...</h3>
+                      <p>I'm a Computer Science graduate with a passion for web development</p>
+                <p>In my spare time, I work on solo projects to deepen my understanding of various web technologies</p>
+                <p>If you're looking for your next front-end web developer, please don't hesitate to get in contact</p>
+            </div>
+        </div>
+
+
       </div>
       <div class="portfolio" id="portfolio">
-        <div class="portfolio-header">
-          <h2>Portfolio</h2>
-          <div class="portfolio-subheader">
-            <h3>Below are some of my past projects, watch the improvement grow!</h3>
+        <div class="card-container">
+          <div class="card-header">
+            <h2>Portfolio</h2>
+            <div class="card-subheader">
+              <h3>Below are some of my past projects, watch the improvement grow!</h3>
+            </div>
           </div>
         </div>
         <div class="portfolio-item">        
            <div class="item-header">
-              <a class="link" href="https://mann-go.github.io/todo-list/dist/index.html"><h3>TodoList</h3></a>
+              <a class="link" href="https://mann-go.github.io/todo-list/dist/index.html"><h3>Todo List</h3></a>
            </div>
            <div class="item-body">
+            A standard Todo List project which used LocalStorage to keep todos persistent across site visits.
            </div>
         </div>
         <div class="portfolio-item">
@@ -45,6 +58,7 @@
               <a class="link" href="https://mann-go.github.io/weather-app/dist/index.html"><h3>Weather Forecast</h3></a>            
           </div>   
           <div class="item-body">
+            A simple form which returns results from a weather forecast API endpoint.
           </div>
         </div>
         <div class="portfolio-item">
@@ -52,6 +66,7 @@
             <a class="link" href="./battleship/dist/index.html"><h3>Battleships</h3></a>
           </div>  
           <div class="item-body">
+            My take on the classic Battleships game, with the ability to play against a friend or a (sometimes component) AI.
           </div>
         </a>
         </div>
@@ -59,19 +74,43 @@
           <div class="item-header">
             <a class="link" href="./responsive-homepage/dist/index.html"><h3>Responsive Homepage</h3></a>
           </div>         
-          
           <div class="item-body">
+            <p>This project implemented a design which leveraged a webpages natural responsiveness to provide a seamless experience on multiple devices. </p>
           </div>
-        </div>
-        
+        </div>   
         <div class="portfolio-item">
           <div class="preview-container"></div>
           <h3 id="item-header">More projects to come...</h3>
         </div>
       </div>
+      <!-- <div class="contact" id="contact">
+        <div class="card-container">
+          <div class="card-header">
+            <h2>Contact Me</h2>
+            <div class="card-subheader">
+              <h3>If you want to reach out to me, just fill in the form here!</h3>
+            </div>
+          </div>
+        </div>
+        <div class="form-container">
+          <form action="">
+            <div class="input">
+              <label for="input_name" aria-label="Full Name">Name: </label>
+              <input type="text" id="input_name" name="name">
+            </div>
+            <div class="input">
+              <label for="input_email" aria-label="Email Address">Email: </label>
+              <input type="text" id="input_email">
+            </div>
+            <div class="input">
+              <label for="input_message" aria-label="Your Message">Message: </label>
+              <input type="textarea" id="input_message" name="message">
+            </div>
+          </form>
+        </div>
+      </div> -->
     </main>
     <footer>
-
     </footer>
   </div>
 </body>

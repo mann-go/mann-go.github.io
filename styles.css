@@ -38,7 +38,6 @@
 }
 
 html {
-    height: 100dvh;
   scroll-behavior: smooth;
 }
 
@@ -46,6 +45,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: calc(100% - 8px * 2); /* minus top & bottom margins*/
+  color: var(--ghost-white);
 }
 
 .wrapper {
@@ -57,6 +57,7 @@ body {
 }
 
 header {
+  z-index: 1;
   display: flex;
   align-items: center;
   padding-left: var(--padding-small);
@@ -64,8 +65,10 @@ header {
   border-bottom: 5px solid var(--rojo);
   box-shadow: 0 2px 2px 0 var(--barn-red);
   background-color: var(--ghost-white);
+  color: var(--delft-blue);
   position: fixed;
   width: 100%;
+  opacity: 0.85;
 }
 
 nav {
@@ -97,8 +100,7 @@ h2 {
 }
 
 main {
-  
-    flex-grow: 1;
+  flex-grow: 1;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   padding: var(--padding);
@@ -107,26 +109,29 @@ main {
 }
 
 .about {
-  color: ghostwhite;
-  /* background-color: var(--ghost-white); */
   width: 100%;
   padding: var(--padding);
 }
 
-.portfolio {
+.portfolio,
+.contact {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
   padding: var(--padding);
-  color: var(--ghost-white);
 }
 
 .portfolio-item:last-child {
   grid-column: 1 / 4;
   background-color: var(--rich-black);
+  place-content: center;
 }
 
-.portfolio-header {
+.card-container {
+  grid-column: 1 / 4;
+}
+
+.card-header {
   text-shadow: 3px 3px var(--charcoal);
   font-size: 58px;
   grid-column: 1 / 4;
@@ -135,10 +140,10 @@ main {
   padding: var(--padding-xl);
   border: 3px solid var(--eerie-black);
   transition: transform 2s ease-in-out;
-  height: max-content;
+  height: min-content;
 }
 
-.portfolio-subheader {
+.card-subheader {
   text-shadow: none;
   font-size: large;
 }
@@ -150,9 +155,13 @@ main {
   background-color: var(--ghost-white);
   border-radius: var(--border-radius);
   padding: var(--padding);
-  height: min-content;
+  height: 200px;
   overflow: hidden;
   transition: 0.5s ease;
+}
+
+.item-body {
+  color: var(--rich-black);
 }
 
 img {
@@ -160,11 +169,45 @@ img {
   height: 200px;
 }
 
+.contact {
+  grid-column: 1 / 5;
+  display: flex;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: 10px;
+  gap: 25px;
+}
+
+.input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-size: 20px;
+}
+
+input {
+  appearance: none;
+  height: 50px;
+  width: 100%;
+  border: none;
+  border-radius: var(--border-radius);
+  padding-left: var(--padding-small);
+  transition: 1s ease;
+}
+
 footer {
   margin-top: auto;
-  border-top: 5px solid var(--charcoal);
-  background-color: var(--gunmetal);
   height: 50px;
+  border-top: 5px solid var(--rojo);
+  background-color: var(--gunmetal);
 }
 
 /** Underline styling **/
@@ -200,12 +243,20 @@ a:hover {
   box-shadow: 0 8px 8px 0 var(--rich-black);
 }
 
+input:hover {
+  box-shadow: 0 8px 8px 0 var(--rich-black);
+}
+
 /** Responsive **/
 
 @media (min-width: 400px) and (max-width: 1457px) {
+  main {
+    width: 100%;
+  }
 
-  .portfolio-header {
+  .card-header {
     grid-column: 1 / 5;
+    font-size: 48px;
   }
 
   .portfolio-item:last-child {
@@ -217,4 +268,10 @@ a:hover {
   }
 }
 
-
+/** Anchor padding fix **/
+.about::before {
+  content: "";
+  display: block;
+  height: 10vh;
+  visibility: hidden;
+}
